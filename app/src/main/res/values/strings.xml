@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Collections and Maps</string>
+    <string name="collections">Collections</string>
+    <string name="maps">Maps</string>
+    <string name="collections_and_maps">Collections and Maps</string>
+    <string name="elements">Elements</string>
+    <string name="threads">Threads</string>
+
+    <string-array name="tab_title">
+        <item>@string/collections</item>
+        <item>@string/maps</item>
+    </string-array>
 </resources>
