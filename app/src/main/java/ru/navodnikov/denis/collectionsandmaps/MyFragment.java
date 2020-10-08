@@ -49,4 +49,6 @@ public class MyFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(listAdapter);
     }
+
+
 }

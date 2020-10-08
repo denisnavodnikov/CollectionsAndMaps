@@ -6,7 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 
 import com.google.android.material.tabs.TabLayout;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private Toolbar toolbar;
+    private Button startButton;
 
 
     @Override
@@ -30,9 +34,19 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         MainPageAdapter pageAdapter = new MainPageAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(pageAdapter);
+
         tabLayout.setupWithViewPager(viewPager);
 
+        startButton = findViewById(R.id.start_button);
+//        startButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
     }
+
 
 
 }

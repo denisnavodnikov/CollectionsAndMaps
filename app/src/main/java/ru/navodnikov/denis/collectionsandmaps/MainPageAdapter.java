@@ -10,8 +10,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
-    private static final int PAGE_COLLECTIONS = 0;
-    private static final int PAGE_MAPS = 1;
+    public static final int PAGE_COLLECTIONS = 0;
+    public static final int PAGE_MAPS = 1;
+    public static int CURRENT_PAGE;
     private String[] titles;
 
     public MainPageAdapter(@NonNull FragmentManager fm, Context context) {

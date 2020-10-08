@@ -11,11 +11,11 @@ import java.util.List;
 
 public class MyListAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    public List<Item> listOfOperations = new ArrayList<>();
+    public static List<Item> listOfOperations = new ArrayList<>();
 
-//    TODO: временно содаём лист через конструктор
+    //    TODO: временно содаём лист через конструктор
     public MyListAdapter() {
-        createOperations();
+        createCollections();
     }
 
     @NonNull
@@ -34,28 +34,40 @@ public class MyListAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public int getItemCount() {
         return listOfOperations.size();
     }
-    private void createOperations() {
-        listOfOperations.add(new Item("Adding to start in ArrayList", "200"));
-        listOfOperations.add(new Item("Adding to start in LinkedList", "200"));
-        listOfOperations.add(new Item("Adding to start in CopyOnWriteArrayList", "200"));
-        listOfOperations.add(new Item("Adding to middle in ArrayList", "200"));
-        listOfOperations.add(new Item("Adding to middle in LinkedList", "200"));
-        listOfOperations.add(new Item("Adding to middle in CopyOnWriteArrayList", "200"));
-        listOfOperations.add(new Item("Adding to end in ArrayList", "200"));
-        listOfOperations.add(new Item("Adding to end in LinkedList", "200"));
-        listOfOperations.add(new Item("Adding to end in CopyOnWriteArrayList", "200"));
-        listOfOperations.add(new Item("Search in ArrayList", "200"));
-        listOfOperations.add(new Item("Search in LinkedList", "200"));
-        listOfOperations.add(new Item("Search in CopyOnWriteArrayList", "200"));
-        listOfOperations.add(new Item("Removing from start in ArrayList", "200"));
-        listOfOperations.add(new Item("Removing from start in LinkedList", "200"));
-        listOfOperations.add(new Item("Removing from start in CopyOnWriteArrayList", "200"));
-        listOfOperations.add(new Item("Removing from middle in ArrayList", "200"));
-        listOfOperations.add(new Item("Removing from middle in LinkedList", "200"));
-        listOfOperations.add(new Item("Removing from middle in CopyOnWriteArrayList", "200"));
-        listOfOperations.add(new Item("Removing from end in ArrayList", "200"));
-        listOfOperations.add(new Item("Removing from end in LinkedList", "200"));
-        listOfOperations.add(new Item("Removing from end in CopyOnWriteArrayList", "200"));
+
+    private void createCollections() {
+        listOfOperations.add(new Item("Adding to start in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to start in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to start in CopyOnWriteArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to middle in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to middle in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to middle in CopyOnWriteArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to end in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to end in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Adding to end in CopyOnWriteArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Search in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Search in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Search in CopyOnWriteArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from start in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from start in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from start in CopyOnWriteArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from middle in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from middle in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from middle in CopyOnWriteArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from end in ArrayList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from end in LinkedList", "N/A ms"));
+        listOfOperations.add(new Item("Removing from end in CopyOnWriteArrayList", "N/A ms"));
+
+    }
+
+    private void createMaps() {
+        listOfOperations.add(new Item("Adding to HashMap", "N/A ms"));
+        listOfOperations.add(new Item("Adding to TreeMap", "N/A ms"));
+        listOfOperations.add(new Item("Search in HashMap", "N/A ms"));
+        listOfOperations.add(new Item("Search in TreeMap", "N/A ms"));
+        listOfOperations.add(new Item("Removing from HashMap", "N/A ms"));
+        listOfOperations.add(new Item("Removing from TreeMap", "N/A ms"));
+
 
     }
 
