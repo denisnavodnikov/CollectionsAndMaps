@@ -10,9 +10,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
+
     public static final int PAGE_COLLECTIONS = 0;
     public static final int PAGE_MAPS = 1;
-    public static int CURRENT_PAGE;
+
     private String[] titles;
 
     public MainPageAdapter(@NonNull FragmentManager fm, Context context) {
@@ -24,12 +25,12 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==PAGE_COLLECTIONS){
-            return createMyFragment(MyFragment.TYPE_COLLECTIONS);
+            return new CollectionsFragment();
         }
         else if (position==PAGE_MAPS){
-            return createMyFragment(MyFragment.TYPE_MAPS);
+            return new MapsFragment();
         }
-        return new Fragment();
+        return new CollectionsFragment();
 
     }
 
@@ -43,12 +44,6 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return titles[position];
     }
-    private static MyFragment createMyFragment(int type){
-        MyFragment fragment = new MyFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(MyFragment.TYPE_KEY, type);
-        fragment.setArguments(bundle);
-        return  fragment;
-    }
+
 
 }

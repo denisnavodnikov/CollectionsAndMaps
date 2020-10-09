@@ -11,7 +11,9 @@ import java.util.List;
 
 public class MyListAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    public static List<Item> listOfOperations = new ArrayList<>();
+    public static List<Model> listOfCollections = new ArrayList<>();
+    public static List<Model> listOfMaps = new ArrayList<>();
+
 
     //    TODO: временно содаём лист через конструктор
     public MyListAdapter() {
@@ -26,47 +28,47 @@ public class MyListAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Item record = listOfOperations.get(position);
-        holder.applyData(record);
+        Model model = listOfCollections.get(position);
+        holder.applyData(model);
     }
 
     @Override
     public int getItemCount() {
-        return listOfOperations.size();
+        return listOfCollections.size();
     }
 
     private void createCollections() {
-        listOfOperations.add(new Item("Adding to start in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to start in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to start in CopyOnWriteArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to middle in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to middle in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to middle in CopyOnWriteArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to end in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to end in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Adding to end in CopyOnWriteArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Search in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Search in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Search in CopyOnWriteArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from start in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from start in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from start in CopyOnWriteArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from middle in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from middle in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from middle in CopyOnWriteArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from end in ArrayList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from end in LinkedList", "N/A ms"));
-        listOfOperations.add(new Item("Removing from end in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to start in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to start in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to start in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to middle in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to middle in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to middle in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to end in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to end in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Adding to end in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Search in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Search in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Search in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from start in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from start in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from start in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from middle in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from middle in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from middle in CopyOnWriteArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from end in ArrayList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from end in LinkedList", "N/A ms"));
+        listOfCollections.add(new Model("Removing from end in CopyOnWriteArrayList", "N/A ms"));
 
     }
 
     private void createMaps() {
-        listOfOperations.add(new Item("Adding to HashMap", "N/A ms"));
-        listOfOperations.add(new Item("Adding to TreeMap", "N/A ms"));
-        listOfOperations.add(new Item("Search in HashMap", "N/A ms"));
-        listOfOperations.add(new Item("Search in TreeMap", "N/A ms"));
-        listOfOperations.add(new Item("Removing from HashMap", "N/A ms"));
-        listOfOperations.add(new Item("Removing from TreeMap", "N/A ms"));
+        listOfMaps.add(new Model("Adding to HashMap", "N/A ms"));
+        listOfMaps.add(new Model("Adding to TreeMap", "N/A ms"));
+        listOfMaps.add(new Model("Search in HashMap", "N/A ms"));
+        listOfMaps.add(new Model("Search in TreeMap", "N/A ms"));
+        listOfMaps.add(new Model("Removing from HashMap", "N/A ms"));
+        listOfMaps.add(new Model("Removing from TreeMap", "N/A ms"));
 
 
     }

@@ -1,11 +1,10 @@
 package ru.navodnikov.denis.collectionsandmaps;
 
-public class Item {
+public class Model {
     private String title;
     private String time;
-//    private int id;
 
-    public Item(String title, String time) {
+    public Model(String title, String time) {
         this.title = title;
         this.time = time;
     }
@@ -17,6 +16,5 @@ public class Item {
     public String getTime() {
         return time;
     }
-
 
 }

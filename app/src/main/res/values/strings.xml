@@ -5,9 +5,45 @@
     <string name="collections_and_maps">Collections and Maps</string>
     <string name="elements">Elements</string>
     <string name="threads">Threads</string>
+    <string name="default_time">N/A ms</string>
 
     <string-array name="tab_title">
         <item>@string/collections</item>
         <item>@string/maps</item>
     </string-array>
+
+    <string-array name="names_collections_list">
+        <item>Adding to start in ArrayList</item>
+        <item>Adding to start in LinkedList</item>
+        <item>Adding to start in CopyOnWriteArrayList</item>
+        <item>Adding to middle in ArrayList</item>
+        <item>Adding to middle in LinkedList</item>
+        <item>Adding to middle in CopyOnWriteArrayList</item>
+        <item>Adding to end in ArrayList</item>
+        <item>Adding to end in LinkedList</item>
+        <item>Adding to end in CopyOnWriteArrayList</item>
+        <item>Search in ArrayList</item>
+        <item>Search in LinkedList</item>
+        <item>Search in CopyOnWriteArrayList</item>
+        <item>Removing from start in ArrayList</item>
+        <item>Removing from start in LinkedList</item>
+        <item>Removing from start in CopyOnWriteArrayList</item>
+        <item>Removing from middle in ArrayList</item>
+        <item>Removing from middle in LinkedList</item>
+        <item>Removing from middle in CopyOnWriteArrayList</item>
+        <item>Removing from end in ArrayList</item>
+        <item>Removing from end in LinkedList</item>
+        <item>Removing from end in CopyOnWriteArrayList</item>
+    </string-array>
+
+    <string-array name="names_maps_list">
+        <item>Adding to HashMap</item>
+        <item>Adding to TreeMap</item>
+        <item>Search in HashMap</item>
+        <item>Search in TreeMap</item>
+        <item>Removing from HashMap</item>
+        <item>Removing from TreeMap</item>
+    </string-array>
+
+
 </resources>
