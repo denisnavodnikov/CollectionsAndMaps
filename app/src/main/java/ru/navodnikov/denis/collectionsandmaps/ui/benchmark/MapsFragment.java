@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps;
+package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,48 +18,41 @@ import butterknife.BindArray;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import ru.navodnikov.denis.collectionsandmaps.R;
+import ru.navodnikov.denis.collectionsandmaps.dto.Model;
 
-public class CollectionsFragment extends Fragment {
+public class MapsFragment extends Fragment {
 
-    private Unbinder unbinder;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindArray(R.array.names_collections_list)
-    String[] namesCollectionsList;
+    @BindArray(R.array.names_maps_list)
+    String[] namesMapsList;
     @BindString(R.string.default_time)
     String defaultTime;
 
 
-    public CollectionsFragment() {
+    public MapsFragment() {
     }
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_items, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        List<Model> listOfCollections = new ArrayList<>();
+        ButterKnife.bind(this, view);
+        List<Model> listOfMaps = new ArrayList<>();
 
 
-        for (int i = 0; i < namesCollectionsList.length; i++) {
-            Model model = new Model(namesCollectionsList[i], defaultTime);
-            listOfCollections.add(model);
+        for (int i = 0; i < namesMapsList.length; i++) {
+            Model model = new Model(namesMapsList[i], defaultTime);
+            listOfMaps.add(model);
         }
 
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfCollections);
+        TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfMaps);
         recyclerView.setAdapter(tabRecycleAdaptor);
 
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

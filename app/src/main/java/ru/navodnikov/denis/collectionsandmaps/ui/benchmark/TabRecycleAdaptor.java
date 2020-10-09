@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps;
+package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import ru.navodnikov.denis.collectionsandmaps.R;
+import ru.navodnikov.denis.collectionsandmaps.dto.Model;
 
 public class TabRecycleAdaptor extends RecyclerView.Adapter<MyViewHolder> {
 
@@ -29,7 +32,7 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if (holder != null) {
             Model model = CollectionsOrMapsList.get(position);
-            holder.applyData(model);
+            holder.bindItem(model);
         }
 
 

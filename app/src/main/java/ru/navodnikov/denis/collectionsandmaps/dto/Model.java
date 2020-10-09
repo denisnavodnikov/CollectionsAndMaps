@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps;
+package ru.navodnikov.denis.collectionsandmaps.dto;
 
 public class Model {
     private String title;
