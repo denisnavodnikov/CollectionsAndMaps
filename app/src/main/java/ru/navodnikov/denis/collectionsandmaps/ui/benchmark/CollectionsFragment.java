@@ -51,16 +51,16 @@ public class CollectionsFragment extends Fragment {
 
         List<Model> listOfCollections = new ArrayList<>();
 
-        for (int i = 0; i < namesCollectionsList.length; i++) {
-            Model model = new Model(namesCollectionsList[i], defaultTime);
-            listOfCollections.add(model);
-        }
+//        for (int i = 0; i < namesCollectionsList.length; i++) {
+//            Model model = new Model(namesCollectionsList[i], defaultTime);
+//            listOfCollections.add(model);
+//        }
 
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
+//        recyclerView.setLayoutManager(gridLayoutManager);
         TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfCollections);
-        recyclerView.setAdapter(tabRecycleAdaptor);
+//        recyclerView.setAdapter(tabRecycleAdaptor);
     }
 
     @Override
