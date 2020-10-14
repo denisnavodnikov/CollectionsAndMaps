@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
+package ru.navodnikov.denis.collectionsandmaps.trash;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import java.util.List;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.Model;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.MyViewHolder;
 
 public class MyListAdapter extends RecyclerView.Adapter<MyViewHolder> {
 

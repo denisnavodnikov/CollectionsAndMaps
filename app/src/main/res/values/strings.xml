@@ -6,6 +6,9 @@
     <string name="elements">Elements</string>
     <string name="threads">Threads</string>
     <string name="default_time">N/A ms</string>
+    <string name="enter_elements_amount">Enter elements amount</string>
+    <string name="enter_threads_amount">Enter threads amount</string>
+    <string name="start">start</string>
 
     <string-array name="tab_title">
         <item>@string/collections</item>

@@ -16,6 +16,26 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameOfOperations;
     private final ProgressBar progressBarId;
 
+    public MyViewHolder(@NonNull View itemView, TextView timeOfOperation, TextView nameOfOperations, ProgressBar progressBarId) {
+        super(itemView);
+        this.timeOfOperation = timeOfOperation;
+        this.nameOfOperations = nameOfOperations;
+        this.progressBarId = progressBarId;
+    }
+
+    public ProgressBar getProgressBarId() {
+        return progressBarId;
+    }
+
+    public TextView getTimeOfOperation() {
+        return timeOfOperation;
+    }
+
+    public TextView getNameOfOperations() {
+        return nameOfOperations;
+    }
+
+
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
         nameOfOperations = itemView.findViewById(R.id.name_of_operation);
