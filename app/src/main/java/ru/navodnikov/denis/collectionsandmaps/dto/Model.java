@@ -17,6 +17,12 @@ public class Model {
         return time;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+
     public void setTime(String time) {
         this.time = time;
     }

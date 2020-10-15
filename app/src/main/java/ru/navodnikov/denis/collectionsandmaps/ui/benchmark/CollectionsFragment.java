@@ -1,11 +1,15 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,22 +81,30 @@ public class CollectionsFragment extends Fragment {
         tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfCollections);
         recyclerView.setAdapter(tabRecycleAdaptor);
     }
-    @Optional
-    @OnClick(R.id.collections_start_button) public void onClick() {
-        Log.d("button", "button - collections");
-        int elements = Integer.parseInt(collectionsEditTextElements.getText().toString());
-        int threads = Integer.parseInt(collectionsEditTextThreads.getText().toString());
-//        MyViewHolder holder = (MyViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
-//        holder.getProgressBarId().setVisibility(ProgressBar.VISIBLE);
-//        long startTime = System.currentTimeMillis();
-        Collections collections = new Collections(elements,threads);
-        collections.collectionOperations();
-//        long endTime = System.currentTimeMillis();
-//        holder.getProgressBarId().setVisibility(ProgressBar.INVISIBLE);
 
-//        holder.getTimeOfOperation().setText(String.valueOf((endTime-startTime)));
-//        listOfCollections.get(0).setTime(String.valueOf((endTime-startTime)));
+    @Optional
+    @OnClick(R.id.collections_start_button)
+    public void onClick() {
+        Log.d("button", "button - collections");
+
+
+        if (collectionsEditTextElements.getText().toString().length() == 0)
+            collectionsEditTextElements.setError("Amount of elements must not be empty");
+
+        if (collectionsEditTextThreads.getText().toString().length() == 0)
+            collectionsEditTextThreads.setError("Amount of threads must not be empty");
+
+        if (collectionsEditTextElements.getText().toString().length() != 0 && collectionsEditTextThreads.getText().toString().length() != 0) {
+        TabRecycleAdaptor.isWorking = true;
         tabRecycleAdaptor.notifyDataSetChanged();
+            int elements = Integer.parseInt(collectionsEditTextElements.getText().toString());
+            int threads = Integer.parseInt(collectionsEditTextThreads.getText().toString());
+            Collections collections = new Collections(elements, threads);
+            collections.collectionOperations();
+            TabRecycleAdaptor.isWorking = false;
+            tabRecycleAdaptor.notifyDataSetChanged();
+        }
+
 
     }
 

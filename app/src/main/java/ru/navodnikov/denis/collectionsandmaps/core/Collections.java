@@ -15,7 +15,6 @@ public class Collections {
     public int contOfThreads;
 
 
-
     public Collections(int contOfElements, int contOfThreads) {
         this.contOfElements = contOfElements;
         this.contOfThreads = contOfThreads;
@@ -57,7 +56,7 @@ public class Collections {
                 arrayListAddingStart.add(0, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(0).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(0).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
@@ -65,7 +64,7 @@ public class Collections {
                 linkedListAddingStart.add(0, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(1).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(1).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
 
         });
         threadPool.execute(() -> {
@@ -74,32 +73,32 @@ public class Collections {
                 CopyOnWriteArrayListAddingStart.add(0, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(2).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(2).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
 
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                arrayListAddingMiddle.add(arrayListAddingMiddle.size()/2, 1);
+                arrayListAddingMiddle.add(arrayListAddingMiddle.size() / 2, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(3).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(3).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                linkedListAddingMiddle.add(linkedListAddingMiddle.size()/2, 1);
+                linkedListAddingMiddle.add(linkedListAddingMiddle.size() / 2, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(4).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(4).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                CopyOnWriteArrayListAddingMiddle.add(CopyOnWriteArrayListAddingMiddle.size()/2, 1);
+                CopyOnWriteArrayListAddingMiddle.add(CopyOnWriteArrayListAddingMiddle.size() / 2, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(5).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(5).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
@@ -107,7 +106,7 @@ public class Collections {
                 arrayListAddingEnd.add(1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(6).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(6).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
@@ -115,7 +114,7 @@ public class Collections {
                 linkedListAddingEnd.add(1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(7).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(7).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             long startTime = System.nanoTime();
@@ -123,7 +122,7 @@ public class Collections {
                 CopyOnWriteArrayListAddingEnd.add(1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(8).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(8).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
 
 
@@ -136,7 +135,7 @@ public class Collections {
                 arrayListSearch.contains(2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(9).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(9).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             linkedListSearch.add(1);
@@ -147,7 +146,7 @@ public class Collections {
                 linkedListSearch.contains(2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(10).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(10).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
 
         threadPool.execute(() -> {
@@ -159,9 +158,8 @@ public class Collections {
                 CopyOnWriteArrayListSearch.contains(2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(11).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(11).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
-
 
 
         threadPool.execute(() -> {
@@ -173,7 +171,7 @@ public class Collections {
                 arrayListRemovingStart.remove(0);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(12).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(12).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             for (int i = 0; i < contOfElements; i++) {
@@ -184,7 +182,7 @@ public class Collections {
                 linkedListRemovingStart.remove(0);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(13).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(13).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             for (int i = 0; i < contOfElements; i++) {
@@ -195,7 +193,7 @@ public class Collections {
                 CopyOnWriteArrayListRemovingStart.remove(0);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(14).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(14).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
 
 
@@ -205,10 +203,10 @@ public class Collections {
             }
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                arrayListRemovingMiddle.remove(arrayListRemovingMiddle.size()/2);
+                arrayListRemovingMiddle.remove(arrayListRemovingMiddle.size() / 2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(15).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(15).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             for (int i = 0; i < contOfElements; i++) {
@@ -216,10 +214,10 @@ public class Collections {
             }
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                linkedListRemovingMiddle.remove(linkedListRemovingMiddle.size()/2);
+                linkedListRemovingMiddle.remove(linkedListRemovingMiddle.size() / 2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(16).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(16).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             for (int i = 0; i < contOfElements; i++) {
@@ -227,10 +225,10 @@ public class Collections {
             }
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                CopyOnWriteArrayListRemovingMiddle.remove(CopyOnWriteArrayListRemovingMiddle.size()/2);
+                CopyOnWriteArrayListRemovingMiddle.remove(CopyOnWriteArrayListRemovingMiddle.size() / 2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(17).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(17).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
 
 
@@ -240,10 +238,10 @@ public class Collections {
             }
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                arrayListRemovingEnd.remove(arrayListRemovingEnd.size()-1);
+                arrayListRemovingEnd.remove(arrayListRemovingEnd.size() - 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(18).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(18).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             for (int i = 0; i < contOfElements; i++) {
@@ -251,10 +249,10 @@ public class Collections {
             }
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                linkedListRemovingEnd.remove(linkedListRemovingEnd.size()-1);
+                linkedListRemovingEnd.remove(linkedListRemovingEnd.size() - 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(19).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(19).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
         threadPool.execute(() -> {
             for (int i = 0; i < contOfElements; i++) {
@@ -262,15 +260,14 @@ public class Collections {
             }
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
-                CopyOnWriteArrayListRemovingEnd.remove(CopyOnWriteArrayListRemovingEnd.size()-1);
+                CopyOnWriteArrayListRemovingEnd.remove(CopyOnWriteArrayListRemovingEnd.size() - 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(20).setTime((((double) (endTime-startTime)/1000000)+" ms"));
+            CollectionsFragment.listOfCollections.get(20).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
         });
 
 
-
-
+        threadPool.shutdown();
         try {
             threadPool.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {

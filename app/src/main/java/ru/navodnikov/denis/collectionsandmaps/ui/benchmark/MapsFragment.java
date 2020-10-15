@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +49,10 @@ public class MapsFragment extends Fragment {
     @BindView(R.id.maps_edit_text_threads)
     EditText mapsEditTextThreads;
 
+    @Nullable
+    @BindView(R.id.maps_start_button)
+    Button mapsStartButton;
+
 
     public MapsFragment() {
     }
@@ -74,14 +80,29 @@ public class MapsFragment extends Fragment {
     }
 
     @Optional
-    @OnClick(R.id.maps_start_button) public void onClick() {
+    @OnClick(R.id.maps_start_button)
+    public void onClick() {
         Log.d("button", "button - collections");
-        int elements = Integer.parseInt(mapsEditTextElements.getText().toString());
-        int threads = Integer.parseInt(mapsEditTextThreads.getText().toString());
+        TabRecycleAdaptor.isWorking = true;
 
-        Maps maps = new Maps(elements,threads);
-        maps.mapsOperations();
-        tabRecycleAdaptor.notifyDataSetChanged();
+
+        if (mapsEditTextElements.getText().toString().length() == 0)
+            mapsEditTextElements.setError("Amount of elements must not be empty");
+
+        if (mapsEditTextThreads.getText().toString().length() == 0)
+            mapsEditTextThreads.setError("Amount of threads must not be empty");
+
+        if (mapsEditTextElements.getText().toString().length() != 0 && mapsEditTextThreads.getText().toString().length() != 0) {
+            TabRecycleAdaptor.isWorking = true;
+            tabRecycleAdaptor.notifyDataSetChanged();
+            int elements = Integer.parseInt(mapsEditTextElements.getText().toString());
+            int threads = Integer.parseInt(mapsEditTextThreads.getText().toString());
+            Maps maps = new Maps(elements, threads);
+            maps.mapsOperations();
+            TabRecycleAdaptor.isWorking = false;
+            tabRecycleAdaptor.notifyDataSetChanged();
+        }
+
 
     }
 

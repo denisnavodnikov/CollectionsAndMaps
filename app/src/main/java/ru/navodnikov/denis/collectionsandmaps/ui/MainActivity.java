@@ -21,16 +21,6 @@ import ru.navodnikov.denis.collectionsandmaps.R;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-//    @Nullable
-//    @BindView(R.id.collections_start_button)
-//    Button collectionsStartButton;
-
-
-//    @Nullable
-//    @BindView(R.id.maps_start_button)
-//    Button mapsStartButton;
-
-
     private int currentPosition = 1;
 
     @Override
@@ -38,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
         setSupportActionBar((Toolbar) findViewById(R.id.tool_bar));
 
         final ViewPager viewPager = findViewById(R.id.view_pager);
