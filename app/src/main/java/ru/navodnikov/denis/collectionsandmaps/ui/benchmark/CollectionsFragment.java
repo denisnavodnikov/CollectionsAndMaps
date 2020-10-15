@@ -55,7 +55,6 @@ public class CollectionsFragment extends Fragment {
     public CollectionsFragment() {
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,7 +103,6 @@ public class CollectionsFragment extends Fragment {
             TabRecycleAdaptor.isWorking = false;
             tabRecycleAdaptor.notifyDataSetChanged();
         }
-
 
     }
 
