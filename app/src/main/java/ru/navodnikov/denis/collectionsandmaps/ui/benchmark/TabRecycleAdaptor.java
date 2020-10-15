@@ -3,6 +3,7 @@ package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import ru.navodnikov.denis.collectionsandmaps.dto.Model;
 
 public class TabRecycleAdaptor extends RecyclerView.Adapter<MyViewHolder> {
 
+    public static boolean isWorking = false;
     private Context context;
     private List<Model> CollectionsOrMapsList;
 
@@ -32,6 +34,13 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if (holder != null) {
             Model model = CollectionsOrMapsList.get(position);
+            if (model.getTime().equals("N/A ms")&&isWorking) {
+                holder.getProgressBarId().setVisibility(ProgressBar.VISIBLE);
+
+            } else {
+                holder.getProgressBarId().setVisibility(ProgressBar.INVISIBLE);
+
+            }
             holder.bindItem(model);
         }
 
