@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         viewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager(), this));
 
-        viewPager.addOnPageChangeListener(this);
+
 
         tabLayout.setupWithViewPager(viewPager);
 

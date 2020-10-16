@@ -8,40 +8,39 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.dto.Model;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
-public class TabRecycleAdaptor extends RecyclerView.Adapter<MyViewHolder> {
+public class TabRecycleAdaptor extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     public static boolean isWorking = false;
     private Context context;
-    private List<Model> CollectionsOrMapsList;
+    private final List<BenchmarkItem> CollectionsOrMapsList;
 
-    public TabRecycleAdaptor(Context context, List<Model> collectionsOrMapsList) {
+    public TabRecycleAdaptor(Context context, List<BenchmarkItem> collectionsOrMapsList) {
         this.context = context;
         this.CollectionsOrMapsList = collectionsOrMapsList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collections_and_maps, parent, false));
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new RecyclerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collections_and_maps, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         if (holder != null) {
-            Model model = CollectionsOrMapsList.get(position);
-            if (model.getTime().equals("N/A ms")&&isWorking) {
-                holder.getProgressBarId().setVisibility(ProgressBar.VISIBLE);
-
+            BenchmarkItem benchmarkItem = CollectionsOrMapsList.get(position);
+            if (benchmarkItem.getTime().equals("N/A ms")&&isWorking) {
+                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
             } else {
-                holder.getProgressBarId().setVisibility(ProgressBar.INVISIBLE);
-
+                holder.getProgressBar().setVisibility(ProgressBar.INVISIBLE);
             }
-            holder.bindItem(model);
+            holder.bindItem(benchmarkItem);
         }
 
 
@@ -52,8 +51,5 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<MyViewHolder> {
         return CollectionsOrMapsList.size();
     }
 
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
+
 }

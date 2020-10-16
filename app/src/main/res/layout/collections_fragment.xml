@@ -1,68 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="88dp">
 
-        <TextView
-            android:id="@+id/collections_text_view_elements"
-            android:text="@string/elements"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_margin="12dp"/>
+    <TextView
+        android:id="@+id/collections_text_view_elements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/elements"
+        android:textSize="14sp"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/collections_edit_text_elements"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/collections_text_view_threads"
-            android:text="@string/threads"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="12dp"/>
 
-        <EditText
-            android:id="@+id/collections_edit_text_elements"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="80dp"
-            android:hint="@string/enter_elements_amount" />
+    <TextView
+        android:id="@+id/collections_text_view_threads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/threads"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/collections_edit_text_threads"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collections_text_view_elements" />
 
-        <EditText
-            android:id="@+id/collections_edit_text_threads"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="80dp"
-            android:hint="@string/enter_threads_amount" />
-        <Button
-            android:id="@+id/collections_start_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="8dp" />
-    </RelativeLayout>
+    <EditText
+        android:id="@+id/collections_edit_text_elements"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:hint="@string/enter_elements_amount"
+        android:inputType="number"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/collections_start_button"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/collections_edit_text_threads"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_threads_amount"
+        android:inputType="number"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/collections_start_button"
+        app:layout_constraintTop_toBottomOf="@+id/collections_edit_text_elements" />
+
+    <Button
+        android:id="@+id/collections_start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="@string/start"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collections_edit_text_threads"
+        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_collections_and_maps" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

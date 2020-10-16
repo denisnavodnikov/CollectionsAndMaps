@@ -1,10 +1,10 @@
 package ru.navodnikov.denis.collectionsandmaps.dto;
 
-public class Model {
+public class BenchmarkItem {
     private String title;
     private String time;
 
-    public Model(String title, String time) {
+    public BenchmarkItem(String title, String time) {
         this.title = title;
         this.time = time;
     }

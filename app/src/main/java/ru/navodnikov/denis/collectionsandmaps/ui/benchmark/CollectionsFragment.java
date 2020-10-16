@@ -1,15 +1,11 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,12 +25,12 @@ import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.core.Collections;
-import ru.navodnikov.denis.collectionsandmaps.dto.Model;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public class CollectionsFragment extends Fragment {
 
-    TabRecycleAdaptor tabRecycleAdaptor;
-    public static List<Model> listOfCollections;
+    private TabRecycleAdaptor tabRecycleAdaptor;
+    public static List<BenchmarkItem> listOfCollections;
 
     private Unbinder unbinder;
     @BindView(R.id.recycler_view)
@@ -70,13 +66,12 @@ public class CollectionsFragment extends Fragment {
         listOfCollections = new ArrayList<>();
 
         for (int i = 0; i < namesCollectionsList.length; i++) {
-            Model model = new Model(namesCollectionsList[i], defaultTime);
-            listOfCollections.add(model);
+            BenchmarkItem benchmarkItem = new BenchmarkItem(namesCollectionsList[i], defaultTime);
+            listOfCollections.add(benchmarkItem);
         }
 
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfCollections);
         recyclerView.setAdapter(tabRecycleAdaptor);
     }
@@ -88,10 +83,10 @@ public class CollectionsFragment extends Fragment {
 
 
         if (collectionsEditTextElements.getText().toString().length() == 0)
-            collectionsEditTextElements.setError("Amount of elements must not be empty");
+            collectionsEditTextElements.setError(getString(R.string.elements_empty));
 
         if (collectionsEditTextThreads.getText().toString().length() == 0)
-            collectionsEditTextThreads.setError("Amount of threads must not be empty");
+            collectionsEditTextThreads.setError(getString(R.string.threads_empty));
 
         if (collectionsEditTextElements.getText().toString().length() != 0 && collectionsEditTextThreads.getText().toString().length() != 0) {
         TabRecycleAdaptor.isWorking = true;

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,12 +26,12 @@ import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.core.Maps;
-import ru.navodnikov.denis.collectionsandmaps.dto.Model;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public class MapsFragment extends Fragment {
 
-    TabRecycleAdaptor tabRecycleAdaptor;
-    public static List<Model> listOfMaps;
+    private TabRecycleAdaptor tabRecycleAdaptor;
+    public static List<BenchmarkItem> listOfMaps;
 
     private Unbinder unbinder;
     @BindView(R.id.recycler_view)
@@ -66,13 +65,12 @@ public class MapsFragment extends Fragment {
 
 
         for (int i = 0; i < namesMapsList.length; i++) {
-            Model model = new Model(namesMapsList[i], defaultTime);
-            listOfMaps.add(model);
+            BenchmarkItem benchmarkItem = new BenchmarkItem(namesMapsList[i], defaultTime);
+            listOfMaps.add(benchmarkItem);
         }
 
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfMaps);
         recyclerView.setAdapter(tabRecycleAdaptor);
 
@@ -87,10 +85,10 @@ public class MapsFragment extends Fragment {
 
 
         if (mapsEditTextElements.getText().toString().length() == 0)
-            mapsEditTextElements.setError("Amount of elements must not be empty");
+            mapsEditTextElements.setError(getString(R.string.elements_empty));
 
         if (mapsEditTextThreads.getText().toString().length() == 0)
-            mapsEditTextThreads.setError("Amount of threads must not be empty");
+            mapsEditTextThreads.setError(getString(R.string.threads_empty));
 
         if (mapsEditTextElements.getText().toString().length() != 0 && mapsEditTextThreads.getText().toString().length() != 0) {
             TabRecycleAdaptor.isWorking = true;
