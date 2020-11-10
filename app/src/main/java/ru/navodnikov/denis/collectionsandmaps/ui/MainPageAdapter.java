@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
+import ru.navodnikov.denis.collectionsandmaps.core.Collections;
+import ru.navodnikov.denis.collectionsandmaps.core.Maps;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsFragment;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.MapsFragment;
 
@@ -28,12 +30,12 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==PAGE_COLLECTIONS){
-            return new CollectionsFragment();
+            return new CollectionsFragment(new Collections());
         }
         else if (position==PAGE_MAPS){
-            return new MapsFragment();
+            return new MapsFragment(new Maps());
         }
-        return new CollectionsFragment();
+        return new CollectionsFragment(new Collections());
 
     }
 

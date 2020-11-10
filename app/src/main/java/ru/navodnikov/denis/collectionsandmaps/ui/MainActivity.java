@@ -19,16 +19,15 @@ import butterknife.OnClick;
 import butterknife.Optional;
 import ru.navodnikov.denis.collectionsandmaps.R;
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends AppCompatActivity {
 
-    private int currentPosition = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.tool_bar));
+        setSupportActionBar(findViewById(R.id.tool_bar));
 
         final ViewPager viewPager = findViewById(R.id.view_pager);
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -42,26 +41,5 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-        if(position==0){
-            currentPosition = 1;
-            Log.d("position", "Position = "+currentPosition);
-        }
-        else if(position==1){
-            currentPosition = 2;
-            Log.d("position", "Position = "+currentPosition);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 }

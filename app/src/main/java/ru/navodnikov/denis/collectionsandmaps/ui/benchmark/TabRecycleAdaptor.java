@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
@@ -16,13 +15,15 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public class TabRecycleAdaptor extends RecyclerView.Adapter<RecyclerViewHolder> {
 
-    public static boolean isWorking = false;
-    private Context context;
-    private final List<BenchmarkItem> CollectionsOrMapsList;
 
-    public TabRecycleAdaptor(Context context, List<BenchmarkItem> collectionsOrMapsList) {
-        this.context = context;
-        this.CollectionsOrMapsList = collectionsOrMapsList;
+    private List<BenchmarkItem> collectionsOrMapsList;
+
+    public void setCollectionsOrMapsList(List<BenchmarkItem> collectionsOrMapsList) {
+        this.collectionsOrMapsList = collectionsOrMapsList;
+    }
+
+    public TabRecycleAdaptor(List<BenchmarkItem> collectionsOrMapsList) {
+        this.collectionsOrMapsList = collectionsOrMapsList;
     }
 
     @NonNull
@@ -34,12 +35,12 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<RecyclerViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         if (holder != null) {
-            BenchmarkItem benchmarkItem = CollectionsOrMapsList.get(position);
-            if (benchmarkItem.getTime().equals("N/A ms")&&isWorking) {
-                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
-            } else {
-                holder.getProgressBar().setVisibility(ProgressBar.INVISIBLE);
-            }
+            BenchmarkItem benchmarkItem = collectionsOrMapsList.get(position);
+//            if (benchmarkItem.getTime().equals("N/A ms")&&isWorking) {
+//                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
+//            } else {
+//                holder.getProgressBar().setVisibility(ProgressBar.INVISIBLE);
+//            }
             holder.bindItem(benchmarkItem);
         }
 
@@ -48,7 +49,7 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<RecyclerViewHolder> 
 
     @Override
     public int getItemCount() {
-        return CollectionsOrMapsList.size();
+        return collectionsOrMapsList.size();
     }
 
 

@@ -34,8 +34,9 @@ public abstract class AbstractFragment extends Fragment {
 
 
     public static List<BenchmarkItem> listOfCollectionsOrMaps;
+    private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor(listOfCollectionsOrMaps);
     private final Benchmarked benchmarked;
-    private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor(getActivity(), listOfCollectionsOrMaps);
+
 
     private Unbinder unbinder;
 
@@ -57,7 +58,6 @@ public abstract class AbstractFragment extends Fragment {
     ToggleButton startButton;
 
 
-
     public AbstractFragment(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
         listOfCollectionsOrMaps = benchmarked.getItems();
@@ -70,24 +70,7 @@ public abstract class AbstractFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.collections_or_maps_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        startButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Log.d("button", "button pressed");
-            if (editTextElements.getText().toString().length() == 0)
-                editTextElements.setError(getString(R.string.elements_empty));
 
-            if (editTextThreads.getText().toString().length() == 0)
-                editTextThreads.setError(getString(R.string.threads_empty));
-
-            if (editTextElements.getText().toString().length() != 0 && editTextThreads.getText().toString().length() != 0) {
-                TabRecycleAdaptor.isWorking = true;
-                tabRecycleAdaptor.notifyDataSetChanged();
-                int elements = Integer.parseInt(editTextElements.getText().toString());
-                int threads = Integer.parseInt(editTextThreads.getText().toString());
-                benchmarkedCount(elements, threads);
-                TabRecycleAdaptor.isWorking = false;
-                tabRecycleAdaptor.notifyDataSetChanged();
-            }
-        });
         return view;
     }
 
@@ -98,10 +81,26 @@ public abstract class AbstractFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), benchmarked.getSpanCount()));
+        tabRecycleAdaptor.setCollectionsOrMapsList(listOfCollectionsOrMaps);
         recyclerView.setAdapter(tabRecycleAdaptor);
+        startButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Log.d("button", "button pressed");
+            if (editTextElements.getText().toString().length() == 0)
+                editTextElements.setError(getString(R.string.elements_empty));
+
+            if (editTextThreads.getText().toString().length() == 0)
+                editTextThreads.setError(getString(R.string.threads_empty));
+
+            if (editTextElements.getText().toString().length() != 0 && editTextThreads.getText().toString().length() != 0) {
+                tabRecycleAdaptor.notifyDataSetChanged();
+                int elements = Integer.parseInt(editTextElements.getText().toString());
+                int threads = Integer.parseInt(editTextThreads.getText().toString());
+                benchmarkedCount(elements, threads);
+                tabRecycleAdaptor.notifyDataSetChanged();
+            }
+        });
     }
 
-    
 
     @Override
     public void onDestroyView() {

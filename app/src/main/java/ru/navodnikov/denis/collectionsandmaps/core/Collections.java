@@ -8,125 +8,139 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsFragment;
 
-public class Collections {
-    public int contOfElements;
-    public int contOfThreads;
+public class Collections implements Benchmarked {
 
 
-    public Collections(int contOfElements, int contOfThreads) {
-        this.contOfElements = contOfElements;
-        this.contOfThreads = contOfThreads;
+    @Override
+    public List<BenchmarkItem> getItems() {
+        List<BenchmarkItem> data = new ArrayList<>();
+        data.add(new BenchmarkItem("Adding to start in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to start in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to start in CopyOnWriteArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to middle in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to middle in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to middle in CopyOnWriteArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to end in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to end in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to end in CopyOnWriteArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Search in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Search in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Search in CopyOnWriteArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from start in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from start in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from start in CopyOnWriteArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from middle in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from middle in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from middle in CopyOnWriteArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from end in ArrayList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from end in LinkedList", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from end in CopyOnWriteArrayList", "N/A ms"));
+        return data;
+
     }
 
+    @Override
+    public int getSpanCount() {
+        return 3;
+    }
 
-    static List<Integer> arrayListAddingStart = new ArrayList<>();
-    static List<Integer> arrayListAddingMiddle = new ArrayList<>();
-    static List<Integer> arrayListAddingEnd = new ArrayList<>();
-    static List<Integer> arrayListSearch = new ArrayList<>();
-    static List<Integer> arrayListRemovingStart = new ArrayList<>();
-    static List<Integer> arrayListRemovingMiddle = new ArrayList<>();
-    static List<Integer> arrayListRemovingEnd = new ArrayList<>();
-
-    static List<Integer> linkedListAddingStart = new LinkedList<>();
-    static List<Integer> linkedListAddingMiddle = new LinkedList<>();
-    static List<Integer> linkedListAddingEnd = new LinkedList<>();
-    static List<Integer> linkedListSearch = new LinkedList<>();
-    static List<Integer> linkedListRemovingStart = new LinkedList<>();
-    static List<Integer> linkedListRemovingMiddle = new LinkedList<>();
-    static List<Integer> linkedListRemovingEnd = new LinkedList<>();
-
-    static List<Integer> CopyOnWriteArrayListAddingStart = new CopyOnWriteArrayList<>();
-    static List<Integer> CopyOnWriteArrayListAddingMiddle = new CopyOnWriteArrayList<>();
-    static List<Integer> CopyOnWriteArrayListAddingEnd = new CopyOnWriteArrayList<>();
-    static List<Integer> CopyOnWriteArrayListSearch = new CopyOnWriteArrayList<>();
-    static List<Integer> CopyOnWriteArrayListRemovingStart = new CopyOnWriteArrayList<>();
-    static List<Integer> CopyOnWriteArrayListRemovingMiddle = new CopyOnWriteArrayList<>();
-    static List<Integer> CopyOnWriteArrayListRemovingEnd = new CopyOnWriteArrayList<>();
-
-
-    public void collectionOperations() {
-
-        ExecutorService threadPool = Executors.newFixedThreadPool(contOfThreads);
-
-        threadPool.execute(() -> {
+    @Override
+    public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int contOfElements) {
+        if(benchmarkItem.getTitle().equals("Adding to start in ArrayList")){
+            List<Integer> arrayListAddingStart = new ArrayList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 arrayListAddingStart.add(0, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(0).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to start in LinkedList")){
+            List<Integer> linkedListAddingStart = new LinkedList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 linkedListAddingStart.add(0, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(1).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to start in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListAddingStart = new CopyOnWriteArrayList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 CopyOnWriteArrayListAddingStart.add(0, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(2).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to middle in ArrayList")){
+            List<Integer> arrayListAddingMiddle = new ArrayList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 arrayListAddingMiddle.add(arrayListAddingMiddle.size() / 2, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(3).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to middle in LinkedList")){
+            List<Integer> linkedListAddingMiddle = new LinkedList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 linkedListAddingMiddle.add(linkedListAddingMiddle.size() / 2, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(4).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to middle in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListAddingMiddle = new CopyOnWriteArrayList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 CopyOnWriteArrayListAddingMiddle.add(CopyOnWriteArrayListAddingMiddle.size() / 2, 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(5).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to end in ArrayList")){
+            List<Integer> arrayListAddingEnd = new ArrayList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 arrayListAddingEnd.add(1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(6).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to end in LinkedList")){
+            List<Integer> linkedListAddingEnd = new LinkedList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 linkedListAddingEnd.add(1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(7).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to end in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListAddingEnd = new CopyOnWriteArrayList<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 CopyOnWriteArrayListAddingEnd.add(1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(8).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Search in ArrayList")){
+            List<Integer> arrayListSearch = new ArrayList<>();
             arrayListSearch.add(1);
             arrayListSearch.add(2);
             arrayListSearch.add(3);
@@ -135,9 +149,11 @@ public class Collections {
                 arrayListSearch.contains(2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(9).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Search in LinkedList")){
+            List<Integer> linkedListSearch = new LinkedList<>();
             linkedListSearch.add(1);
             linkedListSearch.add(2);
             linkedListSearch.add(3);
@@ -146,10 +162,11 @@ public class Collections {
                 linkedListSearch.contains(2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(10).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Search in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListSearch = new CopyOnWriteArrayList<>();
             CopyOnWriteArrayListSearch.add(1);
             CopyOnWriteArrayListSearch.add(2);
             CopyOnWriteArrayListSearch.add(3);
@@ -158,11 +175,11 @@ public class Collections {
                 CopyOnWriteArrayListSearch.contains(2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(11).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from start in ArrayList")){
+            List<Integer> arrayListRemovingStart = new ArrayList<>();
             for (int i = 0; i < contOfElements; i++) {
                 arrayListRemovingStart.add(1);
             }
@@ -171,9 +188,11 @@ public class Collections {
                 arrayListRemovingStart.remove(0);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(12).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from start in LinkedList")){
+            List<Integer> linkedListRemovingStart = new LinkedList<>();
             for (int i = 0; i < contOfElements; i++) {
                 linkedListRemovingStart.add(1);
             }
@@ -182,9 +201,11 @@ public class Collections {
                 linkedListRemovingStart.remove(0);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(13).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from start in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListRemovingStart = new CopyOnWriteArrayList<>();
             for (int i = 0; i < contOfElements; i++) {
                 CopyOnWriteArrayListRemovingStart.add(1);
             }
@@ -193,11 +214,11 @@ public class Collections {
                 CopyOnWriteArrayListRemovingStart.remove(0);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(14).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from middle in ArrayList")){
+            List<Integer> arrayListRemovingMiddle = new ArrayList<>();
             for (int i = 0; i < contOfElements; i++) {
                 arrayListRemovingMiddle.add(1);
             }
@@ -206,9 +227,11 @@ public class Collections {
                 arrayListRemovingMiddle.remove(arrayListRemovingMiddle.size() / 2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(15).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from middle in LinkedList")){
+            List<Integer> linkedListRemovingMiddle = new LinkedList<>();
             for (int i = 0; i < contOfElements; i++) {
                 linkedListRemovingMiddle.add(1);
             }
@@ -217,9 +240,11 @@ public class Collections {
                 linkedListRemovingMiddle.remove(linkedListRemovingMiddle.size() / 2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(16).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from middle in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListRemovingMiddle = new CopyOnWriteArrayList<>();
             for (int i = 0; i < contOfElements; i++) {
                 CopyOnWriteArrayListRemovingMiddle.add(1);
             }
@@ -228,11 +253,11 @@ public class Collections {
                 CopyOnWriteArrayListRemovingMiddle.remove(CopyOnWriteArrayListRemovingMiddle.size() / 2);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(17).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from end in ArrayList")){
+            List<Integer> arrayListRemovingEnd = new ArrayList<>();
             for (int i = 0; i < contOfElements; i++) {
                 arrayListRemovingEnd.add(1);
             }
@@ -241,9 +266,11 @@ public class Collections {
                 arrayListRemovingEnd.remove(arrayListRemovingEnd.size() - 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(18).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from end in LinkedList")){
+            List<Integer> linkedListRemovingEnd = new LinkedList<>();
             for (int i = 0; i < contOfElements; i++) {
                 linkedListRemovingEnd.add(1);
             }
@@ -252,9 +279,11 @@ public class Collections {
                 linkedListRemovingEnd.remove(linkedListRemovingEnd.size() - 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(19).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from end in CopyOnWriteArrayList")){
+            List<Integer> CopyOnWriteArrayListRemovingEnd = new CopyOnWriteArrayList<>();
             for (int i = 0; i < contOfElements; i++) {
                 CopyOnWriteArrayListRemovingEnd.add(1);
             }
@@ -263,18 +292,10 @@ public class Collections {
                 CopyOnWriteArrayListRemovingEnd.remove(CopyOnWriteArrayListRemovingEnd.size() - 1);
             }
             long endTime = System.nanoTime();
-            CollectionsFragment.listOfCollections.get(20).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-
-        threadPool.shutdown();
-        try {
-            threadPool.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
         }
 
-
+        return new BenchmarkItem("нет такого", "99999");
     }
-
 }

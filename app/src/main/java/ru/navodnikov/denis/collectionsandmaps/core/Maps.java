@@ -1,54 +1,64 @@
 package ru.navodnikov.denis.collectionsandmaps.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.MapsFragment;
 
-public class Maps {
-    public int contOfElements;
-    public int contOfThreads;
+public class Maps implements Benchmarked {
 
-    public Maps(int contOfElements, int contOfThreads) {
-        this.contOfElements = contOfElements;
-        this.contOfThreads = contOfThreads;
+
+
+    @Override
+    public List<BenchmarkItem> getItems() {
+        List<BenchmarkItem> data = new ArrayList<>();
+        data.add(new BenchmarkItem("Adding to HashMap", "N/A ms"));
+        data.add(new BenchmarkItem("Adding to TreeMap", "N/A ms"));
+        data.add(new BenchmarkItem("Search in HashMap", "N/A ms"));
+        data.add(new BenchmarkItem("Search in TreeMap", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from HashMap", "N/A ms"));
+        data.add(new BenchmarkItem("Removing from TreeMap", "N/A ms"));
+        return data;
+
     }
 
-    static Map<Integer, Integer> hashMapAdding = new HashMap<>();
-    static Map<Integer, Integer> treeMapAdding = new TreeMap<>();
+    @Override
+    public int getSpanCount() {
+        return 2;
+    }
 
-    static Map<Integer, Integer> hashMapSearching = new HashMap<>();
-    static Map<Integer, Integer> treeMapSearching = new TreeMap<>();
-
-    static Map<Integer, Integer> hashMapRemoving = new HashMap<>();
-    static Map<Integer, Integer> treeMapRemoving = new TreeMap<>();
-
-    public void mapsOperations() {
-        ExecutorService threadPool = Executors.newFixedThreadPool(contOfThreads);
-
-        threadPool.execute(() -> {
+    @Override
+    public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int contOfElements) {
+        if(benchmarkItem.getTitle().equals("Adding to HashMap")){
+            Map<Integer, Integer> hashMapAdding = new HashMap<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 hashMapAdding.put(i, 1);
             }
             long endTime = System.nanoTime();
-            MapsFragment.listOfMaps.get(0).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Adding to TreeMap")){
+            Map<Integer, Integer> treeMapAdding = new TreeMap<>();
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 treeMapAdding.put(i, 1);
             }
             long endTime = System.nanoTime();
-            MapsFragment.listOfMaps.get(1).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Search in HashMap")){
+            Map<Integer, Integer> hashMapSearching = new HashMap<>();
             hashMapSearching.put(0, 1);
             hashMapSearching.put(0, 2);
             hashMapSearching.put(0, 3);
@@ -57,10 +67,11 @@ public class Maps {
                 hashMapSearching.containsValue(2);
             }
             long endTime = System.nanoTime();
-            MapsFragment.listOfMaps.get(2).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Search in HashMap")){
+            Map<Integer, Integer> treeMapSearching = new TreeMap<>();
             treeMapSearching.put(0, 1);
             treeMapSearching.put(0, 2);
             treeMapSearching.put(0, 3);
@@ -69,10 +80,11 @@ public class Maps {
                 treeMapSearching.containsValue(2);
             }
             long endTime = System.nanoTime();
-            MapsFragment.listOfMaps.get(3).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-        threadPool.execute(() -> {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Search in TreeMap")){
+            Map<Integer, Integer> hashMapRemoving = new HashMap<>();
             for (int i = 0; i < contOfElements; i++)
                 hashMapRemoving.put(i, 1);
 
@@ -81,10 +93,24 @@ public class Maps {
                 hashMapRemoving.remove(i);
             }
             long endTime = System.nanoTime();
-            MapsFragment.listOfMaps.get(4).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from HashMap")){
+            Map<Integer, Integer> hashMapRemoving = new HashMap<>();
+            for (int i = 0; i < contOfElements; i++)
+                hashMapRemoving.put(i, 1);
 
-        threadPool.execute(() -> {
+            long startTime = System.nanoTime();
+            for (int i = 0; i < contOfElements; i++) {
+                hashMapRemoving.remove(i);
+            }
+            long endTime = System.nanoTime();
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
+        }
+        else if(benchmarkItem.getTitle().equals("Removing from TreeMap")){
+            Map<Integer, Integer> treeMapRemoving = new TreeMap<>();
             for (int i = 0; i < contOfElements; i++)
                 treeMapRemoving.put(i, 1);
             long startTime = System.nanoTime();
@@ -92,14 +118,9 @@ public class Maps {
                 treeMapRemoving.remove(i);
             }
             long endTime = System.nanoTime();
-            MapsFragment.listOfMaps.get(5).setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-        });
-
-        threadPool.shutdown();
-        try {
-            threadPool.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
+            return benchmarkItem;
         }
+        return new BenchmarkItem("нет такого", "9999");
     }
 }

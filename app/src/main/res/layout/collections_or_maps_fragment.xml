@@ -8,30 +8,30 @@
 
 
     <TextView
-        android:id="@+id/collections_text_view_elements"
+        android:id="@+id/text_view_elements"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/elements"
         android:textSize="14sp"
         android:layout_margin="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/collections_edit_text_elements"
+        app:layout_constraintEnd_toStartOf="@+id/edit_text_elements"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/collections_text_view_threads"
+        android:id="@+id/text_view_threads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/threads"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/collections_edit_text_threads"
+        app:layout_constraintEnd_toStartOf="@+id/edit_text_threads"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collections_text_view_elements" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_elements" />
 
     <EditText
-        android:id="@+id/collections_edit_text_elements"
+        android:id="@+id/edit_text_elements"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -39,26 +39,27 @@
         android:hint="@string/enter_elements_amount"
         android:inputType="number"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/collections_start_button"
+        app:layout_constraintEnd_toStartOf="@+id/start_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/collections_edit_text_threads"
+        android:id="@+id/edit_text_threads"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:hint="@string/enter_threads_amount"
         android:inputType="number"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/collections_start_button"
-        app:layout_constraintTop_toBottomOf="@+id/collections_edit_text_elements" />
+        app:layout_constraintEnd_toStartOf="@+id/start_button"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_elements" />
 
-    <Button
-        android:id="@+id/collections_start_button"
+    <ToggleButton
+        android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:text="@string/start"
+        android:textOff="@string/start"
+        android:textOn="@string/stop"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collections_edit_text_threads"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_threads"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_collections_and_maps" />
 

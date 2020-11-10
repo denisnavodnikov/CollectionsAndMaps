@@ -11,6 +11,7 @@
     <string name="start">start</string>
     <string name="elements_empty">Amount of elements must not be empty</string>
     <string name="threads_empty">Amount of threads must not be empty</string>
+    <string name="stop">stop</string>
 
     <string-array name="tab_title">
         <item>@string/collections</item>
