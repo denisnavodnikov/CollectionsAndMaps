@@ -10,20 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
-public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+public class BenchmarkItemViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView timeOfOperation;
     private final TextView nameOfOperations;
     private final ProgressBar progressBar;
 
 
-    public ProgressBar getProgressBar() {
-        return progressBar;
-    }
 
 
-
-    public RecyclerViewHolder(@NonNull View itemView) {
+    public BenchmarkItemViewHolder(@NonNull View itemView) {
         super(itemView);
         nameOfOperations = itemView.findViewById(R.id.name_of_operation);
         timeOfOperation = itemView.findViewById(R.id.time_of_operation);

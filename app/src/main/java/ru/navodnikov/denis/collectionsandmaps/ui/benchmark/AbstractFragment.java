@@ -1,6 +1,7 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,14 +30,17 @@ import butterknife.Unbinder;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.core.Benchmarked;
 import ru.navodnikov.denis.collectionsandmaps.core.Collections;
+import ru.navodnikov.denis.collectionsandmaps.core.Maps;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 
 public abstract class AbstractFragment extends Fragment {
 
-
-    public static List<BenchmarkItem> listOfCollectionsOrMaps;
-    private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor(listOfCollectionsOrMaps);
-    private final Benchmarked benchmarked;
+    private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
+    private int position;
+    private Benchmarked benchmarked;
+    BenchmarkedViewModel model;
 
 
     private Unbinder unbinder;
@@ -43,8 +48,6 @@ public abstract class AbstractFragment extends Fragment {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindString(R.string.default_time)
-    String defaultTime;
 
     @Nullable
     @BindView(R.id.edit_text_elements)
@@ -58,10 +61,25 @@ public abstract class AbstractFragment extends Fragment {
     ToggleButton startButton;
 
 
-    public AbstractFragment(Benchmarked benchmarked) {
-        this.benchmarked = benchmarked;
-        listOfCollectionsOrMaps = benchmarked.getItems();
+    public AbstractFragment() {
+    }
 
+    public static Fragment newInstance(Benchmarked benchmarked) {
+        if (benchmarked instanceof Collections){
+            AbstractFragment collectionsFragment = new CollectionsFragment();
+            Bundle args = new Bundle();
+            args.putInt("position", 0);
+            collectionsFragment.setArguments(args);
+            return collectionsFragment;
+        }
+        else if (benchmarked instanceof Maps){
+            AbstractFragment mapsFragment = new MapsFragment();
+            Bundle args = new Bundle();
+            args.putInt("position", 1);
+            mapsFragment.setArguments(args);
+            return mapsFragment;
+        }
+        return new CollectionsFragment();
     }
 
 
@@ -70,6 +88,16 @@ public abstract class AbstractFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.collections_or_maps_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            position = bundle.getInt("position");
+        }
+        if(position==0){
+            benchmarked= new Collections();
+        }
+        else if (position==1){
+            benchmarked= new Maps();
+        }
 
         return view;
     }
@@ -79,23 +107,31 @@ public abstract class AbstractFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+//        model = ViewModelProviders.of(this, new BenchmarkedModelFactory(benchmarked))
+//                .get(BenchmarkedViewModel.class);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), benchmarked.getSpanCount()));
-        tabRecycleAdaptor.setCollectionsOrMapsList(listOfCollectionsOrMaps);
+        tabRecycleAdaptor.setCollectionsOrMapsList(benchmarked.getItems());
         recyclerView.setAdapter(tabRecycleAdaptor);
         startButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             Log.d("button", "button pressed");
-            if (editTextElements.getText().toString().length() == 0)
+            String elements = editTextElements.getText().toString();
+            String threads = editTextThreads.getText().toString();
+            if (TextUtils.isEmpty(elements)) {
                 editTextElements.setError(getString(R.string.elements_empty));
+            }
 
-            if (editTextThreads.getText().toString().length() == 0)
+            if (TextUtils.isEmpty(threads)) {
                 editTextThreads.setError(getString(R.string.threads_empty));
+            }
 
-            if (editTextElements.getText().toString().length() != 0 && editTextThreads.getText().toString().length() != 0) {
+            if (!TextUtils.isEmpty(elements) && !TextUtils.isEmpty(threads)) {
                 tabRecycleAdaptor.notifyDataSetChanged();
-                int elements = Integer.parseInt(editTextElements.getText().toString());
-                int threads = Integer.parseInt(editTextThreads.getText().toString());
-                benchmarkedCount(elements, threads);
+                int elementsCount = Integer.parseInt(elements);
+                int threadsCount = Integer.parseInt(threads);
+                benchmarkedCount(elementsCount, threadsCount);
                 tabRecycleAdaptor.notifyDataSetChanged();
             }
         });

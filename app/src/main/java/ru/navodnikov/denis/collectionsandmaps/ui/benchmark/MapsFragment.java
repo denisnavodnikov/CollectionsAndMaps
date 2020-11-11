@@ -36,15 +36,14 @@ public class MapsFragment extends AbstractFragment {
 
 
 
-    public MapsFragment(Benchmarked benchmarked) {
-        super(benchmarked);
+    public MapsFragment() {
     }
 
     @Override
     public void benchmarkedCount(int elements, int threads) {
         Maps maps = new Maps();
         ExecutorService threadPool = Executors.newFixedThreadPool(threads);
-        for (BenchmarkItem benchmarkItem : listOfCollectionsOrMaps) {
+        for (BenchmarkItem benchmarkItem : maps.getItems()) {
            threadPool.execute(() -> maps.measureTime(benchmarkItem, elements));
         }
         threadPool.shutdown();

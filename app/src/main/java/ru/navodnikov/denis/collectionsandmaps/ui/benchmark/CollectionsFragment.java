@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -31,8 +32,7 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 public class CollectionsFragment extends AbstractFragment {
 
 
-    public CollectionsFragment(Benchmarked benchmarked) {
-        super(benchmarked);
+    public CollectionsFragment() {
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CollectionsFragment extends AbstractFragment {
         Collections collections = new Collections();
         ExecutorService threadPool = Executors.newFixedThreadPool(threads);
 
-        for (BenchmarkItem benchmarkItem : listOfCollectionsOrMaps) {
+        for (BenchmarkItem benchmarkItem : collections.getItems()) {
             threadPool.execute(() -> collections.measureTime(benchmarkItem, elements));
         }
         threadPool.shutdown();
