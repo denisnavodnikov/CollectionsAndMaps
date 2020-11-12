@@ -3,6 +3,8 @@ package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +34,9 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
     @Override
     public void onBindViewHolder(@NonNull BenchmarkItemViewHolder holder, int position) {
             BenchmarkItem benchmarkItem = collectionsOrMapsList.get(position);
+            if (benchmarkItem.isProgress()==true){
+                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
+            }
 //            if (benchmarkItem.getTime().equals("N/A ms")&&isWorking) {
 //                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
 //            } else {

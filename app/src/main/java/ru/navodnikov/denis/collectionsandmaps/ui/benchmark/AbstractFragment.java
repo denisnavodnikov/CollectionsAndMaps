@@ -34,13 +34,14 @@ import ru.navodnikov.denis.collectionsandmaps.core.Maps;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
+import ru.navodnikov.denis.collectionsandmaps.ui.MainPageAdapter;
 
 public abstract class AbstractFragment extends Fragment {
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
     private int position;
     private Benchmarked benchmarked;
-    BenchmarkedViewModel model;
+    private BenchmarkedViewModel model;
 
 
     private Unbinder unbinder;
@@ -64,18 +65,18 @@ public abstract class AbstractFragment extends Fragment {
     public AbstractFragment() {
     }
 
-    public static Fragment newInstance(Benchmarked benchmarked) {
-        if (benchmarked instanceof Collections){
+    public static Fragment newInstance(int position) {
+        if (position==0){
             AbstractFragment collectionsFragment = new CollectionsFragment();
             Bundle args = new Bundle();
-            args.putInt("position", 0);
+            args.putInt("position", MainPageAdapter.PAGE_COLLECTIONS);
             collectionsFragment.setArguments(args);
             return collectionsFragment;
         }
-        else if (benchmarked instanceof Maps){
+        else if (position==1){
             AbstractFragment mapsFragment = new MapsFragment();
             Bundle args = new Bundle();
-            args.putInt("position", 1);
+            args.putInt("position", MainPageAdapter.PAGE_MAPS);
             mapsFragment.setArguments(args);
             return mapsFragment;
         }
@@ -92,12 +93,14 @@ public abstract class AbstractFragment extends Fragment {
         if (bundle != null) {
             position = bundle.getInt("position");
         }
-        if(position==0){
+        if(position==MainPageAdapter.PAGE_COLLECTIONS){
             benchmarked= new Collections();
         }
-        else if (position==1){
+        else if (position==MainPageAdapter.PAGE_MAPS){
             benchmarked= new Maps();
         }
+        //        model = ViewModelProviders.of(this, new BenchmarkedModelFactory(benchmarked))
+//                .get(BenchmarkedViewModel.class);
 
         return view;
     }
@@ -107,10 +110,6 @@ public abstract class AbstractFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        model = ViewModelProviders.of(this, new BenchmarkedModelFactory(benchmarked))
-//                .get(BenchmarkedViewModel.class);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), benchmarked.getSpanCount()));
         tabRecycleAdaptor.setCollectionsOrMapsList(benchmarked.getItems());

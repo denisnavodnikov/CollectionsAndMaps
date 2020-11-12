@@ -1,5 +1,7 @@
 package ru.navodnikov.denis.collectionsandmaps.dto;
 
+import android.widget.ProgressBar;
+
 public class BenchmarkItem {
     private String title;
     private String time;
@@ -36,4 +38,6 @@ public class BenchmarkItem {
     public void setProgress(boolean progress) {
         this.progress = progress;
     }
+
+
 }

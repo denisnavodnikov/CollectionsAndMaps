@@ -31,10 +31,10 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==PAGE_COLLECTIONS){
-            return AbstractFragment.newInstance(new Collections());
+            return AbstractFragment.newInstance(PAGE_COLLECTIONS);
         }
         else if (position==PAGE_MAPS){
-            return AbstractFragment.newInstance(new Maps());
+            return AbstractFragment.newInstance(PAGE_MAPS);
         }
         return new CollectionsFragment();
     }

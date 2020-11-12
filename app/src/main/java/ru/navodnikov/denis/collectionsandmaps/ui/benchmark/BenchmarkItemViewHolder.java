@@ -16,8 +16,9 @@ public class BenchmarkItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameOfOperations;
     private final ProgressBar progressBar;
 
-
-
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
 
     public BenchmarkItemViewHolder(@NonNull View itemView) {
         super(itemView);
