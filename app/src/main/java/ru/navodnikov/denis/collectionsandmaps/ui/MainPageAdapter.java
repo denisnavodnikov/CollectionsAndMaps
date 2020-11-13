@@ -14,11 +14,10 @@ import ru.navodnikov.denis.collectionsandmaps.core.Maps;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.AbstractFragment;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsFragment;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.MapsFragment;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Pages;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
 
-    public static final int PAGE_COLLECTIONS = 0;
-    public static final int PAGE_MAPS = 1;
 
     private String[] titles;
 
@@ -30,11 +29,11 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if(position==PAGE_COLLECTIONS){
-            return AbstractFragment.newInstance(PAGE_COLLECTIONS);
+        if(position== Pages.PAGE_COLLECTIONS){
+            return AbstractFragment.newInstance(Pages.PAGE_COLLECTIONS);
         }
-        else if (position==PAGE_MAPS){
-            return AbstractFragment.newInstance(PAGE_MAPS);
+        else if (position==Pages.PAGE_MAPS){
+            return AbstractFragment.newInstance(Pages.PAGE_MAPS);
         }
         return new CollectionsFragment();
     }

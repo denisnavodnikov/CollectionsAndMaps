@@ -5,20 +5,26 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import ru.navodnikov.denis.collectionsandmaps.core.Benchmarked;
+import ru.navodnikov.denis.collectionsandmaps.core.Collections;
+import ru.navodnikov.denis.collectionsandmaps.core.Maps;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Pages;
 
 public class BenchmarkedModelFactory extends ViewModelProvider.NewInstanceFactory {
-    private Benchmarked benchmarked;
+    private int page;
 
-    public BenchmarkedModelFactory(Benchmarked benchmarked) {
+    public BenchmarkedModelFactory(int page) {
         super();
-        this.benchmarked = benchmarked;
+        this.page = page;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == BenchmarkedViewModel.class)
-            return (T) new BenchmarkedViewModel(benchmarked);
+            if (page == Pages.PAGE_COLLECTIONS)
+                return (T) new BenchmarkedViewModel(new Collections());
+            else if (page == Pages.PAGE_MAPS)
+                return (T) new BenchmarkedViewModel(new Maps());
         return null;
     }
 }

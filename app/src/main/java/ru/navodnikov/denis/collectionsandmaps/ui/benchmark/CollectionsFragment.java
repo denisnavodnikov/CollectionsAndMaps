@@ -35,21 +35,6 @@ public class CollectionsFragment extends AbstractFragment {
     public CollectionsFragment() {
     }
 
-    @Override
-    public void benchmarkedCount(int elements, int threads) {
-        Collections collections = new Collections();
-        ExecutorService threadPool = Executors.newFixedThreadPool(threads);
-
-        for (BenchmarkItem benchmarkItem : collections.getItems()) {
-            threadPool.execute(() -> collections.measureTime(benchmarkItem, elements));
-        }
-        threadPool.shutdown();
-        try {
-            threadPool.awaitTermination(20, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 }

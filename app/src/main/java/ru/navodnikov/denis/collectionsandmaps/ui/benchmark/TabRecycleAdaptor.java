@@ -16,10 +16,13 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHolder> {
 
 
-    private final List<BenchmarkItem> collectionsOrMapsList = new ArrayList<>();
 
-    public void setCollectionsOrMapsList(List<BenchmarkItem> collectionsOrMapsList) {
-        collectionsOrMapsList.addAll(collectionsOrMapsList);
+    private final List<BenchmarkItem> items = new ArrayList<>();
+
+    public void setItems(List<BenchmarkItem> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
     }
 
     public TabRecycleAdaptor() {
@@ -33,22 +36,13 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
 
     @Override
     public void onBindViewHolder(@NonNull BenchmarkItemViewHolder holder, int position) {
-            BenchmarkItem benchmarkItem = collectionsOrMapsList.get(position);
-            if (benchmarkItem.isProgress()==true){
-                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
-            }
-//            if (benchmarkItem.getTime().equals("N/A ms")&&isWorking) {
-//                holder.getProgressBar().setVisibility(ProgressBar.VISIBLE);
-//            } else {
-//                holder.getProgressBar().setVisibility(ProgressBar.INVISIBLE);
-//            }
+            BenchmarkItem benchmarkItem = items.get(position);
             holder.bindItem(benchmarkItem);
-
     }
 
     @Override
     public int getItemCount() {
-        return collectionsOrMapsList.size();
+        return items.size();
     }
 
 

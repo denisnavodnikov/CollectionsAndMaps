@@ -39,20 +39,6 @@ public class MapsFragment extends AbstractFragment {
     public MapsFragment() {
     }
 
-    @Override
-    public void benchmarkedCount(int elements, int threads) {
-        Maps maps = new Maps();
-        ExecutorService threadPool = Executors.newFixedThreadPool(threads);
-        for (BenchmarkItem benchmarkItem : maps.getItems()) {
-           threadPool.execute(() -> maps.measureTime(benchmarkItem, elements));
-        }
-        threadPool.shutdown();
-        try {
-            threadPool.awaitTermination(20, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 }

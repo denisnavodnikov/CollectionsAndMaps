@@ -10,6 +10,10 @@ public class BenchmarkedViewModel extends ViewModel {
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
     }
+
+    public Benchmarked getBenchmarked() {
+        return benchmarked;
+    }
 }
 
 
