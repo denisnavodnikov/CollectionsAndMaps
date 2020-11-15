@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -97,7 +98,7 @@ public abstract class AbstractFragment extends Fragment implements CompoundButto
             benchmarkedModelFactory = new BenchmarkedModelFactory(Pages.PAGE_MAPS);
         }
 
-        model = ViewModelProviders.of(getActivity(), benchmarkedModelFactory)
+        model = ViewModelProviders.of(this, benchmarkedModelFactory)
                 .get(BenchmarkedViewModel.class);
 
 
@@ -139,23 +140,50 @@ public abstract class AbstractFragment extends Fragment implements CompoundButto
             editTextThreads.setError(getString(R.string.threads_empty));
         }
 
-        if (!TextUtils.isEmpty(elements) && !TextUtils.isEmpty(threads)) {
+
+
+        if (!TextUtils.isEmpty(elements) && !TextUtils.isEmpty(threads) && isChecked) {
 
             int elementsCount = Integer.parseInt(elements);
             int threadsCount = Integer.parseInt(threads);
-            ExecutorService threadPool = Executors.newFixedThreadPool(threadsCount);
 
-            for (BenchmarkItem benchmarkItem : model.getBenchmarked().getItems()) {
-                threadPool.execute(() -> model.getBenchmarked().measureTime(benchmarkItem, elementsCount));
+            for (BenchmarkItem benchmarkItem : tabRecycleAdaptor.getItems()) {
+                benchmarkItem.setProgress(true);
             }
-            threadPool.shutdown();
+            tabRecycleAdaptor.notifyDataSetChanged();
+
+            ExecutorService threadPool = Executors.newFixedThreadPool(threadsCount);
+            CountDownLatch downLatch = new CountDownLatch(threadsCount);
+
+            for (BenchmarkItem benchmarkItem : tabRecycleAdaptor.getItems()) {
+
+                threadPool.execute(() -> model.getBenchmarked().measureTime(benchmarkItem, elementsCount));
+                downLatch.countDown();
+            }
             try {
-                threadPool.awaitTermination(20, TimeUnit.SECONDS);
+                downLatch.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
+            threadPool.execute(() -> getActivity().runOnUiThread(() -> {
+                for (BenchmarkItem benchmarkItem : tabRecycleAdaptor.getItems()) {
+                    benchmarkItem.setProgress(false);
+                }
+                buttonView.setChecked(false);
+                tabRecycleAdaptor.notifyDataSetChanged();
+            }));
+
+
+            threadPool.shutdown();
+
+
             tabRecycleAdaptor.notifyDataSetChanged();
+
+
         }
+
     }
+
+
 }

@@ -1,6 +1,5 @@
 package ru.navodnikov.denis.collectionsandmaps.dto;
 
-import android.widget.ProgressBar;
 
 public class BenchmarkItem {
     private String title;

@@ -19,6 +19,10 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
 
     private final List<BenchmarkItem> items = new ArrayList<>();
 
+    public List<BenchmarkItem> getItems() {
+        return items;
+    }
+
     public void setItems(List<BenchmarkItem> items) {
         this.items.clear();
         this.items.addAll(items);
