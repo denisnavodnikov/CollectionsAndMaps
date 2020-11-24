@@ -1,19 +1,14 @@
 package ru.navodnikov.denis.collectionsandmaps.ui;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.core.Collections;
-import ru.navodnikov.denis.collectionsandmaps.core.Maps;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.AbstractFragment;
-import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsFragment;
-import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.MapsFragment;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Pages;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
@@ -22,7 +17,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     private String[] titles;
 
     public MainPageAdapter(@NonNull FragmentManager fm, Context context) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         titles = context.getResources().getStringArray(R.array.tab_title);
     }
 
@@ -35,7 +30,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
         else if (position==Pages.PAGE_MAPS){
             return AbstractFragment.newInstance(Pages.PAGE_MAPS);
         }
-        return new CollectionsFragment();
+        return new AbstractFragment();
     }
 
     @Override

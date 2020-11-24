@@ -1,23 +1,12 @@
 package ru.navodnikov.denis.collectionsandmaps.ui;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabLayout;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Optional;
 import ru.navodnikov.denis.collectionsandmaps.R;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,17 +15,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setSupportActionBar(findViewById(R.id.tool_bar));
-
         final ViewPager viewPager = findViewById(R.id.view_pager);
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         viewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager(), this));
-
-
-
         tabLayout.setupWithViewPager(viewPager);
-
 
     }
 

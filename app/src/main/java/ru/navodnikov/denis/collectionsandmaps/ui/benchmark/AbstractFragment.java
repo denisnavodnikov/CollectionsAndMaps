@@ -1,7 +1,6 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,24 +16,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.core.Benchmarked;
-import ru.navodnikov.denis.collectionsandmaps.core.Collections;
-import ru.navodnikov.denis.collectionsandmaps.core.Maps;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
-import ru.navodnikov.denis.collectionsandmaps.ui.MainPageAdapter;
 
-public abstract class AbstractFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class AbstractFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, BenchmarkedViewModel.CallbackFragment {
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
     private int position;
@@ -59,25 +49,48 @@ public abstract class AbstractFragment extends Fragment implements CompoundButto
     @BindView(R.id.start_button)
     ToggleButton startButton;
 
+    public BenchmarkedViewModel getModel() {
+        return model;
+    }
+
+    public void setModel(BenchmarkedViewModel model) {
+        this.model = model;
+    }
 
     public AbstractFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            position = bundle.getInt("position");
+        }
+
+        benchmarkedModelFactory = new BenchmarkedModelFactory(position);
+
+        model = ViewModelProviders.of(this, benchmarkedModelFactory)
+                .get(BenchmarkedViewModel.class);
+        model.registerCallback(this);
+    }
+
     public static Fragment newInstance(int position) {
         if (position == 0) {
-            AbstractFragment collectionsFragment = new CollectionsFragment();
+            AbstractFragment collectionsFragment = new AbstractFragment();
             Bundle args = new Bundle();
             args.putInt("position", Pages.PAGE_COLLECTIONS);
             collectionsFragment.setArguments(args);
             return collectionsFragment;
         } else if (position == 1) {
-            AbstractFragment mapsFragment = new MapsFragment();
+            AbstractFragment mapsFragment = new AbstractFragment();
             Bundle args = new Bundle();
             args.putInt("position", Pages.PAGE_MAPS);
             mapsFragment.setArguments(args);
             return mapsFragment;
         }
-        return new CollectionsFragment();
+        return new AbstractFragment();
     }
 
 
@@ -88,20 +101,6 @@ public abstract class AbstractFragment extends Fragment implements CompoundButto
         unbinder = ButterKnife.bind(this, view);
 
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            position = bundle.getInt("position");
-        }
-        if (position == Pages.PAGE_COLLECTIONS) {
-            benchmarkedModelFactory = new BenchmarkedModelFactory(Pages.PAGE_COLLECTIONS);
-        } else if (position == Pages.PAGE_MAPS) {
-            benchmarkedModelFactory = new BenchmarkedModelFactory(Pages.PAGE_MAPS);
-        }
-
-        model = ViewModelProviders.of(this, benchmarkedModelFactory)
-                .get(BenchmarkedViewModel.class);
-
-
         return view;
     }
 
@@ -109,14 +108,15 @@ public abstract class AbstractFragment extends Fragment implements CompoundButto
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tabRecycleAdaptor.setItems(model.getBenchmarked().getItems());
+        tabRecycleAdaptor.setItems(model.getItems());
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), model.getBenchmarked().getSpanCount()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), model.getSpanCount()));
 
         recyclerView.setAdapter(tabRecycleAdaptor);
 
         startButton.setOnCheckedChangeListener(this);
+
 
     }
 
@@ -130,60 +130,27 @@ public abstract class AbstractFragment extends Fragment implements CompoundButto
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         Log.d("button", "button pressed");
+
         String elements = editTextElements.getText().toString();
         String threads = editTextThreads.getText().toString();
-        if (TextUtils.isEmpty(elements)) {
-            editTextElements.setError(getString(R.string.elements_empty));
-        }
+        model.onButtonClicked(elements, threads, isChecked);
 
-        if (TextUtils.isEmpty(threads)) {
-            editTextThreads.setError(getString(R.string.threads_empty));
-        }
-
-
-
-        if (!TextUtils.isEmpty(elements) && !TextUtils.isEmpty(threads) && isChecked) {
-
-            int elementsCount = Integer.parseInt(elements);
-            int threadsCount = Integer.parseInt(threads);
-
-            for (BenchmarkItem benchmarkItem : tabRecycleAdaptor.getItems()) {
-                benchmarkItem.setProgress(true);
-            }
-            tabRecycleAdaptor.notifyDataSetChanged();
-
-            ExecutorService threadPool = Executors.newFixedThreadPool(threadsCount);
-            CountDownLatch downLatch = new CountDownLatch(threadsCount);
-
-            for (BenchmarkItem benchmarkItem : tabRecycleAdaptor.getItems()) {
-
-                threadPool.execute(() -> model.getBenchmarked().measureTime(benchmarkItem, elementsCount));
-                downLatch.countDown();
-            }
-            try {
-                downLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            threadPool.execute(() -> getActivity().runOnUiThread(() -> {
-                for (BenchmarkItem benchmarkItem : tabRecycleAdaptor.getItems()) {
-                    benchmarkItem.setProgress(false);
-                }
-                buttonView.setChecked(false);
-                tabRecycleAdaptor.notifyDataSetChanged();
-            }));
-
-
-            threadPool.shutdown();
-
-
-            tabRecycleAdaptor.notifyDataSetChanged();
-
-
-        }
 
     }
 
 
+    @Override
+    public void setError(String error) {
+        if (error.equals(getString(R.string.elements_empty))) {
+            editTextElements.setError(getString(R.string.elements_empty));
+        }
+        if (error.equals(getString(R.string.threads_empty))) {
+            editTextThreads.setError(getString(R.string.threads_empty));
+        }
+    }
+
+    @Override
+    public void updateAdapter(boolean isProgress, BenchmarkItem benchmarkItem) {
+        tabRecycleAdaptor.setProgressVisible(isProgress, benchmarkItem);
+    }
 }

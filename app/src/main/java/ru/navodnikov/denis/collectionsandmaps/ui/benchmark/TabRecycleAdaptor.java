@@ -10,23 +10,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHolder> {
 
 
-
     private final List<BenchmarkItem> items = new ArrayList<>();
 
-    public List<BenchmarkItem> getItems() {
-        return items;
-    }
 
     public void setItems(List<BenchmarkItem> items) {
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public void updateItem(BenchmarkItem benchmarkItem) {
+        for (BenchmarkItem item : items) {
+            if (benchmarkItem.getTitle().equals(item.getTitle())){
+                items.set(items.indexOf(item), benchmarkItem);
+            }
+        }
     }
 
     public TabRecycleAdaptor() {
@@ -40,13 +45,25 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
 
     @Override
     public void onBindViewHolder(@NonNull BenchmarkItemViewHolder holder, int position) {
-            BenchmarkItem benchmarkItem = items.get(position);
-            holder.bindItem(benchmarkItem);
+        holder.bindItem(items.get(position));
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void setProgressVisible(boolean isProgress, BenchmarkItem benchmarkItem){
+
+        for (int i = 0; i < items.size(); i++) {
+            if(items.get(i).getTitle().equals(benchmarkItem.getTitle())){
+                items.set(i, benchmarkItem);
+                items.get(i).setProgress(isProgress);
+                notifyItemChanged(i);
+            }
+        }
+
+
     }
 
 
