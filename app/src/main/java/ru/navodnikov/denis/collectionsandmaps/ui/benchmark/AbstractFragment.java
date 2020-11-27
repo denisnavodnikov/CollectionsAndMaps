@@ -1,6 +1,8 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +25,14 @@ import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
+import ru.navodnikov.denis.collectionsandmaps.dto.CallbackFragment;
 
-public class AbstractFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, BenchmarkedViewModel.CallbackFragment {
+public class AbstractFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
     private int position;
     private BenchmarkedViewModel model;
-    private BenchmarkedModelFactory benchmarkedModelFactory;
+    private Handler modelHandler = new Handler(Looper.getMainLooper());
 
 
     private Unbinder unbinder;
@@ -69,9 +72,8 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
             position = bundle.getInt("position");
         }
 
-        benchmarkedModelFactory = new BenchmarkedModelFactory(position);
 
-        model = ViewModelProviders.of(this, benchmarkedModelFactory)
+        model = ViewModelProviders.of(this, new BenchmarkedModelFactory(position))
                 .get(BenchmarkedViewModel.class);
         model.registerCallback(this);
     }
@@ -80,13 +82,13 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
         if (position == 0) {
             AbstractFragment collectionsFragment = new AbstractFragment();
             Bundle args = new Bundle();
-            args.putInt("position", Pages.PAGE_COLLECTIONS);
+            args.putInt("position", Constants.PAGE_COLLECTIONS);
             collectionsFragment.setArguments(args);
             return collectionsFragment;
         } else if (position == 1) {
             AbstractFragment mapsFragment = new AbstractFragment();
             Bundle args = new Bundle();
-            args.putInt("position", Pages.PAGE_MAPS);
+            args.putInt("position", Constants.PAGE_MAPS);
             mapsFragment.setArguments(args);
             return mapsFragment;
         }
@@ -140,17 +142,37 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
 
 
     @Override
-    public void setError(String error) {
-        if (error.equals(getString(R.string.elements_empty))) {
+    public void setError(int error) {
+        if (error == Constants.ERROR_EMPTY_ELEMENTS) {
             editTextElements.setError(getString(R.string.elements_empty));
         }
-        if (error.equals(getString(R.string.threads_empty))) {
+        if (error == Constants.ERROR_EMPTY_THREADS) {
             editTextThreads.setError(getString(R.string.threads_empty));
+        }
+        if (error == Constants.ERROR_ZERO_ELEMENTS) {
+            editTextElements.setError(getString(R.string.elements_zero));
+        }
+        if (error == Constants.ERROR_ZERO_THREADS) {
+            editTextThreads.setError(getString(R.string.threads_zero));
         }
     }
 
     @Override
-    public void updateAdapter(boolean isProgress, BenchmarkItem benchmarkItem) {
-        tabRecycleAdaptor.setProgressVisible(isProgress, benchmarkItem);
+    public void updateTabRecycleAdaptor(BenchmarkItem benchmarkItem) {
+        modelHandler.post(() -> tabRecycleAdaptor.updateItem(benchmarkItem));
+
+    }
+
+    @Override
+    public void setProgress(boolean isProgress) {
+        if (isProgress) {
+            tabRecycleAdaptor.setProgressBar(isProgress);
+            tabRecycleAdaptor.notifyDataSetChanged();
+        } else {
+            modelHandler.post(() -> {
+                tabRecycleAdaptor.setProgressBar(isProgress);
+                startButton.setChecked(false);
+            });
+        }
     }
 }

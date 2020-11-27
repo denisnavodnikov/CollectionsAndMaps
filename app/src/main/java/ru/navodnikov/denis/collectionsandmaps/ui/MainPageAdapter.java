@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.AbstractFragment;
-import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Pages;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Constants;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
 
@@ -24,13 +23,13 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if(position== Pages.PAGE_COLLECTIONS){
-            return AbstractFragment.newInstance(Pages.PAGE_COLLECTIONS);
+        if(position== Constants.PAGE_COLLECTIONS){
+            return AbstractFragment.newInstance(Constants.PAGE_COLLECTIONS);
         }
-        else if (position==Pages.PAGE_MAPS){
-            return AbstractFragment.newInstance(Pages.PAGE_MAPS);
+        else if (position== Constants.PAGE_MAPS){
+            return AbstractFragment.newInstance(Constants.PAGE_MAPS);
         }
-        return new AbstractFragment();
+        return null;
     }
 
     @Override

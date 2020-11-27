@@ -10,7 +10,9 @@
     <string name="enter_threads_amount">Enter threads amount</string>
     <string name="start">start</string>
     <string name="elements_empty">Amount of elements must not be empty</string>
+    <string name="elements_zero">Amount of elements must not be zero</string>
     <string name="threads_empty">Amount of threads must not be empty</string>
+    <string name="threads_zero">Amount of threads must not be zero</string>
     <string name="stop">stop</string>
 
     <string-array name="tab_title">

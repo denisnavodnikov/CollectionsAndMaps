@@ -28,11 +28,9 @@ public class BenchmarkItemViewHolder extends RecyclerView.ViewHolder {
 
         nameOfOperations.setText(item.getTitle());
         timeOfOperation.setText(String.valueOf(item.getTime()));
-        if (item.isProgress()){
-            progressBar.animate().alpha(1f).start();
-        }
-        else if (!item.isProgress()){
-            progressBar.animate().alpha(0f).start();
-        }
+
+        float alphaConst = (item.isProgress()) ? 1f : 0f;
+        progressBar.animate().alpha(alphaConst).start();
+
     }
 }

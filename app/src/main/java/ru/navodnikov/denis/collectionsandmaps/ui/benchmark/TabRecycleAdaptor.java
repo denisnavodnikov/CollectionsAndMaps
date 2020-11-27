@@ -26,13 +26,6 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
         notifyDataSetChanged();
     }
 
-    public void updateItem(BenchmarkItem benchmarkItem) {
-        for (BenchmarkItem item : items) {
-            if (benchmarkItem.getTitle().equals(item.getTitle())){
-                items.set(items.indexOf(item), benchmarkItem);
-            }
-        }
-    }
 
     public TabRecycleAdaptor() {
     }
@@ -53,18 +46,23 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
         return items.size();
     }
 
-    public void setProgressVisible(boolean isProgress, BenchmarkItem benchmarkItem){
+    public void updateItem(BenchmarkItem benchmarkItem){
 
         for (int i = 0; i < items.size(); i++) {
             if(items.get(i).getTitle().equals(benchmarkItem.getTitle())){
                 items.set(i, benchmarkItem);
-                items.get(i).setProgress(isProgress);
                 notifyItemChanged(i);
             }
         }
 
-
     }
 
-
+    public void setProgressBar(boolean isProgress) {
+        for (int i = 0; i < items.size(); i++){
+            BenchmarkItem benchmarkItem = items.get(i);
+            benchmarkItem.setProgress(isProgress);
+            items.set(i, benchmarkItem);
+        }
+        notifyDataSetChanged();
+    }
 }
