@@ -9,7 +9,7 @@ import ru.navodnikov.denis.collectionsandmaps.core.Maps;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Constants;
 
 public class BenchmarkedModelFactory extends ViewModelProvider.NewInstanceFactory {
-    private int page;
+    private final int page;
 
     public BenchmarkedModelFactory(int page) {
         super();

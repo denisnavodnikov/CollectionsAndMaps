@@ -14,6 +14,8 @@
     <string name="threads_empty">Amount of threads must not be empty</string>
     <string name="threads_zero">Amount of threads must not be zero</string>
     <string name="stop">stop</string>
+    <string name="ms">\" ms\"</string>
+    <string name="position">position</string>
 
     <string-array name="tab_title">
         <item>@string/collections</item>

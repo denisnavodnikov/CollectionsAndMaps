@@ -26,13 +26,14 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 import ru.navodnikov.denis.collectionsandmaps.dto.CallbackFragment;
+import ru.navodnikov.denis.collectionsandmaps.ui.AppContext;
 
-public class AbstractFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
+public class CollectionsOrMapsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
     private int position;
     private BenchmarkedViewModel model;
-    private Handler modelHandler = new Handler(Looper.getMainLooper());
+    private final Handler modelHandler = new Handler(Looper.getMainLooper());
 
 
     private Unbinder unbinder;
@@ -60,7 +61,7 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
         this.model = model;
     }
 
-    public AbstractFragment() {
+    public CollectionsOrMapsFragment() {
     }
 
     @Override
@@ -69,7 +70,7 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            position = bundle.getInt("position");
+            position = bundle.getInt(getString(R.string.position));
         }
 
 
@@ -79,20 +80,12 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
     }
 
     public static Fragment newInstance(int position) {
-        if (position == 0) {
-            AbstractFragment collectionsFragment = new AbstractFragment();
-            Bundle args = new Bundle();
-            args.putInt("position", Constants.PAGE_COLLECTIONS);
-            collectionsFragment.setArguments(args);
-            return collectionsFragment;
-        } else if (position == 1) {
-            AbstractFragment mapsFragment = new AbstractFragment();
-            Bundle args = new Bundle();
-            args.putInt("position", Constants.PAGE_MAPS);
-            mapsFragment.setArguments(args);
-            return mapsFragment;
-        }
-        return new AbstractFragment();
+
+        CollectionsOrMapsFragment fragment = new CollectionsOrMapsFragment();
+        Bundle args = new Bundle();
+        args.putInt(AppContext.getContext().getResources().getString(R.string.position), position);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -142,37 +135,46 @@ public class AbstractFragment extends Fragment implements CompoundButton.OnCheck
 
 
     @Override
-    public void setError(int error) {
+    public void setErrorToElements(int error) {
         if (error == Constants.ERROR_EMPTY_ELEMENTS) {
             editTextElements.setError(getString(R.string.elements_empty));
+            startButton.setChecked(false);
         }
-        if (error == Constants.ERROR_EMPTY_THREADS) {
-            editTextThreads.setError(getString(R.string.threads_empty));
-        }
+
         if (error == Constants.ERROR_ZERO_ELEMENTS) {
             editTextElements.setError(getString(R.string.elements_zero));
+            startButton.setChecked(false);
         }
-        if (error == Constants.ERROR_ZERO_THREADS) {
-            editTextThreads.setError(getString(R.string.threads_zero));
-        }
+
     }
 
     @Override
-    public void updateTabRecycleAdaptor(BenchmarkItem benchmarkItem) {
+    public void setErrorToThreads(int error) {
+        if (error == Constants.ERROR_EMPTY_THREADS) {
+            editTextThreads.setError(getString(R.string.threads_empty));
+            startButton.setChecked(false);
+        }
+        if (error == Constants.ERROR_ZERO_THREADS) {
+            editTextThreads.setError(getString(R.string.threads_zero));
+
+        }
+
+    }
+
+    @Override
+    public void setCheckedButton(boolean isChecked) {
+        modelHandler.post(() -> startButton.setChecked(isChecked));
+
+    }
+
+    @Override
+    public void updateItemInAdaptor(BenchmarkItem benchmarkItem) {
         modelHandler.post(() -> tabRecycleAdaptor.updateItem(benchmarkItem));
 
     }
 
     @Override
     public void setProgress(boolean isProgress) {
-        if (isProgress) {
-            tabRecycleAdaptor.setProgressBar(isProgress);
-            tabRecycleAdaptor.notifyDataSetChanged();
-        } else {
-            modelHandler.post(() -> {
-                tabRecycleAdaptor.setProgressBar(isProgress);
-                startButton.setChecked(false);
-            });
-        }
+        modelHandler.post(() -> tabRecycleAdaptor.setProgressBar(isProgress));
     }
 }

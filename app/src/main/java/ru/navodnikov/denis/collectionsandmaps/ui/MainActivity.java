@@ -1,12 +1,13 @@
 package ru.navodnikov.denis.collectionsandmaps.ui;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
+
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
     }
-
 
 
 }

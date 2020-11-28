@@ -2,11 +2,9 @@ package ru.navodnikov.denis.collectionsandmaps.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
@@ -36,9 +34,7 @@ public class Maps implements Benchmarked {
 
         Map<Integer, Integer> mapOfItems;
 
-        if (benchmarkItem.getNumberOfOperations() == 0
-                || benchmarkItem.getNumberOfOperations() == 2
-                || benchmarkItem.getNumberOfOperations() == 4) {
+        if (benchmarkItem.getNumberOfOperations() % 2 == 0) {
             mapOfItems = new HashMap<>();
         } else {
             mapOfItems = new TreeMap<>();
@@ -52,55 +48,31 @@ public class Maps implements Benchmarked {
         }
 
 
-        if (benchmarkItem.getNumberOfOperations() == 0) {
+        if (benchmarkItem.getNumberOfOperations() < 2) {
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 mapOfItems.put(i, 1);
             }
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-            return benchmarkItem;
-        } else if (benchmarkItem.getNumberOfOperations() == 1) {
-            long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                mapOfItems.put(i, 1);
-            }
-            long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-            return benchmarkItem;
-        } else if (benchmarkItem.getNumberOfOperations() == 2) {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+
+        } else if (benchmarkItem.getNumberOfOperations() > 1 && benchmarkItem.getNumberOfOperations() < 4) {
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 mapOfItems.containsValue(2);
             }
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-            return benchmarkItem;
-        } else if (benchmarkItem.getNumberOfOperations() == 3) {
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+
+        } else if (benchmarkItem.getNumberOfOperations() > 3) {
             long startTime = System.nanoTime();
             for (int i = 0; i < contOfElements; i++) {
                 mapOfItems.remove(i);
             }
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-            return benchmarkItem;
-        } else if (benchmarkItem.getNumberOfOperations() == 4) {
-            long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                mapOfItems.remove(i);
-            }
-            long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-            return benchmarkItem;
-        } else if (benchmarkItem.getNumberOfOperations() == 5) {
-            long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                mapOfItems.remove(i);
-            }
-            long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + " ms"));
-            return benchmarkItem;
+            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+
         }
-        return new BenchmarkItem("нет такого", "9999", 0);
+        return benchmarkItem;
     }
 }

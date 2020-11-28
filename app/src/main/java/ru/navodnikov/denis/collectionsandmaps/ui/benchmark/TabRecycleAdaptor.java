@@ -3,7 +3,6 @@ package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,10 +45,10 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
         return items.size();
     }
 
-    public void updateItem(BenchmarkItem benchmarkItem){
+    public void updateItem(BenchmarkItem benchmarkItem) {
 
         for (int i = 0; i < items.size(); i++) {
-            if(items.get(i).getTitle().equals(benchmarkItem.getTitle())){
+            if (items.get(i).getTitle().equals(benchmarkItem.getTitle())) {
                 items.set(i, benchmarkItem);
                 notifyItemChanged(i);
             }
@@ -58,7 +57,7 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
     }
 
     public void setProgressBar(boolean isProgress) {
-        for (int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
             BenchmarkItem benchmarkItem = items.get(i);
             benchmarkItem.setProgress(isProgress);
             items.set(i, benchmarkItem);
