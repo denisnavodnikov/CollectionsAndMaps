@@ -26,7 +26,6 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 import ru.navodnikov.denis.collectionsandmaps.dto.CallbackFragment;
-import ru.navodnikov.denis.collectionsandmaps.ui.AppContext;
 
 public class BenchmarkFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
 
@@ -70,7 +69,7 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            position = bundle.getInt(Constants.position);
+            position = bundle.getInt(Constants.POSITION);
         }
 
 
@@ -83,7 +82,7 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
         BenchmarkFragment fragment = new BenchmarkFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.position, position);
+        args.putInt(Constants.POSITION, position);
         fragment.setArguments(args);
         return fragment;
     }
