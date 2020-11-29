@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps.core;
+package ru.navodnikov.denis.collectionsandmaps.models;
 
 import java.util.List;
 

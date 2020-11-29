@@ -16,7 +16,6 @@ public class BenchmarkItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameOfOperations;
     private final ProgressBar progressBar;
 
-
     public BenchmarkItemViewHolder(@NonNull View itemView) {
         super(itemView);
         nameOfOperations = itemView.findViewById(R.id.name_of_operation);
@@ -25,10 +24,8 @@ public class BenchmarkItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindItem(BenchmarkItem item) {
-
         nameOfOperations.setText(item.getTitle());
         timeOfOperation.setText(String.valueOf(item.getTime()));
         progressBar.animate().alpha(item.isProgress() ? 1f : 0f).start();
-
     }
 }

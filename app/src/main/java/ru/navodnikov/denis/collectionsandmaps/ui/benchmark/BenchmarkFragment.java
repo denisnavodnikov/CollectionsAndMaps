@@ -23,20 +23,16 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
-import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedModelFactory;
-import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
-import ru.navodnikov.denis.collectionsandmaps.dto.CallbackFragment;
 
 public class BenchmarkFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
+    private static final String POSITION = "position";
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
-    private int position;
-    private BenchmarkedViewModel model;
     private final Handler modelHandler = new Handler(Looper.getMainLooper());
 
-
+    private BenchmarkedViewModel model;
+    private int position;
     private Unbinder unbinder;
-
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -52,12 +48,12 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     @BindView(R.id.start_button)
     ToggleButton startButton;
 
-    public BenchmarkedViewModel getModel() {
-        return model;
-    }
-
-    public void setModel(BenchmarkedViewModel model) {
-        this.model = model;
+    public static Fragment newInstance(int position) {
+        final BenchmarkFragment fragment = new BenchmarkFragment();
+        final Bundle args = new Bundle();
+        args.putInt(POSITION, position);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     public BenchmarkFragment() {
@@ -67,24 +63,14 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle = this.getArguments();
+        final Bundle bundle = this.getArguments();
         if (bundle != null) {
-            position = bundle.getInt(Constants.POSITION);
+            position = bundle.getInt(POSITION);
         }
-
 
         model = ViewModelProviders.of(this, new BenchmarkedModelFactory(position))
                 .get(BenchmarkedViewModel.class);
         model.registerCallback(this);
-    }
-
-    public static Fragment newInstance(int position) {
-
-        BenchmarkFragment fragment = new BenchmarkFragment();
-        Bundle args = new Bundle();
-        args.putInt(Constants.POSITION, position);
-        fragment.setArguments(args);
-        return fragment;
     }
 
 
@@ -93,11 +79,8 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.collections_or_maps_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-
         return view;
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -110,8 +93,6 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
         recyclerView.setAdapter(tabRecycleAdaptor);
 
         startButton.setOnCheckedChangeListener(this);
-
-
     }
 
 
@@ -128,15 +109,11 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
         String elements = editTextElements.getText().toString();
         String threads = editTextThreads.getText().toString();
         model.onButtonClicked(elements, threads, isChecked);
-
-
     }
-
 
     @Override
     public void setErrorToElements(int error) {
         editTextElements.setError(getString(error));
-
     }
 
     @Override
@@ -147,13 +124,11 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     @Override
     public void setCheckedButton(boolean isChecked) {
         modelHandler.post(() -> startButton.setChecked(isChecked));
-
     }
 
     @Override
     public void updateItemInAdaptor(BenchmarkItem benchmarkItem) {
         modelHandler.post(() -> tabRecycleAdaptor.updateItem(benchmarkItem));
-
     }
 
     @Override

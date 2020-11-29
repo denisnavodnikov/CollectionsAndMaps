@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/text_view_elements"
         android:layout_width="wrap_content"
@@ -17,7 +16,6 @@
         app:layout_constraintEnd_toStartOf="@+id/edit_text_elements"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/text_view_threads"
@@ -76,6 +74,5 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_text_threads"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_collections_and_maps" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

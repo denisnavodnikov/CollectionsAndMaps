@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
+import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.BenchmarkFragment;
-import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Constants;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
 

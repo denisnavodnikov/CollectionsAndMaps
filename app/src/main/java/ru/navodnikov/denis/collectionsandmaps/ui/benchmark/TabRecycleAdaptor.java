@@ -1,6 +1,5 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,18 +14,15 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHolder> {
 
-
     private final List<BenchmarkItem> items = new ArrayList<>();
 
+    public TabRecycleAdaptor() {
+    }
 
     public void setItems(List<BenchmarkItem> items) {
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();
-    }
-
-
-    public TabRecycleAdaptor() {
     }
 
     @NonNull
@@ -46,14 +42,12 @@ public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHol
     }
 
     public void updateItem(BenchmarkItem benchmarkItem) {
-
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getTitle().equals(benchmarkItem.getTitle())) {
                 items.set(i, benchmarkItem);
                 notifyItemChanged(i);
             }
         }
-
     }
 
     public void setProgressBar(boolean isProgress) {

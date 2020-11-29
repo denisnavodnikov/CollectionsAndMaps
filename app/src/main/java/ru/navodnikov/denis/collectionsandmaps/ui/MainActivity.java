@@ -11,7 +11,6 @@ import ru.navodnikov.denis.collectionsandmaps.R;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +20,5 @@ public class MainActivity extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         viewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
-
     }
-
-
 }

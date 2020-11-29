@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps.dto;
+package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 
 import android.text.TextUtils;
@@ -11,24 +11,24 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.core.Benchmarked;
-import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Constants;
+import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
+import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
+import ru.navodnikov.denis.collectionsandmaps.models.Benchmarked;
 
 public class BenchmarkedViewModel extends ViewModel {
 
-    private Benchmarked benchmarked;
-
+    private final Benchmarked benchmarked;
 
     private CallbackFragment callbackFragment;
     private ExecutorService threadPool;
     private final AtomicInteger counter = new AtomicInteger();
 
-    public void registerCallback(CallbackFragment callbackFragment) {
-        this.callbackFragment = callbackFragment;
-    }
-
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
+    }
+
+    public void registerCallback(CallbackFragment callbackFragment) {
+        this.callbackFragment = callbackFragment;
     }
 
     public List<BenchmarkItem> getItems() {
@@ -41,25 +41,20 @@ public class BenchmarkedViewModel extends ViewModel {
 
 
     public void onButtonClicked(String elements, String threads, boolean isChecked) {
-
         if (isChecked) {
-
             if (TextUtils.isEmpty(elements)) {
                 callbackFragment.setErrorToElements(R.string.elements_empty);
-
             }
             if (TextUtils.isEmpty(threads)) {
                 callbackFragment.setErrorToThreads(R.string.threads_empty);
-
             }
             if (TextUtils.isEmpty(elements) || TextUtils.isEmpty(threads)) {
                 callbackFragment.setCheckedButton(false);
                 return;
             }
 
-            int elementsCount = Integer.parseInt(elements);
-            int threadsCount = Integer.parseInt(threads);
-
+            final int elementsCount = Integer.parseInt(elements);
+            final int threadsCount = Integer.parseInt(threads);
 
             if (Constants.ZERO == elementsCount) {
                 callbackFragment.setErrorToElements(R.string.elements_zero);
@@ -97,10 +92,7 @@ public class BenchmarkedViewModel extends ViewModel {
             if (!threadPool.isShutdown() || !threadPool.isTerminated()) {
                 threadPool.shutdown();
             }
-
         }
-
-
     }
 }
 
