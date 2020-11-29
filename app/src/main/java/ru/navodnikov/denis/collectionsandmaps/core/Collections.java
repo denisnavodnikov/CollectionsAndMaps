@@ -61,7 +61,7 @@ public class Collections implements Benchmarked {
             benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 8 && benchmarkItem.getNumberOfOperations() < 12) {
-            listOfItems.add(new Random().nextInt(listOfItems.size()), 2);
+            listOfItems.add(new Random().nextInt(listOfItems.size()-1), 2);
             long startTime = System.nanoTime();
             listOfItems.indexOf(2);
             long endTime = System.nanoTime();
