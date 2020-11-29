@@ -3,6 +3,7 @@ package ru.navodnikov.denis.collectionsandmaps.core;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
@@ -60,8 +61,9 @@ public class Collections implements Benchmarked {
             benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 8 && benchmarkItem.getNumberOfOperations() < 12) {
+            listOfItems.add(new Random().nextInt(listOfItems.size()), 2);
             long startTime = System.nanoTime();
-            listOfItems.indexOf(1);
+            listOfItems.indexOf(2);
             long endTime = System.nanoTime();
             benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
