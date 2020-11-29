@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.core.Benchmarked;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Constants;
 
@@ -38,25 +39,25 @@ public class BenchmarkedViewModel extends ViewModel {
         return benchmarked.getSpanCount();
     }
 
-    public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int elementsCount) {
-        return benchmarked.measureTime(benchmarkItem, elementsCount);
-    }
 
     public void onButtonClicked(String elements, String threads, boolean isChecked) {
 
         if (isChecked) {
             if (TextUtils.isEmpty(elements) && TextUtils.isEmpty(threads)) {
-                callbackFragment.setErrorToElements(Constants.ERROR_EMPTY_ELEMENTS);
-                callbackFragment.setErrorToThreads(Constants.ERROR_EMPTY_THREADS);
+                callbackFragment.setErrorToElements(R.string.elements_empty);
+                callbackFragment.setErrorToThreads(R.string.threads_empty);
+                callbackFragment.setCheckedButton(false);
                 return;
             }
             if (TextUtils.isEmpty(elements)) {
-                callbackFragment.setErrorToElements(Constants.ERROR_EMPTY_ELEMENTS);
+                callbackFragment.setErrorToElements(R.string.elements_empty);
+                callbackFragment.setCheckedButton(false);
                 return;
             }
 
             if (TextUtils.isEmpty(threads)) {
-                callbackFragment.setErrorToThreads(Constants.ERROR_EMPTY_THREADS);
+                callbackFragment.setErrorToThreads(R.string.threads_empty);
+                callbackFragment.setCheckedButton(false);
                 return;
             }
 
@@ -64,17 +65,20 @@ public class BenchmarkedViewModel extends ViewModel {
             int threadsCount = Integer.parseInt(threads);
 
             if (Constants.ZERO == elementsCount && Constants.ZERO == threadsCount) {
-                callbackFragment.setErrorToElements(Constants.ERROR_ZERO_ELEMENTS);
-                callbackFragment.setErrorToThreads(Constants.ERROR_ZERO_THREADS);
+                callbackFragment.setErrorToElements(R.string.elements_zero);
+                callbackFragment.setErrorToThreads(R.string.threads_zero);
+                callbackFragment.setCheckedButton(false);
                 return;
             }
             if (Constants.ZERO == elementsCount) {
-                callbackFragment.setErrorToElements(Constants.ERROR_ZERO_ELEMENTS);
+                callbackFragment.setErrorToElements(R.string.elements_zero);
+                callbackFragment.setCheckedButton(false);
                 return;
             }
 
             if (Constants.ZERO == threadsCount) {
-                callbackFragment.setErrorToThreads(Constants.ERROR_ZERO_THREADS);
+                callbackFragment.setErrorToThreads(R.string.threads_zero);
+                callbackFragment.setCheckedButton(false);
                 return;
             }
 
@@ -86,9 +90,8 @@ public class BenchmarkedViewModel extends ViewModel {
 
             for (BenchmarkItem benchmarkItem : getItems()) {
                 threadPool.execute(() -> {
-                    BenchmarkItem item = measureTime(benchmarkItem, elementsCount);
 
-                    callbackFragment.updateItemInAdaptor(item);
+                    callbackFragment.updateItemInAdaptor(benchmarked.measureTime(benchmarkItem, elementsCount));
                     counter.addAndGet(-1);
                     if (counter.compareAndSet(0, 0)) {
                         callbackFragment.setProgress(false);
@@ -99,8 +102,8 @@ public class BenchmarkedViewModel extends ViewModel {
             }
             threadPool.shutdown();
 
-        } else {
-            if (threadPool != null || !threadPool.isShutdown() || !threadPool.isTerminated()) {
+        } else if (threadPool != null) {
+            if (!threadPool.isShutdown() || !threadPool.isTerminated()) {
                 threadPool.shutdown();
             }
 

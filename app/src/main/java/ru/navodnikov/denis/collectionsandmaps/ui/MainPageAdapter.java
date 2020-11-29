@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsOrMapsFragment;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.BenchmarkFragment;
 import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.Constants;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
@@ -26,9 +26,9 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == Constants.PAGE_COLLECTIONS) {
-            return CollectionsOrMapsFragment.newInstance(Constants.PAGE_COLLECTIONS);
+            return BenchmarkFragment.newInstance(Constants.PAGE_COLLECTIONS);
         } else if (position == Constants.PAGE_MAPS) {
-            return CollectionsOrMapsFragment.newInstance(Constants.PAGE_MAPS);
+            return BenchmarkFragment.newInstance(Constants.PAGE_MAPS);
         }
         return null;
     }

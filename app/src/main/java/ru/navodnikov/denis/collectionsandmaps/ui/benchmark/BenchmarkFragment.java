@@ -28,7 +28,7 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkedViewModel;
 import ru.navodnikov.denis.collectionsandmaps.dto.CallbackFragment;
 import ru.navodnikov.denis.collectionsandmaps.ui.AppContext;
 
-public class CollectionsOrMapsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
+public class BenchmarkFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
     private int position;
@@ -61,7 +61,7 @@ public class CollectionsOrMapsFragment extends Fragment implements CompoundButto
         this.model = model;
     }
 
-    public CollectionsOrMapsFragment() {
+    public BenchmarkFragment() {
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CollectionsOrMapsFragment extends Fragment implements CompoundButto
 
     public static Fragment newInstance(int position) {
 
-        CollectionsOrMapsFragment fragment = new CollectionsOrMapsFragment();
+        BenchmarkFragment fragment = new BenchmarkFragment();
         Bundle args = new Bundle();
         args.putInt(AppContext.getContext().getResources().getString(R.string.position), position);
         fragment.setArguments(args);
@@ -136,29 +136,13 @@ public class CollectionsOrMapsFragment extends Fragment implements CompoundButto
 
     @Override
     public void setErrorToElements(int error) {
-        if (error == Constants.ERROR_EMPTY_ELEMENTS) {
-            editTextElements.setError(getString(R.string.elements_empty));
-            startButton.setChecked(false);
-        }
-
-        if (error == Constants.ERROR_ZERO_ELEMENTS) {
-            editTextElements.setError(getString(R.string.elements_zero));
-            startButton.setChecked(false);
-        }
+        editTextElements.setError(getString(error));
 
     }
 
     @Override
     public void setErrorToThreads(int error) {
-        if (error == Constants.ERROR_EMPTY_THREADS) {
-            editTextThreads.setError(getString(R.string.threads_empty));
-            startButton.setChecked(false);
-        }
-        if (error == Constants.ERROR_ZERO_THREADS) {
-            editTextThreads.setError(getString(R.string.threads_zero));
-
-        }
-
+        editTextThreads.setError(getString(error));
     }
 
     @Override

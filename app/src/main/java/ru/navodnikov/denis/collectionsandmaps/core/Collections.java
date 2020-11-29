@@ -42,60 +42,46 @@ public class Collections implements Benchmarked {
 
         if (benchmarkItem.getNumberOfOperations() < 3) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.add(0, 1);
-            }
+            listOfItems.add(0, 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
 
         } else if (benchmarkItem.getNumberOfOperations() > 2 && benchmarkItem.getNumberOfOperations() < 6) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.add(listOfItems.size() / 2, 1);
-            }
+            listOfItems.add(listOfItems.size() / 2, 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 5 && benchmarkItem.getNumberOfOperations() < 9) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.add(1);
-            }
+            listOfItems.add(1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 8 && benchmarkItem.getNumberOfOperations() < 12) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.contains(2);
-            }
+            listOfItems.contains(2);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 11 && benchmarkItem.getNumberOfOperations() < 15) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.remove(0);
-            }
+            listOfItems.remove(0);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 14 && benchmarkItem.getNumberOfOperations() < 18) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.remove(listOfItems.size() / 2);
-            }
+            listOfItems.remove(listOfItems.size() / 2);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         } else if (benchmarkItem.getNumberOfOperations() > 17) {
             long startTime = System.nanoTime();
-            for (int i = 0; i < contOfElements; i++) {
-                listOfItems.remove(listOfItems.size() - 1);
-            }
+            listOfItems.remove(listOfItems.size() - 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((((double) (endTime - startTime) / 1000000) + AppContext.getContext().getResources().getString(R.string.ms)));
+            benchmarkItem.setTime(AppContext.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
 
         }
         return benchmarkItem;
