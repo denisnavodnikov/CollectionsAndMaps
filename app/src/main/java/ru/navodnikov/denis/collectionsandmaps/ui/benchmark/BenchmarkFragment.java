@@ -29,7 +29,6 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
     private final Handler modelHandler = new Handler(Looper.getMainLooper());
-
     private BenchmarkedViewModel model;
     private int position;
     private Unbinder unbinder;
