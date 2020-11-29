@@ -19,12 +19,13 @@ public class BenchmarkedModelFactory extends ViewModelProvider.NewInstanceFactor
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass == BenchmarkedViewModel.class)
+        if (modelClass == BenchmarkedViewModel.class) {
             if (page == Constants.PAGE_COLLECTIONS) {
                 return (T) new BenchmarkedViewModel(new Collections());
             } else if (page == Constants.PAGE_MAPS) {
                 return (T) new BenchmarkedViewModel(new Maps());
             }
+        }
         return null;
     }
 }

@@ -70,7 +70,7 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            position = bundle.getInt(getString(R.string.position));
+            position = bundle.getInt(Constants.position);
         }
 
 
@@ -83,7 +83,7 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
         BenchmarkFragment fragment = new BenchmarkFragment();
         Bundle args = new Bundle();
-        args.putInt(AppContext.getContext().getResources().getString(R.string.position), position);
+        args.putInt(Constants.position, position);
         fragment.setArguments(args);
         return fragment;
     }

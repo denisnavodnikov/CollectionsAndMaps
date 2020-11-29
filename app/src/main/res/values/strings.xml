@@ -15,7 +15,6 @@
     <string name="threads_zero">Amount of threads must not be zero</string>
     <string name="stop">stop</string>
     <string name="result">%1$g ms</string>
-    <string name="position">position</string>
 
     <string-array name="tab_title">
         <item>@string/collections</item>

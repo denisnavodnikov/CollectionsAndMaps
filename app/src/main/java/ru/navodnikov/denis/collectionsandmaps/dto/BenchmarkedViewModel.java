@@ -43,20 +43,16 @@ public class BenchmarkedViewModel extends ViewModel {
     public void onButtonClicked(String elements, String threads, boolean isChecked) {
 
         if (isChecked) {
-            if (TextUtils.isEmpty(elements) && TextUtils.isEmpty(threads)) {
-                callbackFragment.setErrorToElements(R.string.elements_empty);
-                callbackFragment.setErrorToThreads(R.string.threads_empty);
-                callbackFragment.setCheckedButton(false);
-                return;
-            }
+
             if (TextUtils.isEmpty(elements)) {
                 callbackFragment.setErrorToElements(R.string.elements_empty);
-                callbackFragment.setCheckedButton(false);
-                return;
-            }
 
+            }
             if (TextUtils.isEmpty(threads)) {
                 callbackFragment.setErrorToThreads(R.string.threads_empty);
+
+            }
+            if (TextUtils.isEmpty(elements) || TextUtils.isEmpty(threads)) {
                 callbackFragment.setCheckedButton(false);
                 return;
             }
@@ -64,20 +60,15 @@ public class BenchmarkedViewModel extends ViewModel {
             int elementsCount = Integer.parseInt(elements);
             int threadsCount = Integer.parseInt(threads);
 
-            if (Constants.ZERO == elementsCount && Constants.ZERO == threadsCount) {
-                callbackFragment.setErrorToElements(R.string.elements_zero);
-                callbackFragment.setErrorToThreads(R.string.threads_zero);
-                callbackFragment.setCheckedButton(false);
-                return;
-            }
+
             if (Constants.ZERO == elementsCount) {
                 callbackFragment.setErrorToElements(R.string.elements_zero);
-                callbackFragment.setCheckedButton(false);
-                return;
             }
 
             if (Constants.ZERO == threadsCount) {
                 callbackFragment.setErrorToThreads(R.string.threads_zero);
+            }
+            if (Constants.ZERO == elementsCount || Constants.ZERO == threadsCount) {
                 callbackFragment.setCheckedButton(false);
                 return;
             }
