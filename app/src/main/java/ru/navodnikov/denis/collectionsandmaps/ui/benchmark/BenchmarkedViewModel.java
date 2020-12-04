@@ -1,15 +1,16 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
@@ -20,8 +21,8 @@ public class BenchmarkedViewModel extends ViewModel {
     private final Benchmarked benchmarked;
 
     private CallbackFragment callbackFragment;
-    private ExecutorService threadPool;
     private final AtomicInteger counter = new AtomicInteger();
+    private Observable<List<BenchmarkItem>> benchmarkedObservable;
 
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
@@ -40,6 +41,7 @@ public class BenchmarkedViewModel extends ViewModel {
     }
 
 
+    @SuppressLint("CheckResult")
     public void onButtonClicked(String elements, String threads, boolean isChecked) {
         if (isChecked) {
             if (TextUtils.isEmpty(elements)) {
@@ -71,29 +73,24 @@ public class BenchmarkedViewModel extends ViewModel {
             callbackFragment.setProgress(true);
             counter.set(getItems().size());
 
-            threadPool = Executors.newFixedThreadPool(threadsCount);
+            final List<BenchmarkItem> items = benchmarked.getItems();
 
-
-            for (BenchmarkItem benchmarkItem : getItems()) {
-                threadPool.execute(() -> {
-
-                    callbackFragment.updateItemInAdaptor(benchmarked.measureTime(benchmarkItem, elementsCount));
-                    counter.addAndGet(-1);
-                    if (counter.compareAndSet(0, 0)) {
-                        callbackFragment.setProgress(false);
-                        callbackFragment.setCheckedButton(false);
-                    }
-                });
-
-            }
-            threadPool.shutdown();
-
-        } else if (threadPool != null) {
-            if (!threadPool.isShutdown() || !threadPool.isTerminated()) {
-                threadPool.shutdown();
-            }
+            benchmarkedObservable = Observable.just(items);
+            benchmarkedObservable
+                    .flatMapIterable(benchmarkItems -> benchmarkItems)
+                    .flatMap(benchmarkItem -> Observable.just(benchmarkItem))
+                    .observeOn(Schedulers.newThread())
+                    .subscribe(item -> {
+                        callbackFragment.updateItemInAdaptor(benchmarked.measureTime(item, elementsCount));
+                        counter.addAndGet(-1);
+                        if (counter.compareAndSet(0, 0)) {
+                            callbackFragment.setProgress(false);
+                            callbackFragment.setCheckedButton(false);
+                        }
+                    });
         }
     }
+
 }
 
 
