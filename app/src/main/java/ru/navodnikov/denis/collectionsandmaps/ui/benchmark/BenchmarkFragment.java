@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import ru.navodnikov.denis.collectionsandmaps.BenchmarkApp;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
@@ -28,7 +30,6 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     private static final String POSITION = "position";
 
     private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
-    private final Handler modelHandler = new Handler(Looper.getMainLooper());
     private BenchmarkedViewModel model;
     private int position;
     private Unbinder unbinder;
@@ -122,16 +123,26 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
     @Override
     public void setCheckedButton(boolean isChecked) {
-        modelHandler.post(() -> startButton.setChecked(isChecked));
+        startButton.setChecked(isChecked);
     }
 
     @Override
     public void updateItemInAdaptor(BenchmarkItem benchmarkItem) {
-        modelHandler.post(() -> tabRecycleAdaptor.updateItem(benchmarkItem));
+        tabRecycleAdaptor.updateItem(benchmarkItem);
     }
 
     @Override
     public void setProgress(boolean isProgress) {
-        modelHandler.post(() -> tabRecycleAdaptor.setProgressBar(isProgress));
+        tabRecycleAdaptor.setProgressBar(isProgress);
+    }
+
+    @Override
+    public void showMessage(int message) {
+        Toast.makeText(getActivity(), BenchmarkApp.getContext().getString(message), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setDefaultTime() {
+        tabRecycleAdaptor.setItems(model.getItems());
     }
 }

@@ -13,5 +13,9 @@ public interface CallbackFragment {
     void updateItemInAdaptor(BenchmarkItem benchmarkItem);
 
     void setProgress(boolean isProgress);
+
+    void showMessage(int message);
+
+    void setDefaultTime();
 }
 

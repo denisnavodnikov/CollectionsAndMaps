@@ -7,13 +7,12 @@ import android.text.TextUtils;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
@@ -25,9 +24,8 @@ public class BenchmarkedViewModel extends ViewModel {
     private final Benchmarked benchmarked;
 
     private CallbackFragment callbackFragment;
-    private final AtomicInteger counter = new AtomicInteger();
-    private Observable<List<BenchmarkItem>> benchmarkedObservable;
-    private ExecutorService threadPool;
+    private Disposable disposable;
+    private boolean isWorking = false;
 
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
@@ -48,7 +46,7 @@ public class BenchmarkedViewModel extends ViewModel {
 
     @SuppressLint("CheckResult")
     public void onButtonClicked(String elements, String threads, boolean isChecked) {
-        if (isChecked) {
+        if (isChecked && !isWorking) {
             if (TextUtils.isEmpty(elements)) {
                 callbackFragment.setErrorToElements(R.string.elements_empty);
             }
@@ -75,31 +73,37 @@ public class BenchmarkedViewModel extends ViewModel {
                 return;
             }
 
-
+            isWorking = true;
             final List<BenchmarkItem> items = benchmarked.getItems();
-            threadPool = Executors.newFixedThreadPool(threadsCount);
+            final Scheduler scheduler = Schedulers.from(Executors.newFixedThreadPool(threadsCount));
 
-            benchmarkedObservable = Observable.just(items);
-            benchmarkedObservable
-                    .flatMap(source -> Observable.fromIterable(source))
-                    .subscribeOn(Schedulers.from(threadPool))
+            disposable = Observable.fromIterable(items)
+                    .subscribeOn(scheduler)
+                    .flatMap(benchmarkItem -> Observable.just(benchmarked.measureTime(benchmarkItem, elementsCount)))
+                    .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe(item -> {
                         callbackFragment.setProgress(true);
-
+                    })
+                    .doOnComplete(() -> {
+                        isWorking = false;
+                        callbackFragment.showMessage(R.string.calculation_is_finished);
                     })
                     .doFinally(() -> {
                         callbackFragment.setProgress(false);
                         callbackFragment.setCheckedButton(false);
-                        threadPool.shutdown();
+
                     })
-                    .subscribe(benchmarkItem -> callbackFragment.updateItemInAdaptor(benchmarked.measureTime(benchmarkItem, elementsCount)));
-        }
-        else if (threadPool != null) {
-            callbackFragment.setProgress(false);
-            if (!threadPool.isShutdown() || !threadPool.isTerminated()) {
-                threadPool.shutdown();
+                    .subscribe(benchmarkItem -> callbackFragment.updateItemInAdaptor(benchmarkItem));
+        } else if (isWorking) {
+            callbackFragment.showMessage(R.string.calculation_is_stopped);
+            callbackFragment.setDefaultTime();
+            if (disposable != null) {
+                disposable.dispose();
             }
+            callbackFragment.setCheckedButton(false);
+            isWorking = false;
         }
+
     }
 
 }

@@ -10,13 +10,10 @@ import dagger.Provides;
 @Module
 public class AppModule {
     private final Context app;
-    private final Benchmarked collections;
-    private final Benchmarked maps;
 
     public AppModule(Context app) {
         this.app = app;
-        collections = new Collections();
-        maps = new Maps();
+
     }
 
     @Provides
@@ -29,13 +26,13 @@ public class AppModule {
     @Singleton
     @Named("Collections")
     public Benchmarked getCollections() {
-        return collections;
+        return new Collections();
     }
 
     @Provides
     @Singleton
     @Named("Maps")
     public Benchmarked getMaps() {
-        return maps;
+        return new Maps();
     }
 }
