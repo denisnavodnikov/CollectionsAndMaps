@@ -80,30 +80,22 @@ public class BenchmarkedViewModel extends ViewModel {
                     .subscribeOn(scheduler)
                     .map(benchmarkItem -> benchmarked.measureTime(benchmarkItem, elementsCount))
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(item -> {
-                        callbackFragment.setProgress(true);
-                    })
-                    .doOnComplete(() -> {
-                        callbackFragment.showMessage(R.string.calculation_is_finished);
-                    })
+                    .doOnSubscribe(item -> callbackFragment.setProgress(true))
+                    .doOnComplete(() -> callbackFragment.showMessage(R.string.calculation_is_finished))
                     .doFinally(() -> {
                         callbackFragment.setProgress(false);
                         callbackFragment.setCheckedButton(false);
-
                     })
                     .doOnDispose(() -> {
                         callbackFragment.showMessage(R.string.calculation_is_stopped);
                         callbackFragment.setDefaultTime();
-                        callbackFragment.setCheckedButton(false);
                     })
                     .subscribe(benchmarkItem -> callbackFragment.updateItemInAdaptor(benchmarkItem));
         } else if (!disposable.isDisposed()) {
             disposable.dispose();
 
         }
-
     }
-
 }
 
 
