@@ -13,6 +13,7 @@ import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
@@ -24,8 +25,7 @@ public class BenchmarkedViewModel extends ViewModel {
     private final Benchmarked benchmarked;
 
     private CallbackFragment callbackFragment;
-    private Disposable disposable;
-    private boolean isWorking = false;
+    private Disposable disposable = Disposables.disposed();
 
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
@@ -46,7 +46,7 @@ public class BenchmarkedViewModel extends ViewModel {
 
     @SuppressLint("CheckResult")
     public void onButtonClicked(String elements, String threads, boolean isChecked) {
-        if (isChecked && !isWorking) {
+        if (isChecked) {
             if (TextUtils.isEmpty(elements)) {
                 callbackFragment.setErrorToElements(R.string.elements_empty);
             }
@@ -73,19 +73,17 @@ public class BenchmarkedViewModel extends ViewModel {
                 return;
             }
 
-            isWorking = true;
             final List<BenchmarkItem> items = benchmarked.getItems();
             final Scheduler scheduler = Schedulers.from(Executors.newFixedThreadPool(threadsCount));
 
             disposable = Observable.fromIterable(items)
                     .subscribeOn(scheduler)
-                    .flatMap(benchmarkItem -> Observable.just(benchmarked.measureTime(benchmarkItem, elementsCount)))
+                    .map(benchmarkItem -> benchmarked.measureTime(benchmarkItem, elementsCount))
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe(item -> {
                         callbackFragment.setProgress(true);
                     })
                     .doOnComplete(() -> {
-                        isWorking = false;
                         callbackFragment.showMessage(R.string.calculation_is_finished);
                     })
                     .doFinally(() -> {
@@ -93,15 +91,15 @@ public class BenchmarkedViewModel extends ViewModel {
                         callbackFragment.setCheckedButton(false);
 
                     })
+                    .doOnDispose(() -> {
+                        callbackFragment.showMessage(R.string.calculation_is_stopped);
+                        callbackFragment.setDefaultTime();
+                        callbackFragment.setCheckedButton(false);
+                    })
                     .subscribe(benchmarkItem -> callbackFragment.updateItemInAdaptor(benchmarkItem));
-        } else if (isWorking) {
-            callbackFragment.showMessage(R.string.calculation_is_stopped);
-            callbackFragment.setDefaultTime();
-            if (disposable != null) {
-                disposable.dispose();
-            }
-            callbackFragment.setCheckedButton(false);
-            isWorking = false;
+        } else if (!disposable.isDisposed()) {
+            disposable.dispose();
+
         }
 
     }

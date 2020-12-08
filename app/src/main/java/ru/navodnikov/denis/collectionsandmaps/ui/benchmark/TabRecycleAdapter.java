@@ -12,11 +12,11 @@ import java.util.List;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
-public class TabRecycleAdaptor extends RecyclerView.Adapter<BenchmarkItemViewHolder> {
+public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHolder> {
 
     private final List<BenchmarkItem> items = new ArrayList<>();
 
-    public TabRecycleAdaptor() {
+    public TabRecycleAdapter() {
     }
 
     public void setItems(List<BenchmarkItem> items) {

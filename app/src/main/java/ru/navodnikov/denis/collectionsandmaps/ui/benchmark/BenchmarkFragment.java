@@ -1,8 +1,6 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import ru.navodnikov.denis.collectionsandmaps.BenchmarkApp;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public class BenchmarkFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, CallbackFragment {
     private static final String POSITION = "position";
 
-    private final TabRecycleAdaptor tabRecycleAdaptor = new TabRecycleAdaptor();
+    private final TabRecycleAdapter tabRecycleAdapter = new TabRecycleAdapter();
     private BenchmarkedViewModel model;
     private int position;
     private Unbinder unbinder;
@@ -85,12 +82,12 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tabRecycleAdaptor.setItems(model.getItems());
+        tabRecycleAdapter.setItems(model.getItems());
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), model.getSpanCount()));
 
-        recyclerView.setAdapter(tabRecycleAdaptor);
+        recyclerView.setAdapter(tabRecycleAdapter);
 
         startButton.setOnCheckedChangeListener(this);
     }
@@ -128,21 +125,21 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
     @Override
     public void updateItemInAdaptor(BenchmarkItem benchmarkItem) {
-        tabRecycleAdaptor.updateItem(benchmarkItem);
+        tabRecycleAdapter.updateItem(benchmarkItem);
     }
 
     @Override
     public void setProgress(boolean isProgress) {
-        tabRecycleAdaptor.setProgressBar(isProgress);
+        tabRecycleAdapter.setProgressBar(isProgress);
     }
 
     @Override
     public void showMessage(int message) {
-        Toast.makeText(getActivity(), BenchmarkApp.getContext().getString(message), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getActivity().getString(message), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void setDefaultTime() {
-        tabRecycleAdaptor.setItems(model.getItems());
+        tabRecycleAdapter.setItems(model.getItems());
     }
 }
