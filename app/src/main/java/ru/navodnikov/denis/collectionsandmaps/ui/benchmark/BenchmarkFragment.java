@@ -28,7 +28,6 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
 
     private final TabRecycleAdapter tabRecycleAdapter = new TabRecycleAdapter();
     private BenchmarkedViewModel model;
-    private int position;
     private Unbinder unbinder;
 
     @BindView(R.id.recycler_view)
@@ -61,6 +60,7 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
         super.onCreate(savedInstanceState);
 
         final Bundle bundle = this.getArguments();
+        int position = 0;
         if (bundle != null) {
             position = bundle.getInt(POSITION);
         }
