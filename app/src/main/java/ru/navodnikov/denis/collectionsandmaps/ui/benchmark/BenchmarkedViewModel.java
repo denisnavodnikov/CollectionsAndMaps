@@ -23,10 +23,8 @@ import ru.navodnikov.denis.collectionsandmaps.models.Benchmarked;
 public class BenchmarkedViewModel extends ViewModel {
 
     private final Benchmarked benchmarked;
-
     private CallbackFragment callbackFragment;
     private Disposable disposable = Disposables.disposed();
-
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
     }
