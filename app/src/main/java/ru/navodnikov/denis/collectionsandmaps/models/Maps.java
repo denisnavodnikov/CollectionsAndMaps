@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import ru.navodnikov.denis.collectionsandmaps.BenchmarkApp;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
+import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
 
 public class Maps implements Benchmarked {
 
@@ -16,9 +17,8 @@ public class Maps implements Benchmarked {
     @Override
     public List<BenchmarkItem> getItems() {
         List<BenchmarkItem> data = new ArrayList<>();
-        String[] names = BenchmarkApp.getContext().getResources().getStringArray(R.array.names_maps_list);
-        for (int i = 0; i < names.length; i++) {
-            data.add(new BenchmarkItem(names[i], BenchmarkApp.getContext().getString(R.string.default_time), i));
+        for (int i = 0; i < Constants.QUANTITY_OF_MAPS; i++) {
+            data.add(new BenchmarkItem( Constants.DEFAULT_TIME, i));
         }
         return data;
 
@@ -47,20 +47,20 @@ public class Maps implements Benchmarked {
             long startTime = System.nanoTime();
             mapOfItems.put(-1, 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime(BenchmarkApp.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
+            benchmarkItem.setTime((double)(endTime - startTime) / 1000000);
 
         } else if (benchmarkItem.getNumberOfOperations() > 1 && benchmarkItem.getNumberOfOperations() < 4) {
             long startTime = System.nanoTime();
             mapOfItems.containsValue(2);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime(BenchmarkApp.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
+            benchmarkItem.setTime((double)(endTime - startTime) / 1000000);
 
         } else if (benchmarkItem.getNumberOfOperations() > 3) {
 
             long startTime = System.nanoTime();
             mapOfItems.remove(7);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime(BenchmarkApp.getContext().getResources().getString(R.string.result, ((double) (endTime - startTime) / 1000000)));
+            benchmarkItem.setTime((double)(endTime - startTime) / 1000000);
 
         }
         return benchmarkItem;

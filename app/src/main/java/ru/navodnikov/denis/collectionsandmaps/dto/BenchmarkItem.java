@@ -2,22 +2,17 @@ package ru.navodnikov.denis.collectionsandmaps.dto;
 
 
 public class BenchmarkItem {
-    private String title;
-    private String time;
+    private double time;
     private int numberOfOperations;
     private boolean progress;
 
-    public BenchmarkItem(String title, String time, int numberOfOperations) {
-        this.title = title;
+    public BenchmarkItem(double time, int numberOfOperations) {
         this.time = time;
         this.numberOfOperations = numberOfOperations;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public String getTime() {
+    public double getTime() {
         return time;
     }
 
@@ -25,21 +20,13 @@ public class BenchmarkItem {
         return numberOfOperations;
     }
 
-    public void setNumberOfOperations(int numberOfOperations) {
-        this.numberOfOperations = numberOfOperations;
-    }
 
     public boolean isProgress() {
         return progress;
     }
 
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-
-    public void setTime(String time) {
+    public void setTime(double time) {
         this.time = time;
     }
 
