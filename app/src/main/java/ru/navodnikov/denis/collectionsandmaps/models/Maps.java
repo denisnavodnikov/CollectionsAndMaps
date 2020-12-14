@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import ru.navodnikov.denis.collectionsandmaps.BenchmarkApp;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
@@ -17,9 +16,21 @@ public class Maps implements Benchmarked {
     @Override
     public List<BenchmarkItem> getItems() {
         List<BenchmarkItem> data = new ArrayList<>();
-        for (int i = 0; i < Constants.QUANTITY_OF_MAPS; i++) {
-            data.add(new BenchmarkItem( Constants.DEFAULT_TIME, i));
+        int[] maps = {
+                R.string.hash_map,
+                R.string.tree_map,
+        };
+        int[] operations = {
+                R.string.adding_to_Map,
+                R.string.search_in_Map,
+                R.string.removing_from_Map,
+        };
+        for (int operation : operations) {
+            for (int map : maps) {
+                data.add(new BenchmarkItem(Constants.DEFAULT_TIME, map, operation));
+            }
         }
+
         return data;
 
     }
@@ -34,7 +45,7 @@ public class Maps implements Benchmarked {
 
         Map<Integer, Integer> mapOfItems;
 
-        if (benchmarkItem.getNumberOfOperations() % 2 == 0) {
+        if (benchmarkItem.getIdOfCollectionsOrMaps() == R.string.hash_map) {
             mapOfItems = new HashMap<>();
         } else {
             mapOfItems = new TreeMap<>();
@@ -43,24 +54,24 @@ public class Maps implements Benchmarked {
             mapOfItems.put(i, 1);
         }
 
-        if (benchmarkItem.getNumberOfOperations() < 2) {
+        if (benchmarkItem.getIdOfOperations() == R.string.adding_to_Map) {
             long startTime = System.nanoTime();
             mapOfItems.put(-1, 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double)(endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
-        } else if (benchmarkItem.getNumberOfOperations() > 1 && benchmarkItem.getNumberOfOperations() < 4) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.search_in_Map) {
             long startTime = System.nanoTime();
             mapOfItems.containsValue(2);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double)(endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
-        } else if (benchmarkItem.getNumberOfOperations() > 3) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.removing_from_Map) {
 
             long startTime = System.nanoTime();
             mapOfItems.remove(7);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double)(endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
         }
         return benchmarkItem;

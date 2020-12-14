@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
 
@@ -15,9 +16,26 @@ public class Collections implements Benchmarked {
     @Override
     public List<BenchmarkItem> getItems() {
         List<BenchmarkItem> data = new ArrayList<>();
-        for (int i = 0; i < Constants.QUANTITY_OF_COLLECTIONS; i++) {
-            data.add(new BenchmarkItem(Constants.DEFAULT_TIME, i));
+        int[] collections = {
+                R.string.array_list,
+                R.string.linked_list,
+                R.string.copy_on_write_array_list,
+        };
+        int[] operations = {
+                R.string.adding_to_beginning,
+                R.string.adding_to_middle,
+                R.string.adding_to_end,
+                R.string.search_in_list,
+                R.string.removing_from_start,
+                R.string.removing_from_middle,
+                R.string.removing_from_end
+        };
+        for (int operation : operations) {
+            for (int collection : collections) {
+                data.add(new BenchmarkItem(Constants.DEFAULT_TIME, collection, operation));
+            }
         }
+
         return data;
 
     }
@@ -31,56 +49,56 @@ public class Collections implements Benchmarked {
     public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int contOfElements) {
         List<Integer> listOfItems;
 
-        if (benchmarkItem.getNumberOfOperations() % 3 == 0) {
+        if (benchmarkItem.getIdOfCollectionsOrMaps() == R.string.array_list) {
             listOfItems = new ArrayList<>(java.util.Collections.nCopies(contOfElements, 1));
-        } else if (benchmarkItem.getNumberOfOperations() % 3 == 1) {
+        } else if (benchmarkItem.getIdOfCollectionsOrMaps() == R.string.linked_list) {
             listOfItems = new LinkedList<>(java.util.Collections.nCopies(contOfElements, 1));
         } else {
             listOfItems = new CopyOnWriteArrayList<>(java.util.Collections.nCopies(contOfElements, 1));
         }
 
-        if (benchmarkItem.getNumberOfOperations() < 3) {
+        if (benchmarkItem.getIdOfOperations() == R.string.adding_to_beginning) {
             long startTime = System.nanoTime();
             listOfItems.add(0, 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
 
-        } else if (benchmarkItem.getNumberOfOperations() > 2 && benchmarkItem.getNumberOfOperations() < 6) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.adding_to_middle) {
             long startTime = System.nanoTime();
             listOfItems.add(listOfItems.size() / 2, 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
-        } else if (benchmarkItem.getNumberOfOperations() > 5 && benchmarkItem.getNumberOfOperations() < 9) {
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
+        } else if (benchmarkItem.getIdOfOperations() == R.string.adding_to_end) {
             long startTime = System.nanoTime();
             listOfItems.add(1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
-        } else if (benchmarkItem.getNumberOfOperations() > 8 && benchmarkItem.getNumberOfOperations() < 12) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.search_in_list) {
             listOfItems.add(new Random().nextInt(listOfItems.size() - 1), 2);
             long startTime = System.nanoTime();
             listOfItems.indexOf(2);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
-        } else if (benchmarkItem.getNumberOfOperations() > 11 && benchmarkItem.getNumberOfOperations() < 15) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.removing_from_start) {
             long startTime = System.nanoTime();
             listOfItems.remove(0);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
-        } else if (benchmarkItem.getNumberOfOperations() > 14 && benchmarkItem.getNumberOfOperations() < 18) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.removing_from_middle) {
             long startTime = System.nanoTime();
             listOfItems.remove(listOfItems.size() / 2);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
-        } else if (benchmarkItem.getNumberOfOperations() > 17) {
+        } else if (benchmarkItem.getIdOfOperations() == R.string.removing_from_end) {
             long startTime = System.nanoTime();
             listOfItems.remove(listOfItems.size() - 1);
             long endTime = System.nanoTime();
-            benchmarkItem.setTime((double) (endTime - startTime) / 1000000);
+            benchmarkItem.setTime((endTime - startTime) / 1000000D);
 
         }
         return benchmarkItem;

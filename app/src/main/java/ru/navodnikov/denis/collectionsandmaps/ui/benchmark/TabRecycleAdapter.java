@@ -28,14 +28,7 @@ public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHol
     @NonNull
     @Override
     public BenchmarkItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int idOfNames = 0;
-        if (items.size() == 21) {
-            idOfNames = R.array.names_collections_list;
-        } else {
-            idOfNames = R.array.names_maps_list;
-        }
-
-        return new BenchmarkItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collections_and_maps, parent, false), idOfNames);
+        return new BenchmarkItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collections_and_maps, parent, false));
     }
 
     @Override
@@ -50,7 +43,8 @@ public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHol
 
     public void updateItem(BenchmarkItem benchmarkItem) {
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getNumberOfOperations() == benchmarkItem.getNumberOfOperations()) {
+            if (items.get(i).getIdOfCollectionsOrMaps() == benchmarkItem.getIdOfCollectionsOrMaps()
+                    &&items.get(i).getIdOfOperations() == benchmarkItem.getIdOfOperations()) {
                 items.set(i, benchmarkItem);
                 notifyItemChanged(i);
             }

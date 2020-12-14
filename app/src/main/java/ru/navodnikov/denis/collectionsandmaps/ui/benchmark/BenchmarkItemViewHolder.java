@@ -1,5 +1,6 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,23 +17,22 @@ public class BenchmarkItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView timeOfOperation;
     private final TextView nameOfOperations;
     private final ProgressBar progressBar;
-    private final String[] namesOfOperations;
 
-    public BenchmarkItemViewHolder(@NonNull View itemView, int idOfNames) {
+    public BenchmarkItemViewHolder(@NonNull View itemView) {
         super(itemView);
         nameOfOperations = itemView.findViewById(R.id.name_of_operation);
         timeOfOperation = itemView.findViewById(R.id.time_of_operation);
         progressBar = itemView.findViewById(R.id.progressBar);
-        namesOfOperations = BenchmarkApp.getContext().getResources().getStringArray(idOfNames);
     }
 
     public void bindItem(BenchmarkItem item) {
-        nameOfOperations.setText(namesOfOperations[item.getNumberOfOperations()]);
+        Context context = itemView.getContext();
+        nameOfOperations.setText(context.getString(R.string.name_of_collections_or_maps, context.getString(item.getIdOfOperations()), context.getString(item.getIdOfCollectionsOrMaps())));
 
         if (item.getTime() > -1) {
-            timeOfOperation.setText(BenchmarkApp.getContext().getResources().getString(R.string.result, item.getTime()));
+            timeOfOperation.setText(context.getString(R.string.result, item.getTime()));
         } else {
-            timeOfOperation.setText(BenchmarkApp.getContext().getResources().getString(R.string.default_time));
+            timeOfOperation.setText(context.getString(R.string.default_time));
         }
         progressBar.animate().alpha(item.isProgress() ? 1f : 0f).start();
     }

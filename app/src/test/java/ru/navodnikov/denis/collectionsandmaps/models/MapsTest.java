@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 import static org.junit.Assert.assertEquals;
@@ -14,8 +15,7 @@ import static org.junit.Assert.assertNotNull;
 public class MapsTest {
 
     private Maps maps;
-    private final double time = 0.111;
-    private final int numberOfOperations = 0;
+    private final double time = -1.0;
     private final int elementsCount = 100000;
 
 
@@ -27,9 +27,21 @@ public class MapsTest {
     @Test
     public void getItems() {
         List<BenchmarkItem> items = maps.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            assertEquals(items.get(i).getNumberOfOperations(), i);
-        }
+        assertEquals(6, items.size());
+
+        assertEquals(items.get(0).getIdOfCollectionsOrMaps(), R.string.hash_map);
+        assertEquals(items.get(1).getIdOfCollectionsOrMaps(), R.string.tree_map);
+        assertEquals(items.get(2).getIdOfCollectionsOrMaps(), R.string.hash_map);
+        assertEquals(items.get(3).getIdOfCollectionsOrMaps(), R.string.tree_map);
+        assertEquals(items.get(4).getIdOfCollectionsOrMaps(), R.string.hash_map);
+        assertEquals(items.get(5).getIdOfCollectionsOrMaps(), R.string.tree_map);
+
+        assertEquals(items.get(0).getIdOfOperations(), R.string.adding_to_Map);
+        assertEquals(items.get(1).getIdOfOperations(), R.string.adding_to_Map);
+        assertEquals(items.get(2).getIdOfOperations(), R.string.search_in_Map);
+        assertEquals(items.get(3).getIdOfOperations(), R.string.search_in_Map);
+        assertEquals(items.get(4).getIdOfOperations(), R.string.removing_from_Map);
+        assertEquals(items.get(5).getIdOfOperations(), R.string.removing_from_Map);
 
     }
 
@@ -45,7 +57,7 @@ public class MapsTest {
 
     @Test
     public void measureTime() {
-        assertFalse(maps.measureTime(new BenchmarkItem(time, numberOfOperations), elementsCount).getTime() == (time));
+        assertFalse(maps.measureTime(new BenchmarkItem(time, R.string.hash_map, R.string.adding_to_Map), elementsCount).getTime() == time);
 
     }
 }

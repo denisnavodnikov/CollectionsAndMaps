@@ -3,12 +3,14 @@ package ru.navodnikov.denis.collectionsandmaps.dto;
 
 public class BenchmarkItem {
     private double time;
-    private int numberOfOperations;
+    private int idOfCollectionsOrMaps;
+    private int idOfOperations;
     private boolean progress;
 
-    public BenchmarkItem(double time, int numberOfOperations) {
+    public BenchmarkItem(double time, int idOfCollectionsOrMaps,int idOfOperations) {
         this.time = time;
-        this.numberOfOperations = numberOfOperations;
+        this.idOfCollectionsOrMaps = idOfCollectionsOrMaps;
+        this.idOfOperations = idOfOperations;
     }
 
 
@@ -16,8 +18,8 @@ public class BenchmarkItem {
         return time;
     }
 
-    public int getNumberOfOperations() {
-        return numberOfOperations;
+    public int getIdOfCollectionsOrMaps() {
+        return idOfCollectionsOrMaps;
     }
 
 
@@ -35,5 +37,7 @@ public class BenchmarkItem {
         this.progress = progress;
     }
 
-
+    public int getIdOfOperations() {
+        return idOfOperations;
+    }
 }
