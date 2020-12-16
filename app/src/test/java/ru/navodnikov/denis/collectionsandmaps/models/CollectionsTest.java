@@ -7,13 +7,13 @@ import java.util.List;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
+import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 public class CollectionsTest {
-    private final double time = -1.0;
     private final int elementsCount = 100000;
     private Collections collections;
 
@@ -84,6 +84,6 @@ public class CollectionsTest {
 
     @Test
     public void measureTime() {
-        assertFalse(collections.measureTime(new BenchmarkItem(time, R.string.array_list, R.string.adding_to_beginning), elementsCount).getTime() == time);
+        assertFalse(collections.measureTime(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.array_list, R.string.adding_to_beginning), elementsCount).getTime() == Constants.DEFAULT_TIME);
     }
 }

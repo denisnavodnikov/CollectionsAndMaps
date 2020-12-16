@@ -42,13 +42,11 @@ public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHol
     }
 
     public void updateItem(BenchmarkItem benchmarkItem) {
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getIdOfCollectionsOrMaps() == benchmarkItem.getIdOfCollectionsOrMaps()
-                    &&items.get(i).getIdOfOperations() == benchmarkItem.getIdOfOperations()) {
-                items.set(i, benchmarkItem);
-                notifyItemChanged(i);
-            }
+        for (BenchmarkItem item : items) {
+            item.comparisonOfItem(benchmarkItem);
+            notifyItemChanged(items.indexOf(item));
         }
+
     }
 
     public void setProgressBar(boolean isProgress) {

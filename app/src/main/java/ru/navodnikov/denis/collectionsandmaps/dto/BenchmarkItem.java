@@ -40,4 +40,14 @@ public class BenchmarkItem {
     public int getIdOfOperations() {
         return idOfOperations;
     }
+
+
+    public void comparisonOfItem(BenchmarkItem benchmarkItem) {
+        if (this.getIdOfCollectionsOrMaps() == benchmarkItem.getIdOfCollectionsOrMaps()
+                && this.getIdOfOperations() == benchmarkItem.getIdOfOperations()){
+            this.time = benchmarkItem.getTime();
+            this.idOfCollectionsOrMaps = benchmarkItem.getIdOfCollectionsOrMaps();
+            this.idOfOperations = benchmarkItem.getIdOfOperations();
+        }
+    }
 }

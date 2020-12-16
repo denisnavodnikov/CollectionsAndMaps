@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
+import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -15,7 +16,6 @@ import static org.junit.Assert.assertNotNull;
 public class MapsTest {
 
     private Maps maps;
-    private final double time = -1.0;
     private final int elementsCount = 100000;
 
 
@@ -57,7 +57,7 @@ public class MapsTest {
 
     @Test
     public void measureTime() {
-        assertFalse(maps.measureTime(new BenchmarkItem(time, R.string.hash_map, R.string.adding_to_Map), elementsCount).getTime() == time);
+        assertFalse(maps.measureTime(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.hash_map, R.string.adding_to_Map), elementsCount).getTime() == Constants.DEFAULT_TIME);
 
     }
 }
