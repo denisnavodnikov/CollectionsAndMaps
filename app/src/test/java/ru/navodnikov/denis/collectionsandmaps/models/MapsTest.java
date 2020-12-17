@@ -25,7 +25,7 @@ public class MapsTest {
     }
 
     @Test
-    public void getItems() {
+    public void getItems_IsItemOnPosition_True() {
         List<BenchmarkItem> items = maps.getItems();
         assertEquals(6, items.size());
 
@@ -46,17 +46,13 @@ public class MapsTest {
     }
 
     @Test
-    public void getSpanCount() {
+    public void getSpanCount_Two() {
         assertEquals(2, maps.getSpanCount());
     }
 
-    @Test
-    public void getSpanCountIsNotNull() {
-        assertNotNull(maps.getSpanCount());
-    }
 
     @Test
-    public void measureTime() {
+    public void measureTime_IsChangeTime_False() {
         assertFalse(maps.measureTime(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.hash_map, R.string.adding_to_Map), elementsCount).getTime() == Constants.DEFAULT_TIME);
 
     }

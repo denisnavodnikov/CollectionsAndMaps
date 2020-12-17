@@ -24,7 +24,7 @@ public class CollectionsTest {
     }
 
     @Test
-    public void getItems() {
+    public void getItems_IsItemOnPosition_True() {
         List<BenchmarkItem> items = collections.getItems();
         assertEquals(items.size(), 21);
         assertEquals(items.get(0).getIdOfCollectionsOrMaps(), R.string.array_list);
@@ -73,17 +73,13 @@ public class CollectionsTest {
     }
 
     @Test
-    public void getSpanCount() {
+    public void getSpanCount_Three() {
         assertEquals(3, collections.getSpanCount());
     }
 
-    @Test
-    public void getSpanCountIsNotNull() {
-        assertNotNull(collections.getSpanCount());
-    }
 
     @Test
-    public void measureTime() {
+    public void measureTime_IsChangeTime_False() {
         assertFalse(collections.measureTime(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.array_list, R.string.adding_to_beginning), elementsCount).getTime() == Constants.DEFAULT_TIME);
     }
 }
