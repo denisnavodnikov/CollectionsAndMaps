@@ -11,10 +11,10 @@ import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.models.Maps;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BenchmarkedViewModelTest {
@@ -43,12 +43,8 @@ public class BenchmarkedViewModelTest {
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
 
         verify(callbackFragment).setErrorToElements(R.string.elements_empty);
-        verify(callbackFragment, times(0)).setErrorToThreads(anyInt());
-        verify(callbackFragment, times(0)).setProgress(true);
-        verify(callbackFragment, times(0)).setProgress(false);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_finished);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_stopped);
-        verify(callbackFragment, times(0)).updateItemInAdaptor(any(BenchmarkItem.class));
+        verify(callbackFragment).setCheckedButton(false);
+        verifyNoMoreInteractions(callbackFragment);
     }
 
     @Test
@@ -59,12 +55,8 @@ public class BenchmarkedViewModelTest {
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
 
         verify(callbackFragment).setErrorToThreads(R.string.threads_empty);
-        verify(callbackFragment, times(0)).setErrorToElements(anyInt());
-        verify(callbackFragment, times(0)).setProgress(true);
-        verify(callbackFragment, times(0)).setProgress(false);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_finished);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_stopped);
-        verify(callbackFragment, times(0)).updateItemInAdaptor(any(BenchmarkItem.class));
+        verify(callbackFragment).setCheckedButton(false);
+        verifyNoMoreInteractions(callbackFragment);
     }
 
     @Test
@@ -75,12 +67,8 @@ public class BenchmarkedViewModelTest {
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
 
         verify(callbackFragment).setErrorToElements(R.string.elements_zero);
-        verify(callbackFragment, times(0)).setErrorToThreads(anyInt());
-        verify(callbackFragment, times(0)).setProgress(true);
-        verify(callbackFragment, times(0)).setProgress(false);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_finished);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_stopped);
-        verify(callbackFragment, times(0)).updateItemInAdaptor(any(BenchmarkItem.class));
+        verify(callbackFragment).setCheckedButton(false);
+        verifyNoMoreInteractions(callbackFragment);
     }
 
     @Test
@@ -91,12 +79,8 @@ public class BenchmarkedViewModelTest {
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
 
         verify(callbackFragment).setErrorToThreads(R.string.threads_zero);
-        verify(callbackFragment, times(0)).setErrorToElements(anyInt());
-        verify(callbackFragment, times(0)).setProgress(true);
-        verify(callbackFragment, times(0)).setProgress(false);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_finished);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_stopped);
-        verify(callbackFragment, times(0)).updateItemInAdaptor(any(BenchmarkItem.class));
+        verify(callbackFragment).setCheckedButton(false);
+        verifyNoMoreInteractions(callbackFragment);
     }
 
     @Test
@@ -106,30 +90,26 @@ public class BenchmarkedViewModelTest {
 
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
 
-        verify(callbackFragment, times(0)).setErrorToThreads(anyInt());
-        verify(callbackFragment, times(0)).setErrorToElements(anyInt());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         verify(callbackFragment, times(1)).setProgress(true);
         verify(callbackFragment, times(1)).setProgress(false);
         verify(callbackFragment, times(1)).showMessage(R.string.calculation_is_finished);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_stopped);
         verify(callbackFragment, times(6)).updateItemInAdaptor(any(BenchmarkItem.class));
+        verify(callbackFragment, times(1)).setCheckedButton(false);
+        verifyNoMoreInteractions(callbackFragment);
     }
 
     @Test
     public void onButtonClicked_MeasureTime_IsStopped() {
         threadsCount = "3";
         elementsCount = "100000";
-        isChecked = false;
-
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
-
-        verify(callbackFragment, times(0)).setErrorToThreads(anyInt());
-        verify(callbackFragment, times(0)).setErrorToElements(anyInt());
-        verify(callbackFragment, times(0)).setProgress(true);
-        verify(callbackFragment, times(0)).setProgress(false);
-        verify(callbackFragment, times(0)).showMessage(R.string.calculation_is_finished);
+        isChecked = false;
+        viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
         verify(callbackFragment, times(1)).showMessage(R.string.calculation_is_stopped);
-        verify(callbackFragment, times(1)).setDefaultTime();
-        verify(callbackFragment, times(0)).updateItemInAdaptor(any(BenchmarkItem.class));
     }
 }
