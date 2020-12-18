@@ -30,20 +30,17 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.jakewharton:butterknife:10.2.3'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
     implementation 'com.google.dagger:dagger:2.30.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.30.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.7.22'
-    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
 
@@ -54,4 +51,9 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

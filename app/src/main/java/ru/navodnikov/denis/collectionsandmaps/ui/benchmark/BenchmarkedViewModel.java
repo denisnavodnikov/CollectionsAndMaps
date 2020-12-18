@@ -1,6 +1,5 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
-
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
@@ -25,6 +24,7 @@ public class BenchmarkedViewModel extends ViewModel {
     private final Benchmarked benchmarked;
     private CallbackFragment callbackFragment;
     private Disposable disposable = Disposables.disposed();
+
     public BenchmarkedViewModel(Benchmarked benchmarked) {
         this.benchmarked = benchmarked;
     }
@@ -91,7 +91,6 @@ public class BenchmarkedViewModel extends ViewModel {
                     .subscribe(benchmarkItem -> callbackFragment.updateItemInAdaptor(benchmarkItem));
         } else if (!disposable.isDisposed()) {
             disposable.dispose();
-
         }
     }
 }
