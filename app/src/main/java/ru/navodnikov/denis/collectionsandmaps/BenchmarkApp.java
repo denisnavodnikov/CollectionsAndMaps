@@ -1,7 +1,7 @@
 package ru.navodnikov.denis.collectionsandmaps;
 
 import android.app.Application;
-import android.content.Context;
+
 
 import ru.navodnikov.denis.collectionsandmaps.models.AppComponent;
 import ru.navodnikov.denis.collectionsandmaps.models.AppModule;
@@ -24,4 +24,5 @@ public class BenchmarkApp extends Application {
     public AppComponent getAppComponent() {
         return appComponent;
     }
+
 }
