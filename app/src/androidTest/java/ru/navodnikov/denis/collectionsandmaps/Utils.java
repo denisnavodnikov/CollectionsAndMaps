@@ -12,6 +12,7 @@ import org.hamcrest.Matcher;
 import static androidx.test.espresso.core.internal.deps.dagger.internal.Preconditions.checkNotNull;
 
 public class Utils {
+
     public static Matcher<View> atPosition(final int position, @NonNull final Matcher<View> itemMatcher) {
         checkNotNull(itemMatcher);
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
@@ -23,7 +24,7 @@ public class Utils {
 
             @Override
             protected boolean matchesSafely(final RecyclerView view) {
-                RecyclerView.ViewHolder viewHolder = view.findViewHolderForAdapterPosition(position);
+                final RecyclerView.ViewHolder viewHolder = view.findViewHolderForAdapterPosition(position);
                 if (viewHolder == null) {
                     // has no item on such position
                     return false;
