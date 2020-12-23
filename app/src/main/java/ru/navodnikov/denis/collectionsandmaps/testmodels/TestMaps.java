@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps.models;
+package ru.navodnikov.denis.collectionsandmaps.testmodels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,9 @@ import java.util.List;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
+import ru.navodnikov.denis.collectionsandmaps.models.Maps;
 
-public class TestMaps implements Benchmarked {
+public class TestMaps extends Maps {
 
 
     @Override
@@ -40,12 +41,13 @@ public class TestMaps implements Benchmarked {
     @Override
     public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int contOfElements) {
 
-        benchmarkItem.setTime(2.0);
+
         try {
-            Thread.sleep(300);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        benchmarkItem.setTime(2.0);
         return benchmarkItem;
     }
 }

@@ -3,9 +3,13 @@ package ru.navodnikov.denis.collectionsandmaps;
 import android.app.Application;
 
 
+import androidx.annotation.VisibleForTesting;
+
 import ru.navodnikov.denis.collectionsandmaps.models.AppComponent;
 import ru.navodnikov.denis.collectionsandmaps.models.AppModule;
 import ru.navodnikov.denis.collectionsandmaps.models.DaggerAppComponent;
+import ru.navodnikov.denis.collectionsandmaps.testmodels.DaggerTestAppComponent;
+import ru.navodnikov.denis.collectionsandmaps.testmodels.TestAppModule;
 
 public class BenchmarkApp extends Application {
     private static BenchmarkApp instance;
@@ -23,6 +27,11 @@ public class BenchmarkApp extends Application {
     }
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    @VisibleForTesting
+    public void setAppComponent(){
+        this.appComponent = DaggerTestAppComponent.builder().testAppModule(new TestAppModule(this)).build();
     }
 
 }

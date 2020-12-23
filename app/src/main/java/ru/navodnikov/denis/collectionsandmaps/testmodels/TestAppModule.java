@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps.models;
+package ru.navodnikov.denis.collectionsandmaps.testmodels;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import ru.navodnikov.denis.collectionsandmaps.models.Benchmarked;
 
 @Module
 public class TestAppModule {
