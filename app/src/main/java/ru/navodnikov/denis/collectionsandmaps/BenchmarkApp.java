@@ -30,8 +30,8 @@ public class BenchmarkApp extends Application {
     }
 
     @VisibleForTesting
-    public void setAppComponent(){
-        this.appComponent = DaggerTestAppComponent.builder().testAppModule(new TestAppModule(this)).build();
+    public void setAppComponent(AppComponent appComponent){
+        this.appComponent = appComponent;
     }
 
 }
