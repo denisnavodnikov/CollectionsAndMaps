@@ -4,6 +4,19 @@ public class TestConstants {
     public static final String DEFAULT_TIME = "N/A ms";
     public static final String COLLECTIONS_TIME = "3.00000 ms";
     public static final String MAPS_TIME = "2.00000 ms";
+    public static final String NAME_TAB_COLLECTIONS = "Collections";
+    public static final String NAME_TAB_MAPS = "Maps";
+    public static final String ELEMENTS_EMPTY = "Amount of elements must not be empty";
+    public static final String THREADS_EMPTY = "Amount of threads must not be empty";
+    public static final String ELEMENTS_ZERO = "Amount of elements must not be zero";
+    public static final String THREADS_ZERO = "Amount of threads must not be zero";
+    public static final String ZERO = "0";
+    public static final String EMPTY = "";
+    public static final String TEST_ELEMENTS = "10000";
+    public static final String TEST_THREADS = "6";
+    public static final float ALPHA_1 = 1;
+    public static final float ALPHA_0 = 0;
+
     public static final String[] NAMES_OF_COLLECTIONS = {
             "Adding to start in ArrayList",
             "Adding to start in LinkedList",
@@ -36,14 +49,4 @@ public class TestConstants {
             "Removing from HashMap",
             "Removing from TreeMap"
     };
-    public static final String ELEMENTS_EMPTY = "Amount of elements must not be empty";
-    public static final String THREADS_EMPTY = "Amount of threads must not be empty";
-    public static final String ELEMENTS_ZERO = "Amount of elements must not be zero";
-    public static final String THREADS_ZERO = "Amount of threads must not be zero";
-    public static final String ZERO = "0";
-    public static final String EMPTY = "";
-    public static final String TEST_ELEMENTS = "10000";
-    public static final String TEST_THREADS = "6";
-    public static final float ALPHA_1 = 1;
-    public static final float ALPHA_0 = 0;
 }
