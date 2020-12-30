@@ -6,28 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import ru.navodnikov.denis.collectionsandmaps.BenchmarkApp;
 import ru.navodnikov.denis.collectionsandmaps.R;
-import ru.navodnikov.denis.collectionsandmaps.testmodels.DaggerTestAppComponent;
-import ru.navodnikov.denis.collectionsandmaps.testmodels.TestAppModule;
-import ru.navodnikov.denis.collectionsandmaps.ui.MainActivity;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.swipeLeft;
-import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
@@ -39,99 +26,50 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 
-@RunWith(AndroidJUnit4.class)
-public class CollectionsAndMapsTestUi {
-    private RecyclerViewMatcher recyclerViewMatcher_Collections;
-    private RecyclerViewMatcher recyclerViewMatcher_Maps;
-    private Matcher recyclerViewMatcher = allOf(withId(R.id.recycler_view), isDisplayed());
-
-    @Rule
-    public ActivityScenarioRule<MainActivity> activity = new ActivityScenarioRule<>(MainActivity.class);
-
-    @Before
-    public void setUp() {
-        BenchmarkApp app = ((BenchmarkApp) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext());
-        app.setAppComponent(DaggerTestAppComponent.builder().testAppModule(new TestAppModule(app)).build());
-    }
+public class TestUIApp {
+    private Matcher matcher = allOf(withId(R.id.recycler_view), isDisplayed());
 
 
-    @Test
-    public void TestUiFragment() {
-
-
-        testInitialState();
-
-        testErrorEmptyFields();
-
-        testErrorZeroFields();
-
-        testCalculationLaunch(TestConstants.NAMES_OF_COLLECTIONS, recyclerViewMatcher_Collections);
-
-        onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click()); // TODO delete lately
-
-        testCalculationStop(TestConstants.NAMES_OF_COLLECTIONS, recyclerViewMatcher_Collections);
-
-//        testCalculationComplete(TestConstants.NAMES_OF_COLLECTIONS, TestConstants.COLLECTIONS_TIME, recyclerViewMatcher_Collections);
-
-        onView(recyclerViewMatcher)
-                .perform(swipeLeft());
-
-        testErrorEmptyFields();
-
-        testErrorZeroFields();
-
-        testCalculationLaunch(TestConstants.NAMES_OF_MAPS, recyclerViewMatcher_Maps);
-
-        onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click()); // TODO delete lately
-
-        testCalculationStop(TestConstants.NAMES_OF_MAPS, recyclerViewMatcher_Maps);
-
-//        testCalculationComplete(TestConstants.NAMES_OF_MAPS, TestConstants.MAPS_TIME, recyclerViewMatcher_Maps);
-
-
-    }
-
-
-    public void testInitialState() {
-
-        sleep(300);
-        recyclerViewMatcher_Collections = new RecyclerViewMatcher(getCurrentRecyclerView());
-
-        onView(recyclerViewMatcher)
-                .perform(swipeLeft());
-
-        sleep(300);
-        recyclerViewMatcher_Maps = new RecyclerViewMatcher(getCurrentRecyclerView());
-
-        onView(recyclerViewMatcher)
-                .perform(swipeRight());
-
-        sleep(300);
-
-        onView(withText(TestConstants.NAME_TAB_MAPS)).perform(click());
-
-        sleep(300);
-
-        for (int i = 0; i < TestConstants.NAMES_OF_MAPS.length; i++) {
-
-            checkRecyclerViewItem(recyclerViewMatcher_Maps, TestConstants.NAMES_OF_MAPS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
-        }
-
-        onView(withText(TestConstants.NAME_TAB_COLLECTIONS)).perform(click());
-
-        sleep(300);
-
-        for (int i = 0; i < TestConstants.NAMES_OF_COLLECTIONS.length; i++) {
-            if (!itemIsDisplayed(i)) {
-                onView(recyclerViewMatcher)
-                        .perform(actionOnItemAtPosition(i, scrollTo()));
-                sleep(300);
-            }
-            checkRecyclerViewItem(recyclerViewMatcher_Collections, TestConstants.NAMES_OF_COLLECTIONS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
-        }
-        onView(recyclerViewMatcher)
-                .perform(RecyclerViewActions.scrollToPosition(0));
-    }
+//    public void testInitialState() {
+//
+//        sleep(300);
+//        recyclerViewMatcher_Collections = new RecyclerViewMatcher(getCurrentRecyclerView());
+//
+//        onView(recyclerViewMatcher)
+//                .perform(swipeLeft());
+//
+//        sleep(300);
+//        recyclerViewMatcher_Maps = new RecyclerViewMatcher(getCurrentRecyclerView());
+//
+//        onView(recyclerViewMatcher)
+//                .perform(swipeRight());
+//
+//        sleep(300);
+//
+//        onView(withText(TestConstants.NAME_TAB_MAPS)).perform(click());
+//
+//        sleep(300);
+//
+//        for (int i = 0; i < TestConstants.NAMES_OF_MAPS.length; i++) {
+//
+//            checkRecyclerViewItem(recyclerViewMatcher_Maps, TestConstants.NAMES_OF_MAPS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
+//        }
+//
+//        onView(withText(TestConstants.NAME_TAB_COLLECTIONS)).perform(click());
+//
+//        sleep(300);
+//
+//        for (int i = 0; i < TestConstants.NAMES_OF_COLLECTIONS.length; i++) {
+//            if (!itemIsDisplayed(i)) {
+//                onView(recyclerViewMatcher)
+//                        .perform(actionOnItemAtPosition(i, scrollTo()));
+//                sleep(300);
+//            }
+//            checkRecyclerViewItem(recyclerViewMatcher_Collections, TestConstants.NAMES_OF_COLLECTIONS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
+//        }
+//        onView(recyclerViewMatcher)
+//                .perform(RecyclerViewActions.scrollToPosition(0));
+//    }
 
     public void testErrorEmptyFields() {
         sleep(300);
@@ -163,14 +101,14 @@ public class CollectionsAndMapsTestUi {
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(typeText(TestConstants.TEST_THREADS));
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
         for (int i = 0; i < names.length; i++) {
-            if (names==TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
-                onView(this.recyclerViewMatcher)
+            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
+                onView(matcher)
                         .perform(actionOnItemAtPosition(i, scrollTo()));
                 sleep(1000);
             }
             checkRecyclerViewItem(recyclerViewMatcher, names, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_1);
         }
-        onView(this.recyclerViewMatcher)
+        onView(matcher)
                 .perform(RecyclerViewActions.scrollToPosition(0));
 
         sleep(2000);
@@ -189,8 +127,8 @@ public class CollectionsAndMapsTestUi {
         sleep(300);
 
         for (int i = 0; i < names.length; i++) {
-            if (names==TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
-                onView(this.recyclerViewMatcher)
+            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
+                onView(matcher)
                         .perform(actionOnItemAtPosition(i, scrollTo()));
                 sleep(300);
             }
@@ -208,21 +146,21 @@ public class CollectionsAndMapsTestUi {
         sleep(6000);
 
         for (int i = 0; i < names.length; i++) {
-            if (itemIsDisplayed(i)) {
-                onView(this.recyclerViewMatcher)
+            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
+                onView(matcher)
                         .perform(actionOnItemAtPosition(i, scrollTo()));
                 sleep(300);
             }
             checkRecyclerViewItem(recyclerViewMatcher, names, i, time, TestConstants.ALPHA_0);
         }
-        onView(this.recyclerViewMatcher)
+        onView(matcher)
                 .perform(RecyclerViewActions.scrollToPosition(0));
     }
 
 
     public boolean itemIsDisplayed(int position) {
         try {
-            onView(recyclerViewMatcher_Collections.atPosition(position)).check(matches(isDisplayed()));
+            onView(new RecyclerViewMatcher(getCurrentRecyclerView()).atPosition(position)).check(matches(isDisplayed()));
             return false;
         } catch (Exception e) {
             return true;
@@ -242,7 +180,7 @@ public class CollectionsAndMapsTestUi {
 
     public RecyclerView getCurrentRecyclerView() {
         final View[] rv = new View[1];
-        onView(recyclerViewMatcher)
+        onView(matcher)
                 .perform(new ViewAction() {
                     @Override
                     public Matcher<View> getConstraints() {
@@ -262,12 +200,11 @@ public class CollectionsAndMapsTestUi {
         return (RecyclerView) rv[0];
     }
 
-    public void sleep(int ms) {
+    public static void sleep(int ms) {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -10,8 +10,8 @@ import org.hamcrest.TypeSafeMatcher;
 
 
 public class TestTypeSafeMatcher extends TypeSafeMatcher<View> {
-    Resources resources = null;
-    View childView;
+    private Resources resources = null;
+    private View childView;
     private final int position;
     private final RecyclerView recyclerView;
     private final int targetViewId;
