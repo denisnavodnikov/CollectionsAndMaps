@@ -25,8 +25,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
+import static ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsAndMapsTestUI.sleep;
 
-public class TestSwipeActivity extends CollectionsAndMapsTestUI {
+public class TestSwipeActivity {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activity = new ActivityScenarioRule<>(MainActivity.class);
