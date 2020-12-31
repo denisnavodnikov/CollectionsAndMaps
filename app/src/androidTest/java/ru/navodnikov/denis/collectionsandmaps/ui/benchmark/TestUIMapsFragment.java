@@ -3,7 +3,6 @@ package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +20,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.core.AllOf.allOf;
 
-public class TestUIMapsFragment extends TestUIApp {
+public class TestUIMapsFragment extends CollectionsAndMapsTestUI {
 
 
     @Rule
@@ -41,20 +40,20 @@ public class TestUIMapsFragment extends TestUIApp {
 
         sleep(300);
 
-        RecyclerViewMatcher recyclerViewMatcher_Maps = new RecyclerViewMatcher(getCurrentRecyclerView());
+        RecyclerViewMatcher recyclerViewMatcher = new RecyclerViewMatcher(getCurrentRecyclerView());
 
 
         testErrorEmptyFields();
 
         testErrorZeroFields();
 
-        testCalculationLaunch(TestConstants.NAMES_OF_MAPS, recyclerViewMatcher_Maps);
+        testCalculationLaunch(TestConstants.NAMES_OF_MAPS, recyclerViewMatcher);
 
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click()); // TODO delete lately
 
-        testCalculationStop(TestConstants.NAMES_OF_MAPS, recyclerViewMatcher_Maps);
+        testCalculationStop(TestConstants.NAMES_OF_MAPS, recyclerViewMatcher);
 
-//        testCalculationComplete(TestConstants.NAMES_OF_MAPS, TestConstants.MAPS_TIME, recyclerViewMatcher_Maps);
+//        testCalculationComplete(TestConstants.NAMES_OF_MAPS, TestConstants.MAPS_TIME, recyclerViewMatcher);
 
 
     }

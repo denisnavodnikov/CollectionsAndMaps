@@ -26,50 +26,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 
-public class TestUIApp {
+public class CollectionsAndMapsTestUI {
     private Matcher matcher = allOf(withId(R.id.recycler_view), isDisplayed());
 
-
-//    public void testInitialState() {
-//
-//        sleep(300);
-//        recyclerViewMatcher_Collections = new RecyclerViewMatcher(getCurrentRecyclerView());
-//
-//        onView(recyclerViewMatcher)
-//                .perform(swipeLeft());
-//
-//        sleep(300);
-//        recyclerViewMatcher_Maps = new RecyclerViewMatcher(getCurrentRecyclerView());
-//
-//        onView(recyclerViewMatcher)
-//                .perform(swipeRight());
-//
-//        sleep(300);
-//
-//        onView(withText(TestConstants.NAME_TAB_MAPS)).perform(click());
-//
-//        sleep(300);
-//
-//        for (int i = 0; i < TestConstants.NAMES_OF_MAPS.length; i++) {
-//
-//            checkRecyclerViewItem(recyclerViewMatcher_Maps, TestConstants.NAMES_OF_MAPS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
-//        }
-//
-//        onView(withText(TestConstants.NAME_TAB_COLLECTIONS)).perform(click());
-//
-//        sleep(300);
-//
-//        for (int i = 0; i < TestConstants.NAMES_OF_COLLECTIONS.length; i++) {
-//            if (!itemIsDisplayed(i)) {
-//                onView(recyclerViewMatcher)
-//                        .perform(actionOnItemAtPosition(i, scrollTo()));
-//                sleep(300);
-//            }
-//            checkRecyclerViewItem(recyclerViewMatcher_Collections, TestConstants.NAMES_OF_COLLECTIONS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
-//        }
-//        onView(recyclerViewMatcher)
-//                .perform(RecyclerViewActions.scrollToPosition(0));
-//    }
 
     public void testErrorEmptyFields() {
         sleep(300);
@@ -101,7 +60,7 @@ public class TestUIApp {
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(typeText(TestConstants.TEST_THREADS));
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
         for (int i = 0; i < names.length; i++) {
-            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
+            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsNotDisplayed(i)) {
                 onView(matcher)
                         .perform(actionOnItemAtPosition(i, scrollTo()));
                 sleep(1000);
@@ -127,7 +86,7 @@ public class TestUIApp {
         sleep(300);
 
         for (int i = 0; i < names.length; i++) {
-            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
+            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsNotDisplayed(i)) {
                 onView(matcher)
                         .perform(actionOnItemAtPosition(i, scrollTo()));
                 sleep(300);
@@ -146,7 +105,7 @@ public class TestUIApp {
         sleep(6000);
 
         for (int i = 0; i < names.length; i++) {
-            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsDisplayed(i)) {
+            if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsNotDisplayed(i)) {
                 onView(matcher)
                         .perform(actionOnItemAtPosition(i, scrollTo()));
                 sleep(300);
@@ -158,7 +117,7 @@ public class TestUIApp {
     }
 
 
-    public boolean itemIsDisplayed(int position) {
+    public boolean itemIsNotDisplayed(int position) {
         try {
             onView(new RecyclerViewMatcher(getCurrentRecyclerView()).atPosition(position)).check(matches(isDisplayed()));
             return false;

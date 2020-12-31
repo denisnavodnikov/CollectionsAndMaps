@@ -33,10 +33,6 @@ public class TestMaps extends Maps {
 
     }
 
-    @Override
-    public int getSpanCount() {
-        return 2;
-    }
 
     @Override
     public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int contOfElements) {

@@ -39,11 +39,6 @@ public class TestCollections extends Collections {
     }
 
     @Override
-    public int getSpanCount() {
-        return 3;
-    }
-
-    @Override
     public BenchmarkItem measureTime(BenchmarkItem benchmarkItem, int contOfElements) {
 
         try {

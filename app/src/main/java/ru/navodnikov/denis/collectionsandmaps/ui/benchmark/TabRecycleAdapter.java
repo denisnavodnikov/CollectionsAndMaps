@@ -43,7 +43,7 @@ public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHol
 
     public void updateItem(BenchmarkItem benchmarkItem) {
         for (BenchmarkItem item : items) {
-            item.comparisonOfItem(benchmarkItem);
+            item.isSame(benchmarkItem);
             notifyItemChanged(items.indexOf(item));
         }
 

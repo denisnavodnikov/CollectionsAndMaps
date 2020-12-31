@@ -1,8 +1,9 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
-import androidx.test.espresso.contrib.RecyclerViewActions;
+
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.viewpager.widget.ViewPager;
 
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -17,17 +18,15 @@ import ru.navodnikov.denis.collectionsandmaps.ui.MainActivity;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.swipeRight;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
-import static ru.navodnikov.denis.collectionsandmaps.ui.benchmark.TestUIApp.sleep;
+import static org.junit.Assert.assertEquals;
 
-public class TestSwipeActivity extends TestUIApp {
+public class TestSwipeActivity extends CollectionsAndMapsTestUI {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activity = new ActivityScenarioRule<>(MainActivity.class);
@@ -40,47 +39,43 @@ public class TestSwipeActivity extends TestUIApp {
 
     @Test
     public void testInitialState() {
-        RecyclerViewMatcher recyclerViewMatcher_Collections;
-        RecyclerViewMatcher recyclerViewMatcher_Maps;
+
+        final ViewPager[] viewPager = new ViewPager[1];
+        int positionOfCollections = 0;
+        int positionOfMaps = 1;
+        activity.getScenario().onActivity(activity1 ->  viewPager[0] = activity1.findViewById(R.id.view_pager));
+
         Matcher recyclerViewMatcher = allOf(withId(R.id.recycler_view), isDisplayed());
 
+        assertEquals("Selected page", positionOfCollections, viewPager[0].getCurrentItem());
 
         sleep(300);
-        recyclerViewMatcher_Collections = new RecyclerViewMatcher(getCurrentRecyclerView());
 
         onView(recyclerViewMatcher)
                 .perform(swipeLeft());
 
         sleep(300);
-        recyclerViewMatcher_Maps = new RecyclerViewMatcher(getCurrentRecyclerView());
 
+        assertEquals("Selected page", positionOfMaps, viewPager[0].getCurrentItem());
         onView(recyclerViewMatcher)
                 .perform(swipeRight());
 
         sleep(300);
+        assertEquals("Selected page", positionOfCollections, viewPager[0].getCurrentItem());
 
         onView(withText(TestConstants.NAME_TAB_MAPS)).perform(click());
 
         sleep(300);
+        assertEquals("Selected page", positionOfMaps, viewPager[0].getCurrentItem());
 
-        for (int i = 0; i < TestConstants.NAMES_OF_MAPS.length; i++) {
-
-            checkRecyclerViewItem(recyclerViewMatcher_Maps, TestConstants.NAMES_OF_MAPS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
-        }
+        sleep(300);
 
         onView(withText(TestConstants.NAME_TAB_COLLECTIONS)).perform(click());
 
         sleep(300);
 
-        for (int i = 0; i < TestConstants.NAMES_OF_COLLECTIONS.length; i++) {
-            if (itemIsDisplayed(i)) {
-                onView(recyclerViewMatcher)
-                        .perform(actionOnItemAtPosition(i, scrollTo()));
-                sleep(300);
-            }
-            checkRecyclerViewItem(recyclerViewMatcher_Collections, TestConstants.NAMES_OF_COLLECTIONS, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
-        }
-        onView(recyclerViewMatcher)
-                .perform(RecyclerViewActions.scrollToPosition(0));
+        assertEquals("Selected page", 0, viewPager[0].getCurrentItem());
+
+
     }
 }

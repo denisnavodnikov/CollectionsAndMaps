@@ -42,7 +42,7 @@ public class BenchmarkItem {
     }
 
 
-    public void comparisonOfItem(BenchmarkItem benchmarkItem) {
+    public void isSame(BenchmarkItem benchmarkItem) {
         if (this.getIdOfCollectionsOrMaps() == benchmarkItem.getIdOfCollectionsOrMaps()
                 && this.getIdOfOperations() == benchmarkItem.getIdOfOperations()){
             this.time = benchmarkItem.getTime();
