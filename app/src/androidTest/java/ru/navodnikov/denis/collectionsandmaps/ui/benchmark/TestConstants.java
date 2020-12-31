@@ -12,7 +12,7 @@ public class TestConstants {
     public static final String THREADS_ZERO = "Amount of threads must not be zero";
     public static final String ZERO = "0";
     public static final String EMPTY = "";
-    public static final String TEST_ELEMENTS = "10000";
+    public static final String TEST_ELEMENTS = "1000";
     public static final String TEST_THREADS = "6";
     public static final float ALPHA_1 = 1;
     public static final float ALPHA_0 = 0;

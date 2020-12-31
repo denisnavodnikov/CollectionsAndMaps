@@ -22,30 +22,25 @@ import static org.hamcrest.core.AllOf.allOf;
 public class TestUICollectionFragment extends CollectionsAndMapsTestUI {
 
     @Rule
-    public ActivityScenarioRule<MainActivity> activity = new ActivityScenarioRule<>(MainActivity.class);
+    public final ActivityScenarioRule<MainActivity> activity = new ActivityScenarioRule<>(MainActivity.class);
 
     @Before
     public void setUp() {
-        BenchmarkApp app = ((BenchmarkApp) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext());
+        final BenchmarkApp app = ((BenchmarkApp) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext());
         app.setAppComponent(DaggerTestAppComponent.builder().testAppModule(new TestAppModule(app)).build());
     }
 
     @Test
     public void TestUICollectionsFragment() {
-        RecyclerViewMatcher recyclerViewMatcher = new RecyclerViewMatcher(getCurrentRecyclerView());
-
         testErrorEmptyFields();
-
         testErrorZeroFields();
 
+        final RecyclerViewMatcher recyclerViewMatcher = new RecyclerViewMatcher(getCurrentRecyclerView());
         testCalculationLaunch(TestConstants.NAMES_OF_COLLECTIONS, recyclerViewMatcher);
 
-        onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click()); // TODO delete lately
-
+        onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
         testCalculationStop(TestConstants.NAMES_OF_COLLECTIONS, recyclerViewMatcher);
 
-//        testCalculationComplete(TestConstants.NAMES_OF_COLLECTIONS, TestConstants.COLLECTIONS_TIME, recyclerViewMatcher);
-
-
+        testCalculationComplete(TestConstants.NAMES_OF_COLLECTIONS, TestConstants.COLLECTIONS_TIME, recyclerViewMatcher);
     }
 }

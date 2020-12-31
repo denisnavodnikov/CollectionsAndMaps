@@ -5,7 +5,10 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 
 import org.hamcrest.Matcher;
 
@@ -27,23 +30,21 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class CollectionsAndMapsTestUI {
-    private Matcher matcher = allOf(withId(R.id.recycler_view), isDisplayed());
+    private final Matcher<View> matcher = allOf(withId(R.id.recycler_view), isDisplayed());
 
 
     public void testErrorEmptyFields() {
-        sleep(300);
+        ThreadUtil.sleep(300);
         onView(allOf(withId(R.id.edit_text_elements), isDisplayed())).perform(typeText(TestConstants.EMPTY));
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(typeText(TestConstants.EMPTY));
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
 
         onView(allOf(withId(R.id.edit_text_elements), isDisplayed())).check(matches(hasErrorText(TestConstants.ELEMENTS_EMPTY)));
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).check(matches(hasErrorText(TestConstants.THREADS_EMPTY)));
-
-
     }
 
     public void testErrorZeroFields() {
-        sleep(300);
+        ThreadUtil.sleep(300);
         onView(allOf(withId(R.id.edit_text_elements), isDisplayed())).perform(typeText(TestConstants.ZERO));
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(typeText(TestConstants.ZERO));
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
@@ -61,35 +62,31 @@ public class CollectionsAndMapsTestUI {
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
         for (int i = 0; i < names.length; i++) {
             if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsNotDisplayed(i)) {
-                onView(matcher)
-                        .perform(actionOnItemAtPosition(i, scrollTo()));
-                sleep(1000);
+                onView(matcher).perform(actionOnItemAtPosition(i, scrollTo()));
+                ThreadUtil.sleep(1000);
             }
             checkRecyclerViewItem(recyclerViewMatcher, names, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_1);
         }
-        onView(matcher)
-                .perform(RecyclerViewActions.scrollToPosition(0));
+        onView(matcher).perform(RecyclerViewActions.scrollToPosition(0));
 
-        sleep(2000);
+        ThreadUtil.sleep(2000);
 
         onView(allOf(withId(R.id.edit_text_elements), isDisplayed())).perform(clearText());
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(clearText());
-
     }
 
     public void testCalculationStop(String[] names, RecyclerViewMatcher recyclerViewMatcher) {
         onView(allOf(withId(R.id.edit_text_elements), isDisplayed())).perform(typeText(TestConstants.TEST_ELEMENTS));
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(typeText(TestConstants.TEST_THREADS));
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
-        sleep(300);
+        ThreadUtil.sleep(300);
         onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
-        sleep(300);
+        ThreadUtil.sleep(300);
 
         for (int i = 0; i < names.length; i++) {
             if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsNotDisplayed(i)) {
-                onView(matcher)
-                        .perform(actionOnItemAtPosition(i, scrollTo()));
-                sleep(300);
+                onView(matcher).perform(actionOnItemAtPosition(i, scrollTo()));
+                ThreadUtil.sleep(300);
             }
             checkRecyclerViewItem(recyclerViewMatcher, names, i, TestConstants.DEFAULT_TIME, TestConstants.ALPHA_0);
         }
@@ -101,19 +98,28 @@ public class CollectionsAndMapsTestUI {
     public void testCalculationComplete(String[] names, String time, RecyclerViewMatcher recyclerViewMatcher) {
         onView(allOf(withId(R.id.edit_text_elements), isDisplayed())).perform(typeText(TestConstants.TEST_ELEMENTS));
         onView(allOf(withId(R.id.edit_text_threads), isDisplayed())).perform(typeText(TestConstants.TEST_THREADS));
-        onView(allOf(withId(R.id.start_button), isDisplayed())).perform(click());
-        sleep(6000);
+
+        final ViewInteraction buttonInteraction = onView(allOf(withId(R.id.start_button), isDisplayed()));
+        buttonInteraction.perform(click());
+
+        boolean wait = true;
+        while (wait) {
+            ThreadUtil.sleep(1000);
+            try {
+                buttonInteraction.check(ViewAssertions.matches(ViewMatchers.isChecked()));
+            } catch (Throwable ignore) {
+                wait = false;
+            }
+        }
 
         for (int i = 0; i < names.length; i++) {
             if (names == TestConstants.NAMES_OF_COLLECTIONS && itemIsNotDisplayed(i)) {
-                onView(matcher)
-                        .perform(actionOnItemAtPosition(i, scrollTo()));
-                sleep(300);
+                onView(matcher).perform(actionOnItemAtPosition(i, scrollTo()));
+                ThreadUtil.sleep(300);
             }
             checkRecyclerViewItem(recyclerViewMatcher, names, i, time, TestConstants.ALPHA_0);
         }
-        onView(matcher)
-                .perform(RecyclerViewActions.scrollToPosition(0));
+        onView(matcher).perform(RecyclerViewActions.scrollToPosition(0));
     }
 
 
@@ -126,14 +132,16 @@ public class CollectionsAndMapsTestUI {
         }
     }
 
-    public void checkRecyclerViewItem(RecyclerViewMatcher matcher, String[] names, int position, String time, float alpha) {
+    public void checkRecyclerViewItem(RecyclerViewMatcher matcher, String[] names, int position,
+                                      String time, float alpha) {
         onView(matcher.atPositionOnView(position, R.id.name_of_operation))
                 .check(matches(withText(names[position])));
+
         onView(matcher.atPositionOnView(position, R.id.time_of_operation))
                 .check(matches(withText(time)));
+
         onView(matcher.atPositionOnView(position, R.id.progressBar))
                 .check(matches(withAlpha(alpha)));
-
     }
 
 
@@ -157,13 +165,5 @@ public class CollectionsAndMapsTestUI {
                     }
                 });
         return (RecyclerView) rv[0];
-    }
-
-    public static void sleep(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

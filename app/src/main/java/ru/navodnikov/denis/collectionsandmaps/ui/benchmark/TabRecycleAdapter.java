@@ -28,7 +28,8 @@ public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHol
     @NonNull
     @Override
     public BenchmarkItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BenchmarkItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collections_and_maps, parent, false));
+        return new BenchmarkItemViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_collections_and_maps, parent, false));
     }
 
     @Override
@@ -42,19 +43,18 @@ public class TabRecycleAdapter extends RecyclerView.Adapter<BenchmarkItemViewHol
     }
 
     public void updateItem(BenchmarkItem benchmarkItem) {
-        for (BenchmarkItem item : items) {
-            item.isSame(benchmarkItem);
-            notifyItemChanged(items.indexOf(item));
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).isSame(benchmarkItem)) {
+                items.set(i, benchmarkItem);
+                notifyItemChanged(i);
+            }
         }
-
     }
 
     public void setProgressBar(boolean isProgress) {
         for (int i = 0; i < items.size(); i++) {
-            BenchmarkItem benchmarkItem = items.get(i);
-            benchmarkItem.setProgress(isProgress);
-            items.set(i, benchmarkItem);
+            items.get(i).setProgress(isProgress);
+            notifyItemChanged(i);
         }
-        notifyDataSetChanged();
     }
 }

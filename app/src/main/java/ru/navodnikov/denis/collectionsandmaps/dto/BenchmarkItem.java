@@ -3,11 +3,11 @@ package ru.navodnikov.denis.collectionsandmaps.dto;
 
 public class BenchmarkItem {
     private double time;
-    private int idOfCollectionsOrMaps;
-    private int idOfOperations;
+    private final int idOfCollectionsOrMaps;
+    private final int idOfOperations;
     private boolean progress;
 
-    public BenchmarkItem(double time, int idOfCollectionsOrMaps,int idOfOperations) {
+    public BenchmarkItem(double time, int idOfCollectionsOrMaps, int idOfOperations) {
         this.time = time;
         this.idOfCollectionsOrMaps = idOfCollectionsOrMaps;
         this.idOfOperations = idOfOperations;
@@ -42,12 +42,8 @@ public class BenchmarkItem {
     }
 
 
-    public void isSame(BenchmarkItem benchmarkItem) {
-        if (this.getIdOfCollectionsOrMaps() == benchmarkItem.getIdOfCollectionsOrMaps()
-                && this.getIdOfOperations() == benchmarkItem.getIdOfOperations()){
-            this.time = benchmarkItem.getTime();
-            this.idOfCollectionsOrMaps = benchmarkItem.getIdOfCollectionsOrMaps();
-            this.idOfOperations = benchmarkItem.getIdOfOperations();
-        }
+    public boolean isSame(BenchmarkItem benchmarkItem) {
+        return this.getIdOfCollectionsOrMaps() == benchmarkItem.getIdOfCollectionsOrMaps()
+                && this.getIdOfOperations() == benchmarkItem.getIdOfOperations();
     }
 }
