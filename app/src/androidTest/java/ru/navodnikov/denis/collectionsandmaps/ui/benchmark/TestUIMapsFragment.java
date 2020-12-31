@@ -12,6 +12,9 @@ import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.testmodels.DaggerTestAppComponent;
 import ru.navodnikov.denis.collectionsandmaps.testmodels.TestAppModule;
 import ru.navodnikov.denis.collectionsandmaps.ui.MainActivity;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.RecyclerViewMatcher;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.TestConstants;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.ThreadUtil;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;

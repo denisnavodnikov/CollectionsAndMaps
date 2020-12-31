@@ -1,4 +1,4 @@
-package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
+package ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra;
 
 import android.view.View;
 

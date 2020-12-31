@@ -1,6 +1,5 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
-
 import android.view.View;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -17,6 +16,8 @@ import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.testmodels.DaggerTestAppComponent;
 import ru.navodnikov.denis.collectionsandmaps.testmodels.TestAppModule;
 import ru.navodnikov.denis.collectionsandmaps.ui.MainActivity;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.TestConstants;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.ThreadUtil;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -27,7 +28,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
-import static ru.navodnikov.denis.collectionsandmaps.ui.benchmark.CollectionsAndMapsTestUI.sleep;
 
 public class TestSwipeActivity {
 

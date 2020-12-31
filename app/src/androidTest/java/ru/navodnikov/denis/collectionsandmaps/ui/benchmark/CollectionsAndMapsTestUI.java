@@ -13,6 +13,9 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import org.hamcrest.Matcher;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.RecyclerViewMatcher;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.TestConstants;
+import ru.navodnikov.denis.collectionsandmaps.ui.benchmark.infra.ThreadUtil;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
