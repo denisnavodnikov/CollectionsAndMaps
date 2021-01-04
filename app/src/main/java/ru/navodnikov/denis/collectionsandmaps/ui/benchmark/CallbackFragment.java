@@ -1,5 +1,8 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
+import android.content.Context;
+import android.view.View;
+
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 
 public interface CallbackFragment {
@@ -17,5 +20,7 @@ public interface CallbackFragment {
     void showMessage(int message);
 
     void setDefaultTime();
+
+    void hideKeyboard();
 }
 

@@ -100,6 +100,7 @@ public class BenchmarkedViewModelTest {
         verify(callbackFragment, times(1)).showMessage(R.string.calculation_is_finished);
         verify(callbackFragment, times(6)).updateItemInAdaptor(any(BenchmarkItem.class));
         verify(callbackFragment, times(1)).setCheckedButton(false);
+        verify(callbackFragment, times(1)).hideKeyboard();
         verifyNoMoreInteractions(callbackFragment);
     }
 

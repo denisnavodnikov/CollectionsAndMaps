@@ -1,10 +1,13 @@
 package ru.navodnikov.denis.collectionsandmaps.ui.benchmark;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -142,4 +145,11 @@ public class BenchmarkFragment extends Fragment implements CompoundButton.OnChec
     public void setDefaultTime() {
         tabRecycleAdapter.setItems(model.getItems());
     }
+
+    @Override
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editTextThreads.getWindowToken(), 0);
+    }
+
 }

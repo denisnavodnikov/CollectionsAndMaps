@@ -78,7 +78,10 @@ public class BenchmarkedViewModel extends ViewModel {
                     .subscribeOn(scheduler)
                     .map(benchmarkItem -> benchmarked.measureTime(benchmarkItem, elementsCount))
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(item -> callbackFragment.setProgress(true))
+                    .doOnSubscribe(item -> {
+                        callbackFragment.setProgress(true);
+                        callbackFragment.hideKeyboard();
+                    })
                     .doOnComplete(() -> callbackFragment.showMessage(R.string.calculation_is_finished))
                     .doFinally(() -> {
                         callbackFragment.setProgress(false);
