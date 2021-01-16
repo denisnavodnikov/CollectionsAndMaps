@@ -4,10 +4,15 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
+import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
 import ru.navodnikov.denis.collectionsandmaps.models.Maps;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -15,6 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BenchmarkedViewModelTest {
@@ -24,14 +30,20 @@ public class BenchmarkedViewModelTest {
 
     private BenchmarkedViewModel viewModel;
     private BenchmarkFragment callbackFragment;
+    private Maps mapsMock;
     private String threadsCount;
     private String elementsCount;
     private boolean isChecked = true;
 
+
     @Before
     public void setUp() {
+
+
         callbackFragment = mock(BenchmarkFragment.class);
-        viewModel = new BenchmarkedViewModel(new Maps());
+        mapsMock = mock(Maps.class);
+
+        viewModel = new BenchmarkedViewModel(mapsMock);
         viewModel.registerCallback(callbackFragment);
     }
 
@@ -85,20 +97,24 @@ public class BenchmarkedViewModelTest {
 
     @Test
     public void onButtonClicked_MeasureTime() {
+        List<BenchmarkItem> data = new ArrayList<>();
+        data.add(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.hash_map, R.string.adding_to_Map));
+        when(mapsMock.getItems()).thenReturn(data);
+        when(mapsMock.measureTime(data.get(0), 100000)).thenReturn(new BenchmarkItem(2.0,R.string.hash_map,R.string.adding_to_Map));
         threadsCount = "3";
         elementsCount = "100000";
 
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         verify(callbackFragment, times(1)).setProgress(true);
         verify(callbackFragment, times(1)).setProgress(false);
         verify(callbackFragment, times(1)).showMessage(R.string.calculation_is_finished);
-        verify(callbackFragment, times(6)).updateItemInAdaptor(any(BenchmarkItem.class));
+        verify(callbackFragment, times(1)).updateItemInAdaptor(any(BenchmarkItem.class));
         verify(callbackFragment, times(1)).setCheckedButton(false);
         verify(callbackFragment, times(1)).hideKeyboard();
         verifyNoMoreInteractions(callbackFragment);
