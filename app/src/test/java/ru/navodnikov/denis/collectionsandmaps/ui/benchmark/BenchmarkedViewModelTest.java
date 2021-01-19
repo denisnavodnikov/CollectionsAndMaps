@@ -135,5 +135,7 @@ public class BenchmarkedViewModelTest {
     public  void onButtonClicked_getSpanCount(){
         when(mapsMock.getSpanCount()).thenReturn(2);
         assertEquals(2, mapsMock.getSpanCount());
+        verify(mapsMock, times(1)).getSpanCount();
+        verifyNoMoreInteractions(callbackFragment);
     }
 }
