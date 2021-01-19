@@ -30,7 +30,7 @@ public class BenchmarkedViewModelTest {
 
     private BenchmarkedViewModel viewModel;
     private CallbackFragment callbackFragment;
-    private Benchmarked mapsMock;
+    private Benchmarked benchmarkedMock;
     private String threadsCount;
     private String elementsCount;
     private boolean isChecked = true;
@@ -41,9 +41,9 @@ public class BenchmarkedViewModelTest {
 
 
         callbackFragment = mock(CallbackFragment.class);
-        mapsMock = mock(Benchmarked.class);
+        benchmarkedMock = mock(Benchmarked.class);
 
-        viewModel = new BenchmarkedViewModel(mapsMock);
+        viewModel = new BenchmarkedViewModel(benchmarkedMock);
         viewModel.registerCallback(callbackFragment);
     }
 
@@ -99,8 +99,8 @@ public class BenchmarkedViewModelTest {
     public void onButtonClicked_MeasureTime() {
         List<BenchmarkItem> data = new ArrayList<>();
         data.add(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.hash_map, R.string.adding_to_Map));
-        when(mapsMock.getItems()).thenReturn(data);
-        when(mapsMock.measureTime(data.get(0), 100000)).thenReturn(new BenchmarkItem(2.0,R.string.hash_map,R.string.adding_to_Map));
+        when(benchmarkedMock.getItems()).thenReturn(data);
+        when(benchmarkedMock.measureTime(data.get(0), 100000)).thenReturn(new BenchmarkItem(2.0,R.string.hash_map,R.string.adding_to_Map));
         threadsCount = "3";
         elementsCount = "100000";
 
@@ -133,10 +133,10 @@ public class BenchmarkedViewModelTest {
 
     @Test
     public  void onButtonClicked_getSpanCount(){
-        when(mapsMock.getSpanCount()).thenReturn(2);
-        assertEquals(2, mapsMock.getSpanCount());
-        verify(mapsMock, times(1)).getSpanCount();
-        verifyNoMoreInteractions(mapsMock);
+        when(benchmarkedMock.getSpanCount()).thenReturn(2);
+        assertEquals(2, benchmarkedMock.getSpanCount());
+        verify(benchmarkedMock, times(1)).getSpanCount();
+        verifyNoMoreInteractions(benchmarkedMock);
         verifyNoMoreInteractions(callbackFragment);
     }
 }
