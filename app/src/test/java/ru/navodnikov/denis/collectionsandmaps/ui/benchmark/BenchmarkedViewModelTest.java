@@ -100,7 +100,6 @@ public class BenchmarkedViewModelTest {
         List<BenchmarkItem> data = new ArrayList<>();
         data.add(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.hash_map, R.string.adding_to_Map));
         when(mapsMock.getItems()).thenReturn(data);
-        when(mapsMock.getSpanCount()).thenReturn(2);
         when(mapsMock.measureTime(data.get(0), 100000)).thenReturn(new BenchmarkItem(2.0,R.string.hash_map,R.string.adding_to_Map));
         threadsCount = "3";
         elementsCount = "100000";
@@ -119,7 +118,7 @@ public class BenchmarkedViewModelTest {
         verify(callbackFragment, times(1)).setCheckedButton(false);
         verify(callbackFragment, times(1)).hideKeyboard();
         verifyNoMoreInteractions(callbackFragment);
-        assertEquals(2, mapsMock.getSpanCount());
+
     }
 
     @Test
@@ -130,5 +129,11 @@ public class BenchmarkedViewModelTest {
         isChecked = false;
         viewModel.onButtonClicked(elementsCount, threadsCount, isChecked);
         verify(callbackFragment, times(1)).showMessage(R.string.calculation_is_stopped);
+    }
+
+    @Test
+    public  void onButtonClicked_getSpanCount(){
+        when(mapsMock.getSpanCount()).thenReturn(2);
+        assertEquals(2, mapsMock.getSpanCount());
     }
 }
