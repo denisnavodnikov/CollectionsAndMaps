@@ -136,6 +136,7 @@ public class BenchmarkedViewModelTest {
         when(mapsMock.getSpanCount()).thenReturn(2);
         assertEquals(2, mapsMock.getSpanCount());
         verify(mapsMock, times(1)).getSpanCount();
+        verifyNoMoreInteractions(mapsMock);
         verifyNoMoreInteractions(callbackFragment);
     }
 }
