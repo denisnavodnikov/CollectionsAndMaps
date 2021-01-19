@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -13,8 +12,9 @@ import java.util.List;
 import ru.navodnikov.denis.collectionsandmaps.R;
 import ru.navodnikov.denis.collectionsandmaps.dto.BenchmarkItem;
 import ru.navodnikov.denis.collectionsandmaps.dto.Constants;
-import ru.navodnikov.denis.collectionsandmaps.models.Maps;
+import ru.navodnikov.denis.collectionsandmaps.models.Benchmarked;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -29,8 +29,8 @@ public class BenchmarkedViewModelTest {
     public final RxImmediateSchedulerRule schedulers = new RxImmediateSchedulerRule();
 
     private BenchmarkedViewModel viewModel;
-    private BenchmarkFragment callbackFragment;
-    private Maps mapsMock;
+    private CallbackFragment callbackFragment;
+    private Benchmarked mapsMock;
     private String threadsCount;
     private String elementsCount;
     private boolean isChecked = true;
@@ -40,8 +40,8 @@ public class BenchmarkedViewModelTest {
     public void setUp() {
 
 
-        callbackFragment = mock(BenchmarkFragment.class);
-        mapsMock = mock(Maps.class);
+        callbackFragment = mock(CallbackFragment.class);
+        mapsMock = mock(Benchmarked.class);
 
         viewModel = new BenchmarkedViewModel(mapsMock);
         viewModel.registerCallback(callbackFragment);
@@ -100,6 +100,7 @@ public class BenchmarkedViewModelTest {
         List<BenchmarkItem> data = new ArrayList<>();
         data.add(new BenchmarkItem(Constants.DEFAULT_TIME, R.string.hash_map, R.string.adding_to_Map));
         when(mapsMock.getItems()).thenReturn(data);
+        when(mapsMock.getSpanCount()).thenReturn(2);
         when(mapsMock.measureTime(data.get(0), 100000)).thenReturn(new BenchmarkItem(2.0,R.string.hash_map,R.string.adding_to_Map));
         threadsCount = "3";
         elementsCount = "100000";
@@ -118,6 +119,7 @@ public class BenchmarkedViewModelTest {
         verify(callbackFragment, times(1)).setCheckedButton(false);
         verify(callbackFragment, times(1)).hideKeyboard();
         verifyNoMoreInteractions(callbackFragment);
+        assertEquals(2, mapsMock.getSpanCount());
     }
 
     @Test
